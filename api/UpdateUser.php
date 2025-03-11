@@ -20,7 +20,7 @@
         $ret->store_result();
 
         if( $ret->num_rows > 0){
-            $stmt = $conn->prepare("UPDATE Users SET FirstName=?, LastName=?, Password=?, UniversityName=? WHERE UID=?");
+            $stmt = $conn->prepare("UPDATE Users SET First=?, Last=?, Password=?, University_name=? WHERE UID=?");
     		$stmt->bind_param("sssss", $firstName, $lastName, $password, $universityName, $uid);
             $stmt->execute();
             $stmt->close();
