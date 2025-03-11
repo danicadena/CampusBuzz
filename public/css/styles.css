@@ -1,0 +1,42 @@
+*{
+    font-family: "Jersey 10", sans-serif;
+    background-color: #E4BC67 !important;
+}
+
+.links{
+    flex-direction: column;
+    gap: 20px;
+}
+
+a{
+    color: #fff;
+    font-size: 30px;
+}
+
+
+.title-cont{
+    background-color: #E4BC67;
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+#title{
+    color: #fff;
+    font-size: 130px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.img-cont{
+    max-width: fit-content;
+}
+
+#beeImage{
+    max-width: fit-content;
+    max-height: fit-content;
+}
+
+
+
+  
