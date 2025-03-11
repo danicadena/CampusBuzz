@@ -5,7 +5,7 @@
     $lastName = $inData["Last"];
     $password = $inData["Password"];
     $uid = $inData["UID"];
-    $universityName = $inData["University_name"]
+    $universityName = $inData["University_name"];
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -48,7 +48,7 @@
 
     function returnWithInfo( $firstName, $lastName, $password, $universityName, $uid )
 	{
-		$retValue = '{"uid":' . $uid . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","password":"' . $password . '", "university":"' . $universityName . '","error":""}';
+		$retValue = '{"uid":' . $uid . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","password":"' . $password . '","university":"' . $universityName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
