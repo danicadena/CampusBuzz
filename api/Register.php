@@ -9,6 +9,9 @@
     $userType = $inData["User_Type"];
     $uniName = $inData["University_name"];
 
+	// Phone needed if userType is Admin
+	$phone = isset($inData["Phone"]) ? $inData["Phone"] : null;
+
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
 	{
@@ -32,7 +35,29 @@
 		$stmt = $conn->prepare("INSERT into Users (Email, First, Last, Username, Password, User_Type, University_name) VALUES(?,?,?,?,?,?,?)");
 		$stmt->bind_param("sssssss", $email, $firstName, $lastName, $userName, $password, $userType, $uniName);
 		$stmt->execute();
+		$uid = $conn->insert_id;
 		$stmt->close();
+
+		if ($userType === 'Admin')
+		{
+			if ($phone === null)
+			{
+				returnWithError("Phone number is required!", 400);
+				return;
+			}
+			$adminStmt = $conn->prepare("INSERT INTO Admins (UID, Phone) VALUES (?,?)");
+			$adminStmt->bind_param("ss", $uid, $phone);
+			$adminStmt->execute();
+			$adminStmt->close();
+		}
+		elseif ($userType === "SuperAdmin")
+		{
+			$superStmt = $conn->prepare("INSERT INTO SuperAdmins (UID) VALUES (?)");
+			$superStmt->bind_param("s", $uid);
+			$superStmt->execute();
+			$superStmt->close();
+		}
+
 		$conn->close();
 		returnWithError("");
 	}
