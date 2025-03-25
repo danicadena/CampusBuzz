@@ -7,7 +7,7 @@
     $userName = $inData["Username"];
     $password = $inData["Password"];
     $userType = $inData["User_Type"];
-    $uniName = $inData["University_name"];
+    $uniName = isset($inData["University_name"]) ? $inData["University_name"] : null;
 
 	// Phone needed if userType is Admin
 	$phone = isset($inData["Phone"]) ? $inData["Phone"] : null;
