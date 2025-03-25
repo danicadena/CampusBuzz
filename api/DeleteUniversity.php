@@ -1,7 +1,7 @@
 <?php
     $inData = getRequestInfo();
 
-    $uid = $inData["UID"];
+    $uniID = $inData["Uni_ID"];
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -10,8 +10,8 @@
 	}
 	else
 	{
-		$checkStmt = $conn->prepare("SELECT UID FROM Users WHERE UID = ? ");
-		$checkStmt->bind_param("i", $uid);
+		$checkStmt = $conn->prepare("SELECT Uni_ID FROM University WHERE Uni_ID = ? ");
+		$checkStmt->bind_param("i", $uniID);
 		$checkStmt->execute();
 		$checkStmt->store_result();
 
@@ -19,11 +19,11 @@
 		{
 			$checkStmt->close();
 			$conn->close();
-			returnWithError("No user found");
+			returnWithError("No university profile found!");
 			return;
 		}
-		$stmt = $conn->prepare("DELETE from Users where UID = ?");
-		$stmt->bind_param("i", $uid);
+		$stmt = $conn->prepare("DELETE from University where Uni_ID = ?");
+		$stmt->bind_param("i", $uniID);
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
