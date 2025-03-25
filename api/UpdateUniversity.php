@@ -17,7 +17,7 @@
         $ret->store_result();
 
         if( $ret->num_rows > 0){
-            $stmt = $conn->prepare("UPDATE University Student_num=?, Profile_pic=? WHERE Uni_ID=?");
+            $stmt = $conn->prepare("UPDATE University SET Student_num=?, Profile_pic=? WHERE Uni_ID=?");
     		$stmt->bind_param("sss", $studentCount, $profilePic, $uniID);
             $stmt->execute();
             $stmt->close();
