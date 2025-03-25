@@ -1,6 +1,7 @@
 <?php
     $inData = getRequestInfo();
 
+    $uniID = $inData["Uni_ID"];
     $studentCount = $inData["Student_num"];
     $profilePic = isset($inData["Profile_pic"]) ? $inData["Profile_pic"] : null;
 
@@ -12,17 +13,17 @@
 	else
 	{
         $ret = $conn->prepare("SELECT Uni_ID FROM University WHERE Uni_ID=?");
-        $ret->bind_param("s", $uniID);
+        $ret->bind_param("i", $uniID);
         $ret->execute();
         $ret->store_result();
 
         if( $ret->num_rows > 0){
             $stmt = $conn->prepare("UPDATE University SET Student_num=?, Profile_pic=? WHERE Uni_ID=?");
-    		$stmt->bind_param("sss", $studentCount, $profilePic, $uniID);
+    		$stmt->bind_param("isi", $studentCount, $profilePic, $uniID);
             $stmt->execute();
             $stmt->close();
             $conn->close();
-            returnWithError("");
+            returnWithInfo($uniID, $studentCount, $profilePic);
         }
         else{
             $ret->close();
