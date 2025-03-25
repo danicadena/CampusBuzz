@@ -7,7 +7,7 @@ $inData = getRequestInfo();
 $lname = $inData["Lname"];
 $api = "AIzaSyAe-WqswCSTZYV7PWeEEhc_4Kd3tSfJniI";
 
-$search = urlencode($locationName);
+$search = urlencode($lname);
 $url = "https://maps.googleapis.com/maps/api/geocode/json?address=$search&key=$apiKey";
 
 $response = file_get_contents($url);
