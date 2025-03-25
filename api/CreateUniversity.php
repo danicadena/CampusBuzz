@@ -15,7 +15,7 @@
 	{
         // check if LocID exists in Locations
         $locStmt = $conn->prepare("SELECT LocID FROM Locations WHERE Lname = ?");
-        $locStmt->bindparam("s", $uniName);
+        $locStmt->bind_param("s", $uniName);
         $locStmt->execute();
         $locStmt->store_result();
 
