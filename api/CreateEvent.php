@@ -1,7 +1,7 @@
 <?php
     $inData = getRequestInfo();
 
-    $locID = $inData["Loc_ID"];
+    $locID = $inData["LocID"];
     $time = $inData["Event_time"];
     $date = $inData["Date"];
     $name = $inData["Event_name"];
