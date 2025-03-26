@@ -36,8 +36,8 @@
 		}
 
 		// check if there is a duplicate event in the same location at the same time
-		$duplicateCheck = $conn->prepare("SELECT Events_ID FROM Events_At WHERE LocID = ? AND Event_time = ?");
-		$duplicateCheck->bind_param("is", $locID, $time);
+		$duplicateCheck = $conn->prepare("SELECT Events_ID FROM Events_At WHERE LocID = ? AND Event_time = ? AND Date = ?");
+		$duplicateCheck->bind_param("iss", $locID, $time, $date);
 		$duplicateCheck->execute();
 		$duplicateCheck->store_result();
 
@@ -108,6 +108,12 @@
 			$rsoStmt->bind_param("ii", $eventID, $rsoID);
 			$rsoStmt->execute();
 			$rsoStmt->close();
+
+			// change approval status to approved because super admin does not need to approve
+			$approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
+			$approve->bind_param("i", $eventID);
+			$approve->execute();
+			$approve->close();
         }
 
 		$conn->close();

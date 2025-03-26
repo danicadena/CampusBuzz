@@ -60,6 +60,12 @@
 		$adminID = $conn->insert_id;
 		$addAdmin->close();
 
+		// change student user_type to Admin
+		$updateStudent = $conn->prepare("UPDATE Users SET User_Type = 'Admin' WHERE UID = ?");
+		$updateStudent->bind_param("i", $newAdmin);
+		$updateStudent->execute();
+		$updateStudent->close();
+
 		// create the RSO with new admin
 		$stmt = $conn->prepare("INSERT into RSOs_Creates (Admins_ID, RSO_name) VALUES(?,?)");
 		$stmt->bind_param("is", $adminID, $rsoName);
