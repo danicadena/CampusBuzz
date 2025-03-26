@@ -20,7 +20,7 @@
 
         if($type === 'Public' || $type === 'Private')
         {
-            $approve = $conn->prepare("UPDATE Events_At SET Approval_status = 'approved' WHERE Events_ID = ?");
+            $approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
             $approve->bind_param("i", $eventID);
             $approve->execute();
             $approve->close();
