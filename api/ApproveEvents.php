@@ -16,7 +16,7 @@
         $eventType->bind_param("i", $eventID);
         $eventType->execute();
 
-        if ($eventType->num_rows === 0) {
+        if ($eventType->num_rows == 0) {
             $eventType->close();
             $conn->close();
             returnWithError("Event not found!");
