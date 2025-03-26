@@ -1,5 +1,6 @@
 <?php
     // the superadmin that approves will be added as superadmin of event
+    $inData = getRequestInfo();
 
     $superID = $inData["SuperAdmins_ID"];
     $eventID = $inData["Events_ID"];
