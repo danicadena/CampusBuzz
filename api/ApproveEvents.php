@@ -28,7 +28,7 @@
         else
         {
             $conn->close();
-            returnWithError("Super Admins do not approve RSO Events!");
+            returnWithError("Super Admins do not approve RSO Events! - " . $type);
             return;
         }
 
