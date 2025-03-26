@@ -8,8 +8,9 @@
     $description = $inData["Description"];
     $type = $inData["Event_type"];
 	$approval = 'pending';
+    $adminID = $inData["Admins_ID"];
 
-    $adminID = isset($inData["Admins_ID"]) ? $inData["Admins_ID"] : null;
+	// SuperAdmin_ID added once event is approved
     $superID = isset($inData["SuperAdmins_ID"]) ? $inData["SuperAdmins_ID"] : null;
     $rsoID = isset($inData["RSOs_ID"]) ? $inData["RSOs_ID"] : null;
 
@@ -88,6 +89,20 @@
                 return;
             }
             $checkRSO->close();
+
+			// check if admin adding RSO is the owner of RSO 
+			$ownerStmt = $conn->prepare("SELECT Admins_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
+			$ownerStmt->bind_param("i", $rsoID);
+			$ownerStmt->execute();
+			$ownerStmt->bind_result($ownerAdminID);
+			$ownerStmt->fetch();
+			$ownerStmt->close();
+
+			if ($ownerAdminID !== $adminID) {
+				$conn->close();
+				returnWithError("Not authorized to create events for this RSO!");
+				return;
+			}
 
             $rsoStmt = $conn->prepare("INSERT INTO RSOs_Events_Owns (Events_ID, RSOs_ID) VALUES (?,?)");
 			$rsoStmt->bind_param("ii", $eventID, $rsoID);
