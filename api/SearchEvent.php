@@ -12,7 +12,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE (Event_name like ?) AND Events_ID=?");
+		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE Event_name LIKE ?");
 		$event = "%" . $inData["search"] . "%";
 		$stmt->bind_param("si", $event, $inData["Events_ID"]);
 		$stmt->execute();
