@@ -10,7 +10,7 @@
 	}
 	else
 	{
-		$checkStmt = $conn->prepare("SELECT Events_ID FROM Events_At WHERE UID = ? ");
+		$checkStmt = $conn->prepare("SELECT Events_ID FROM Events_At WHERE Events_ID = ? ");
 		$checkStmt->bind_param("i", $eventID);
 		$checkStmt->execute();
 		$checkStmt->store_result();
