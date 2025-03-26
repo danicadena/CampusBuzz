@@ -47,6 +47,7 @@
 			returnWithError("An event already exists at this location and time!");
 			return;
 		}
+		$duplicateCheck->close();
 
         // if found, create an event
 		$stmt = $conn->prepare("INSERT into Events_At (LocID, Event_time, Date, Event_name, Description, Event_type, Approval_Status) VALUES(?,?,?,?,?,?,?)");

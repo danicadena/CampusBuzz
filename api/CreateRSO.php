@@ -3,7 +3,7 @@
 	// UIDs: [1,5,6,7,8]
 	// Student_promoted: 1
 	// Admin_phone: "1234567890"
-	// RSO_name: "
+	// RSO_name: "Women in STEM"
 
     $inData = getRequestInfo();
 
