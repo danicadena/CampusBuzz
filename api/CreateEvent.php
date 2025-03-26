@@ -7,6 +7,7 @@
     $name = $inData["Event_name"];
     $description = $inData["Description"];
     $type = $inData["Event_type"];
+	$approval = 'pending';
 
     $adminID = isset($inData["Admins_ID"]) ? $inData["Admins_ID"] : null;
     $superID = isset($inData["SuperAdmins_ID"]) ? $inData["SuperAdmins_ID"] : null;
@@ -48,8 +49,8 @@
 		}
 
         // if found, create an event
-		$stmt = $conn->prepare("INSERT into Events_At (LocID, Event_time, Date, Event_name, Description, Event_type) VALUES(?,?,?,?,?,?)");
-		$stmt->bind_param("isssss", $locID, $time, $date, $name, $description, $type);
+		$stmt = $conn->prepare("INSERT into Events_At (LocID, Event_time, Date, Event_name, Description, Event_type, Approval_Status) VALUES(?,?,?,?,?,?,?)");
+		$stmt->bind_param("issssss", $locID, $time, $date, $name, $description, $type, $approval);
 		$stmt->execute();
 		$eventID = $conn->insert_id;
 		$stmt->close();
