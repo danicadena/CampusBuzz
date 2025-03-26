@@ -33,6 +33,20 @@
 			return;
 		}
 
+		// check if there is a duplicate event in the same location at the same time
+		$duplicateCheck = $conn->prepare("SELECT Events_ID FROM Events_At WHERE LocID = ? AND Event_time = ?");
+		$duplicateCheck->bind_param("is", $locID, $time);
+		$duplicateCheck->execute();
+		$duplicateCheck->store_result();
+
+		if( $duplicateCheck->num_rows > 0 )
+		{
+			$duplicateCheck->close();
+			$conn->close();
+			returnWithError("An event already exists at this location and time!");
+			return;
+		}
+
         // if found, create an event
 		$stmt = $conn->prepare("INSERT into Events_At (LocID, Event_time, Date, Event_name, Description, Event_type) VALUES(?,?,?,?,?,?)");
 		$stmt->bind_param("isssss", $locID, $time, $date, $name, $description, $type);
