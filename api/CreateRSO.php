@@ -3,12 +3,14 @@
 	// UIDs: [1,5,6,7,8]
 	// Student_promoted: 1
 	// Admin_phone: "1234567890"
+	// RSO_name: "
 
     $inData = getRequestInfo();
 
 	$uidList = $inData["UIDs"];
     $newAdmin = $inData["Student_promoted"];
 	$phone = $inData["Admin_phone"];
+	$rsoName = $inData["RSO_name"];
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -18,7 +20,7 @@
 	else
 	{
 		$domains = [];
-		
+
 		// ensure all email domains are the same
 		foreach($uidList as $uid)
 		{
@@ -59,8 +61,8 @@
 		$addAdmin->close();
 
 		// create the RSO with new admin
-		$stmt = $conn->prepare("INSERT into RSOs_Creates (Admins_ID) VALUES(?)");
-		$stmt->bind_param("i", $adminID);
+		$stmt = $conn->prepare("INSERT into RSOs_Creates (Admins_ID, RSO_name) VALUES(?,?)");
+		$stmt->bind_param("is", $adminID, $rsoName);
 		$stmt->execute();
 		$rsoID = $conn->insert_id;
 		$stmt->close();
