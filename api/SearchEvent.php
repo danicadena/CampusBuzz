@@ -12,7 +12,7 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE Event_name LIKE ?");
+		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE Event_name like ?");
 		$event = "%" . $inData["search"] . "%";
 		$stmt->bind_param("si", $event, $inData["Events_ID"]);
 		$stmt->execute();
@@ -26,7 +26,8 @@
 				$searchResults .= ",";
 			}
 			$searchCount++;
-            $searchResults .= '{"Events_ID":"' . $row["Events_ID"] . '", "Event_name":"' . $row["Event_name"] . '", "Description":"' . $row["Description"] . '", "Date":"' . $row["Date"] . '", "Event_time":"' . $row["Event_time"] . '", "Event_type":"' . $row["Event_type"] . '", "Approval_Status":"' . $row["Approval_Status"] . '"}';		}
+            $searchResults .= '{"Events_ID":"' . $row["Events_ID"] . '", "Event_name":"' . $row["Event_name"] . '", "Description":"' . $row["Description"] . '", "Date":"' . $row["Date"] . '", "Event_time":"' . $row["Event_time"] . '", "Event_type":"' . $row["Event_type"] . '", "Approval_Status":"' . $row["Approval_Status"] . '"}';
+        }
 		
 		if( $searchCount == 0 )
 		{
