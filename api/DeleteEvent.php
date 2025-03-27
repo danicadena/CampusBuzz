@@ -22,6 +22,7 @@
 			returnWithError("No event found!");
 			return;
 		}
+		
 		$stmt = $conn->prepare("DELETE from Events_At where Events_ID = ?");
 		$stmt->bind_param("i", $eventID);
 		$stmt->execute();

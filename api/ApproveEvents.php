@@ -16,14 +16,17 @@
         $eventType = $conn->prepare("SELECT Event_type FROM Events_At WHERE Events_ID = ?");
         $eventType->bind_param("i", $eventID);
         $eventType->execute();
-        $eventType->bind_result($type);
+        $eventType->store_result();
 
-        if (!$eventType->fetch()) {
+        if ($eventType->num_rows == 0) {
             $eventType->close();
             $conn->close();
             returnWithError("Event not found!");
             return;
         }
+
+        $eventType->bind_result($type);
+        $eventType->fetch();
         $eventType->close();
 
         if($type === 'Public' || $type === 'Private')
