@@ -90,7 +90,7 @@
             }
             $checkRSO->close();
 
-			// check if admin adding RSO is the owner of RSO 
+			// check if admin adding RSO event is the owner of RSO 
 			$ownerStmt = $conn->prepare("SELECT Admins_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
 			$ownerStmt->bind_param("i", $rsoID);
 			$ownerStmt->execute();

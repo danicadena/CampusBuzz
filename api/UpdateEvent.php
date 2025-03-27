@@ -3,16 +3,13 @@
 
     // event being updated
     $eventID = $inData["Events_ID"];
+	// admin doing the update
+	$adminID = $inData["Admins_ID"];
 
     $time = $inData["Event_time"];
     $date = $inData["Date"];
     $name = $inData["Event_name"];
     $description = $inData["Description"];
-    $adminID = $inData["Admins_ID"];
-
-	// SuperAdmin_ID added once event is approved
-    $superID = isset($inData["SuperAdmins_ID"]) ? $inData["SuperAdmins_ID"] : null;
-    $rsoID = isset($inData["RSOs_ID"]) ? $inData["RSOs_ID"] : null;
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -21,39 +18,50 @@
 	}
 	else
 	{
-        // get LocID from Locations
-		$getLoc = $conn->prepare("SELECT LocID FROM Events_At WHERE Events_ID = ?");
-		$getLoc->bind_param("i", $eventID);
-		$getLoc->execute();
-		$getLoc->store_result();
+		// check that the correct admin is updating the event
+		$type = $conn->prepare("SELECT Event_type FROM Events_At WHERE Events_ID = ?");
+        $type->bind_param("i", $eventID);
+        $type->execute();
+        $type->bind_result($eventType);
+        $type->fetch();
+        $type->close();
 
-		if( $getLoc->num_rows == 0 )
-		{
-			$getLoc->close();
-			$conn->close();
-			returnWithError("Location not found in database!");
-			return;
-		}
-        $getLoc->bind_result($locID);
-        $getLoc->fetch();
-        $getLoc->close();
+        if ($eventType === "Public") {
+            $auth = $conn->prepare("SELECT Admins_ID FROM Public_Events_Creates WHERE Events_ID = ?");
+            $auth->bind_param("i", $eventID);
+        } elseif ($eventType === "Private") {
+            $auth = $conn->prepare("SELECT Admins_ID FROM Private_Events_Creates WHERE Events_ID = ?");
+            $auth->bind_param("i", $eventID);
+        } elseif ($eventType === "RSO") {
+            // get RSOs_ID to then find Admin in charge
+            $getRSO = $conn->prepare("SELECT RSOs_ID FROM RSOs_Events_Owns WHERE Events_ID = ?");
+            $getRSO->bind_param("i", $eventID);
+            $getRSO->execute();
+            $getRSO->bind_result($foundRSO);
+            $getRSO->fetch();
+            $getRSO->close();
 
-		// check if there is a duplicate event in the same location at the same time
-		$duplicateCheck = $conn->prepare("SELECT Events_ID FROM Events_At WHERE LocID = ? AND Event_time = ? AND Date = ?");
-		$duplicateCheck->bind_param("iss", $locID, $time, $date);
-		$duplicateCheck->execute();
-		$duplicateCheck->store_result();
+            $auth = $conn->prepare("SELECT Admins_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
+            $auth->bind_param("i", $foundRSO);
+        } else {
+            $conn->close();
+            returnWithError("Invalid event type.");
+            return;
+        }
 
-		if( $duplicateCheck->num_rows > 0 )
-		{
-			$duplicateCheck->close();
-			$conn->close();
-			returnWithError("An event already exists at this location and time!");
-			return;
-		}
-		$duplicateCheck->close();
+        $auth->execute();
+        $auth->bind_result($foundAdmin);
+        $auth->fetch();
+        $auth->close();
 
-        // if found, update event
+        if ($adminID !== $foundAdmin)
+        {
+            $conn->close();
+            returnWithError("Not authorized to update this event!");
+            return;
+        }
+
+        // if authorized, update event
 		$stmt = $conn->prepare("UPDATE Events_At SET Event_time=?,Date=?,Event_name=?,Description=? WHERE Events_ID = ?");
 		$stmt->bind_param("ssssi", $time, $date, $name, $description, $eventID);
 		$stmt->execute();
