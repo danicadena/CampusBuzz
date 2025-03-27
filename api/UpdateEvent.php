@@ -55,7 +55,7 @@
 
         // if found, update event
 		$stmt = $conn->prepare("UPDATE Events_At SET Event_time=?,Date=?,Event_name=?,Description=? WHERE Events_ID = ?");
-		$stmt->bind_param("isssi", $time, $date, $name, $description, $eventID);
+		$stmt->bind_param("ssssi", $time, $date, $name, $description, $eventID);
 		$stmt->execute();
 		$stmt->close();
 

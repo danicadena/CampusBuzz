@@ -15,13 +15,13 @@
 	else
 	{
         $ret = $conn->prepare("SELECT First FROM Users WHERE UID=?");
-        $ret->bind_param("s", $uid);
+        $ret->bind_param("i", $uid);
         $ret->execute();
         $ret->store_result();
 
         if( $ret->num_rows > 0){
             $stmt = $conn->prepare("UPDATE Users SET First=?, Last=?, Password=?, University_name=? WHERE UID=?");
-    		$stmt->bind_param("sssss", $firstName, $lastName, $password, $universityName, $uid);
+    		$stmt->bind_param("ssssi", $firstName, $lastName, $password, $universityName, $uid);
             $stmt->execute();
             $stmt->close();
             $conn->close();

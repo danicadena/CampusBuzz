@@ -60,14 +60,14 @@
 				return;
 			}
 			$adminStmt = $conn->prepare("INSERT INTO Admins (UID, Phone) VALUES (?,?)");
-			$adminStmt->bind_param("ss", $uid, $phone);
+			$adminStmt->bind_param("is", $uid, $phone);
 			$adminStmt->execute();
 			$adminStmt->close();
 		}
 		elseif ($userType === "SuperAdmin")
 		{
 			$superStmt = $conn->prepare("INSERT INTO SuperAdmins (UID) VALUES (?)");
-			$superStmt->bind_param("s", $uid);
+			$superStmt->bind_param("i", $uid);
 			$superStmt->execute();
 			$superStmt->close();
 		}
