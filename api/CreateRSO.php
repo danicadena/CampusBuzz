@@ -31,7 +31,7 @@
 			$uidEmail->fetch();
 			$uidEmail->close();
 
-			$domain = strrchr($email, "@");
+			$domain = substr(strrchr($email, "@"), 1);
 			$domains[] = $domain;
 		}
 
@@ -67,8 +67,8 @@
 		$updateStudent->close();
 
 		// create the RSO with new admin
-		$stmt = $conn->prepare("INSERT into RSOs_Creates (Admins_ID, RSO_name) VALUES(?,?)");
-		$stmt->bind_param("is", $adminID, $rsoName);
+		$stmt = $conn->prepare("INSERT into RSOs_Creates (Admins_ID, RSO_name, Email_domain) VALUES(?,?,?)");
+		$stmt->bind_param("iss", $adminID, $rsoName, $first);
 		$stmt->execute();
 		$rsoID = $conn->insert_id;
 		$stmt->close();

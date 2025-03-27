@@ -15,6 +15,7 @@
         $eventType = $conn->prepare("SELECT Event_type FROM Events_At WHERE Events_ID = ?");
         $eventType->bind_param("i", $eventID);
         $eventType->execute();
+        $eventType->store_result();
 
         if ($eventType->num_rows == 0) {
             $eventType->close();
@@ -29,23 +30,24 @@
 
         if($type === 'Public' || $type === 'Private')
         {
+            // approve event
             $approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
             $approve->bind_param("i", $eventID);
             $approve->execute();
             $approve->close();
+
+            // add SuperAdmin to event
+            $addSuper = $conn->prepare("UPDATE Events_At SET SuperAdmins_ID = ? WHERE Events_ID = ?");
+            $addSuper->bind_param("ii", $superID, $eventID);
+            $addSuper->execute();
+            $addSuper->close();
         }
         else
         {
             $conn->close();
-            returnWithError("Super Admins do not approve RSO Events! - " . $type);
+            returnWithError("Super Admins do not approve RSO Events!");
             return;
         }
-
-        // Add SuperAdmin to event
-        $addSuper = $conn->prepare("UPDATE Events_At SET SuperAdmins_ID = ? WHERE Events_ID = ?");
-        $addSuper->bind_param("ii", $superID, $eventID);
-        $addSuper->execute();
-        $addSuper->close();
 
 
         $conn->close();
