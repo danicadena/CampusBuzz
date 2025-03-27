@@ -26,6 +26,12 @@
         $type->fetch();
         $type->close();
 
+		if ($eventType === null) {
+			$conn->close();
+			returnWithError("Event_type is null!");
+			return;
+		}		
+
         if ($eventType === "Public") {
             $auth = $conn->prepare("SELECT Admins_ID FROM Public_Events_Creates WHERE Events_ID = ?");
             $auth->bind_param("i", $eventID);
