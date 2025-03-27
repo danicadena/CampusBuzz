@@ -4,6 +4,7 @@
 
     $superID = $inData["SuperAdmins_ID"];
     $eventID = $inData["Events_ID"];
+    $approved = 'approved';
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -17,7 +18,7 @@
         $eventType->execute();
         $eventType->store_result();
 
-        if ($eventType->num_rows == 0) {
+        if ($eventType->num_rows === 0) {
             $eventType->close();
             $conn->close();
             returnWithError("Event not found!");
@@ -31,16 +32,10 @@
         if($type === 'Public' || $type === 'Private')
         {
             // approve event
-            $approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
-            $approve->bind_param("i", $eventID);
+            $approve = $conn->prepare("UPDATE Events_At SET Approval_Status = ?, SuperAdmins_ID = ? WHERE Events_ID = ?");
+            $approve->bind_param("sii", $approved, $superID, $eventID);
             $approve->execute();
             $approve->close();
-
-            // add SuperAdmin to event
-            $addSuper = $conn->prepare("UPDATE Events_At SET SuperAdmins_ID = ? WHERE Events_ID = ?");
-            $addSuper->bind_param("ii", $superID, $eventID);
-            $addSuper->execute();
-            $addSuper->close();
         }
         else
         {
@@ -48,7 +43,6 @@
             returnWithError("Super Admins do not approve RSO Events!");
             return;
         }
-
 
         $conn->close();
 		returnWithError("");
