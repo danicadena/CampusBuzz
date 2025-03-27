@@ -29,6 +29,12 @@
         $eventType->fetch();
         $eventType->close();
 
+        if (!$type) {
+            $conn->close();
+            returnWithError("Event type fetch failed or null.");
+            return;
+        }
+
         if($type === 'Public' || $type === 'Private')
         {
             // approve event
