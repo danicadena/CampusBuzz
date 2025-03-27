@@ -12,6 +12,8 @@
 	} 
 	else
 	{
+        // need to add where user can only search their own rso event?
+
 		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE Event_name like ?");
 		$event = "%" . $inData["search"] . "%";
 		$stmt->bind_param("si", $event, $inData["Events_ID"]);
