@@ -12,6 +12,20 @@
 	// Phone needed if userType is Admin
 	$phone = isset($inData["Phone"]) ? $inData["Phone"] : null;
 
+	// validate fields
+	if(($userType === 'Student' || $userType === 'Admin') && empty($uniName))
+	{
+		returnWithError("Must belong to a university!");
+		return;
+	}
+
+	if($userType === 'SuperAdmin')
+	{
+		$uniName = null;
+		$phone = null;
+	}
+
+	// connect to database
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
 	{
