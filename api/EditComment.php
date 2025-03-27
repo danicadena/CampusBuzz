@@ -16,7 +16,7 @@
 	else
 	{
         $stmt = $conn->prepare("UPDATE Comments SET Rating=?, Text=?, Timestamp=? WHERE UID=? AND Events_ID=?");
-        $stmt->bind_param("issiI", $rating, $text, $timestamp, $uid, $eventID);
+        $stmt->bind_param("issii", $rating, $text, $timestamp, $uid, $eventID);
         $stmt->execute();
         $stmt->close();
 
