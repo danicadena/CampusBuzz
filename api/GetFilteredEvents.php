@@ -14,14 +14,6 @@
 	{
         $events = [];
 
-        // get a user's university
-        $uniName = $conn->prepare("SELECT University_name FROM Users WHERE UID=?");
-        $uniName->bind_param("i", $uid);
-        $uniName->execute();
-        $uniName->bind_result($userUni);
-        $uniName->fetch();
-        $uniName->close();
-
 		// get public and private events where event location matches the university a user belongs to
 		$filterEvent = $conn->prepare("
             SELECT * FROM Events_At E
