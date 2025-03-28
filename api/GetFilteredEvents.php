@@ -1,6 +1,14 @@
 <?php
 
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+
 	$inData = getRequestInfo();
+
+    file_put_contents("debug.txt", json_encode($inData));
+
 
 	// user that is searching
 	$uid = $inData["UID"];
@@ -30,7 +38,7 @@
         }
         $filterEvent->close();
 
-        // get rso events where 
+        // get rso events where user is a member of
         $filterRSOs = $conn->prepare("
             SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
             JOIN RSOs_Events_Owns R ON E.Events_ID = R.Events_ID
