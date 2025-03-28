@@ -41,7 +41,7 @@
         // get rso events where user is a member of
         $filterRSOs = $conn->prepare("
             SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
-            JOIN RSOs_Events_Owns R ON E.Events_ID = R.Events_ID
+            JOIN RSO_Events_Owns R ON E.Events_ID = R.Events_ID
             JOIN Joins J ON R.RSOs_ID = J.RSOs_ID
             WHERE J.UID = ? AND J.Approval_Status = 'approved'
         ");
