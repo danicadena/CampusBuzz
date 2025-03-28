@@ -36,9 +36,10 @@ async function doLogin(){
             //reset the input fields if unsuccessful login
             document.getElementById("usernameInp") = "";
             document.getElementById("passwordInp") = "";
+        } else{
+            window.location.href = "dashboard.html";
         }
 
-        window.location.href = "dashboard.html";
      }catch(error){
         console.log("Error fetching data: ", error);
         document.getElementById("loginRes").innerHTML = "failed login";
