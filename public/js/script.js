@@ -46,3 +46,21 @@ async function doLogin(){
      }
 
 }
+
+
+async function doRegister(){
+    let email = document.getElementById("emailInp").value();
+    let firstName = document.getElementById("firstNameInp").value();
+    let lastName = document.getElementById("lastNameInp").value();
+    let userType = document.getElementById("userType").value();
+    let university = document.getElementById("University").value();
+
+    let registerInfo = {
+        Email: email,
+        First : firstName,
+        Last : lastName,
+        User_Type : userType,
+        University_name : university
+    };
+
+}

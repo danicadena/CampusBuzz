@@ -1,13 +1,26 @@
 html, body{
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 #loginInfo{
+    position: fixed;
+    width: 400px;
+    text-align: center;
     color: #fff;
     font-size: 40px;
 }
+#registerInfo{
+    position: fixed;
+    width: 400px;
+    text-align: center;
+    color: #fff;
+    font-size: 40px;
+    top: 40%;
+}
 
 .loginForm{
+    position:fixed;
     background-color: #fff;
     width: 900px;
     height: 100vh;
@@ -16,8 +29,25 @@ html, body{
     align-items: center;
 }
 
+.loginCont{
+    width: 60%;
+}
+
 #inner-title{
+    position: fixed;
+    top: 100px;
     font-size: 80px;
+}
+
+#registerBeeImage{
+    position: fixed;
+    height: 500px;
+    left: 120px;
+}
+
+#returnLogin{
+    color: #fff;
+    top: 400px;
 }
 
 
