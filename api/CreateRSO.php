@@ -19,6 +19,22 @@
 	}
 	else
 	{
+		// ensure student promoted is inside UIDs
+		foreach($uid as $uidList)
+		{
+			if($newAdmin == $uid)
+			{
+				$found = true;
+				break;
+			}
+		}
+
+		if(!$found)
+		{
+			returnWithError("Admin must be included in UIDs!");
+			return;
+		}
+
 		$domains = [];
 
 		// ensure all email domains are the same
