@@ -1,0 +1,31 @@
+html, body{
+    overflow-y: hidden;
+}
+
+#loginInfo{
+    color: #fff;
+    font-size: 40px;
+}
+
+.loginForm{
+    background-color: #fff;
+    width: 900px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#inner-title{
+    font-size: 80px;
+}
+
+
+.input{
+    width: 100%;
+}
+
+.input:focus{
+    background-color: #E4BC67;
+}
+
