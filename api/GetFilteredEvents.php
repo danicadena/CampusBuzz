@@ -14,21 +14,34 @@
 	{
         $events = [];
 
-		// get public and private events where event location matches the university a user belongs to
-		$filterEvent = $conn->prepare("
+        // get public events
+        $filterPublic = $conn->prepare("
             SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
-            JOIN Locations L ON E.LocID = L.LocID
-            JOIN Users U ON L.Lname = U.University_name
-            WHERE U.UID = ? AND (E.Event_type = 'Public' OR E.Event_type = 'Private')
+            WHERE E.Event_type = 'Public'
         ");
-        $filterEvent->bind_param("i", $uid);
-        $filterEvent->execute();
-        $result1 = $filterEvent->get_result();
+        $filterPublic->execite();
+        $result1 = $filterPublic->get_result();
 
         while ($row = $result1->fetch_assoc()) {
             $events[] = $row;
         }
-        $filterEvent->close();
+        $filterPublic->close();
+
+		// get private events where event location matches the university a user belongs to
+		$filterPrivate = $conn->prepare("
+            SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
+            JOIN Locations L ON E.LocID = L.LocID
+            JOIN Users U ON L.Lname = U.University_name
+            WHERE U.UID = ? AND E.Event_type = 'Private'
+        ");
+        $filterPrivate->bind_param("i", $uid);
+        $filterPrivate->execute();
+        $result2 = $filterPrivate->get_result();
+
+        while ($row = $result2->fetch_assoc()) {
+            $events[] = $row;
+        }
+        $filterPrivate->close();
 
         // get rso events where user is a member of
         $filterRSOs = $conn->prepare("
@@ -39,9 +52,9 @@
         ");
         $filterRSOs->bind_param("i", $uid);
         $filterRSOs->execute();
-        $result2 = $filterRSOs->get_result();
+        $result3 = $filterRSOs->get_result();
 
-		while ($row = $result2->fetch_assoc()) {
+		while ($row = $result3->fetch_assoc()) {
             $events[] = $row;
         }
         $filterRSOs->close();
