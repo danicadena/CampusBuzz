@@ -31,7 +31,7 @@ async function doLogin(){
         const data = await response.json();
         console.log("data recieved: ", data);
 
-        if (!data.error === ""){
+        if (data.error && data.error !== ""){
             document.getElementById("loginRes").innerHTML = "User does not exist: Please Check User/Password";
             //reset the input fields if unsuccessful login
             document.getElementById("usernameInp") = "";
