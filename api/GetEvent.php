@@ -2,7 +2,6 @@
 
 	$inData = getRequestInfo();
 
-	// user that is searching
 	$eventsID = $inData["Events_ID"];
 
 	$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
@@ -18,7 +17,7 @@
         $get->execute();
         $result = $get->get_result();
 
-        while ($row = $result->fetch_assoc()) {
+        if ($row = $result->fetch_assoc()) {
             returnWithInfo($row);
         }
         else
