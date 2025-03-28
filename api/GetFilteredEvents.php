@@ -16,7 +16,7 @@
 
 		// get public and private events where event location matches the university a user belongs to
 		$filterEvent = $conn->prepare("
-            SELECT * FROM Events_At E
+            SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
             JOIN Locations L ON E.LocID = L.LocID
             JOIN Users U ON L.Lname = U.University_name
             WHERE U.UID = ? AND (E.Event_type = 'Public' OR E.Event_type = 'Private')
@@ -32,7 +32,7 @@
 
         // get rso events where 
         $filterRSOs = $conn->prepare("
-            SELECT * FROM Events_At E
+            SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
             JOIN RSOs_Events_Owns R ON E.Events_ID = R.Events_ID
             JOIN Joins J ON R.RSOs_ID = J.RSOs_ID
             WHERE J.UID = ? AND J.Approval_Status = 'approved'
