@@ -8,7 +8,7 @@ async function doLogin(){
 
      document.getElementById("loginRes").innerHTML = "";
 
-     let userInfo ={
+     let userInfo = {
         Username: user,
         Password : password
     };
@@ -28,14 +28,16 @@ async function doLogin(){
             mode: 'no-cors'
         });
 
-        if (!response.ok){
-            console.log("Server error");
-            return;
+        if (!response.error === ""){
+            document.getElementById("loginRes").innerHTML = "User does not exist: Please Check User/Password";
+            //reset the input fields if unsuccessful login
+            document.getElementById("usernameInp") = "";
+            document.getElementById("passwordInp") = "";
         }
 
         const data = await response.json();
         console.log("data recieved: ", data);
-        document.getElementById("loginRes").innerHTML = "successful login";
+        window.location.href("dashboard.html");
      }catch(error){
         console.log("Error fetching data: ", error);
         document.getElementById("loginRes").innerHTML = "failed login";
