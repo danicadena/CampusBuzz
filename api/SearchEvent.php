@@ -3,7 +3,6 @@
 	$inData = getRequestInfo();
 	
 	$searchResults = "";
-	$searchCount = 0;
 
 	// user that is searching
 	$uid = $inData["UID"];
@@ -15,33 +14,55 @@
 	} 
 	else
 	{
-		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE Event_name like ?");
-		$name = "%" . $inData["search"] . "%";
-		$stmt->bind_param("s", $name);
-		$stmt->execute();
-		
-		$result = $stmt->get_result();
-		
-		while($row = $result->fetch_assoc())
-		{
-			if( $searchCount > 0 )
-			{
-				$searchResults .= ",";
-			}
-			$searchCount++;
-            $searchResults .= '{"Events_ID":"' . $row["Events_ID"] . '", "Event_name":"' . $row["Event_name"] . '", "Description":"' . $row["Description"] . '", "Date":"' . $row["Date"] . '", "Event_time":"' . $row["Event_time"] . '", "Event_type":"' . $row["Event_type"] . '", "Approval_Status":"' . $row["Approval_Status"] . '"}';
+		$events = [];
+
+		// get public and private events where event location matches the university a user belongs to
+		$filterEvent = $conn->prepare("
+            SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
+            JOIN Locations L ON E.LocID = L.LocID
+            JOIN Users U ON L.Lname = U.University_name
+            WHERE U.UID = ? AND (E.Event_type = 'Public' OR E.Event_type = 'Private')
+        ");
+        $filterEvent->bind_param("i", $uid);
+        $filterEvent->execute();
+        $result1 = $filterEvent->get_result();
+
+        while ($row = $result1->fetch_assoc()) {
+            $events[] = $row;
         }
+        $filterEvent->close();
+
+        // get rso events where user is a member of
+        $filterRSOs = $conn->prepare("
+            SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
+            JOIN RSO_Events_Owns R ON E.Events_ID = R.Events_ID
+            JOIN Joins J ON R.RSOs_ID = J.RSOs_ID
+            WHERE J.UID = ? AND J.Approval_Status = 'approved'
+        ");
+        $filterRSOs->bind_param("i", $uid);
+        $filterRSOs->execute();
+        $result2 = $filterRSOs->get_result();
+
+		while ($row = $result2->fetch_assoc()) {
+            $events[] = $row;
+        }
+        $filterRSOs->close();
+
+		// search through filtered list
+		$searchTerm = strtolower($inData["search"]);
+		$search = array_filter($events, function($event) use ($searchTerm) {
+			return strpos(strtolower($event["Event_name"]), $searchTerm) !== false;
+		});
 		
-		if( $searchCount == 0 )
+		if (empty($search))
 		{
-			returnWithError( "No Records Found" );
+			returnWithError("No results found!");
 		}
 		else
 		{
-			returnWithInfo( $searchResults );
+			returnWithInfo(array_values($search));
 		}
-		
-		$stmt->close();
+
 		$conn->close();
 	}
 
@@ -62,9 +83,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $firstName )
+	function returnWithInfo( $results )
 	{
-		$retValue = '{"results":[' . $searchResults . '],"error":""}';
+		$retValue = json_encode(["results" => $results, "error" => ""]);
 		sendResultInfoAsJson( $retValue );
 	}
 	

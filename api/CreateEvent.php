@@ -104,7 +104,7 @@
 				return;
 			}
 
-            $rsoStmt = $conn->prepare("INSERT INTO RSOs_Events_Owns (Events_ID, RSOs_ID) VALUES (?,?)");
+            $rsoStmt = $conn->prepare("INSERT INTO RSO_Events_Owns (Events_ID, RSOs_ID) VALUES (?,?)");
 			$rsoStmt->bind_param("ii", $eventID, $rsoID);
 			$rsoStmt->execute();
 			$rsoStmt->close();
