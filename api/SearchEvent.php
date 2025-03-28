@@ -5,6 +5,9 @@
 	$searchResults = "";
 	$searchCount = 0;
 
+	// user that is searching
+	$uid = $inData["UID"];
+
 	$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
 	if ($conn->connect_error) 
 	{
@@ -12,14 +15,9 @@
 	} 
 	else
 	{
-        // need to add where user can only search their own rso event?
-        // use UID in Joins to get RSO_IDs
-        // use RSO_IDs to get Event_ID RSO_Events_Owns 
-        // get Event_name from Event_ID
-
 		$stmt = $conn->prepare("SELECT * FROM Events_At WHERE Event_name like ?");
-		$event = "%" . $inData["search"] . "%";
-		$stmt->bind_param("si", $event, $inData["Events_ID"]);
+		$name = "%" . $inData["search"] . "%";
+		$stmt->bind_param("s", $name);
 		$stmt->execute();
 		
 		$result = $stmt->get_result();

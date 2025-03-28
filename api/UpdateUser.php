@@ -5,7 +5,6 @@
     $lastName = $inData["Last"];
     $password = $inData["Password"];
     $uid = $inData["UID"];
-    $universityName = $inData["University_name"];
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -20,8 +19,8 @@
         $ret->store_result();
 
         if( $ret->num_rows > 0){
-            $stmt = $conn->prepare("UPDATE Users SET First=?, Last=?, Password=?, University_name=? WHERE UID=?");
-    		$stmt->bind_param("ssssi", $firstName, $lastName, $password, $universityName, $uid);
+            $stmt = $conn->prepare("UPDATE Users SET First=?, Last=?, Password=? WHERE UID=?");
+    		$stmt->bind_param("sssi", $firstName, $lastName, $password, $uid);
             $stmt->execute();
             $stmt->close();
             $conn->close();
