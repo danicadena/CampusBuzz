@@ -55,7 +55,7 @@ async function doRegister(){
     let userType = document.getElementById("userSelect").value; //check since dropdown:
     let username = document.getElementById("userInp").value;
     let password = document.getElementById("passInp").value;
-    let university = document.getElementById("userSelectSpacing").value; //check since dropdown:
+    let university = getSelectedUni(); //check since dropdown:
 
     document.getElementById("registerRes").innerHTML= "";
 
@@ -70,7 +70,7 @@ async function doRegister(){
         University_name : university
     };
 
-    console.log("info being sent to backend: " + registerInfo);
+    console.log("info being sent to backend: ",  registerInfo);
     let url = urlBase + 'Register.'+ extension;
     console.log("url: " , url);
 
@@ -89,13 +89,13 @@ async function doRegister(){
         
         if (data.error && data.error !== ""){
             //if error registering make all the fields blank
-            document.getElementById("emailInp") = "";
-            document.getElementById("firstNameInp") = "";
-            document.getElementById("lastNameInp") = "";
-            document.getElementById("userSelect") = ""; 
-            document.getElementById("userInp") = "";
-            document.getElementById("passInp") = "";
-            document.getElementById("userSelectSpacing") = ""; 
+            document.getElementById("emailInp").value= "";
+            document.getElementById("firstNameInp").value = "";
+            document.getElementById("lastNameInp").value = "";
+            document.getElementById("userSelect").value = ""; 
+            document.getElementById("userInp").value = "";
+            document.getElementById("passInp").value = "";
+            document.getElementById("userSelectSpacing").value = ""; 
         }
         else{
             //otherwise automatically log in a user 
@@ -118,25 +118,24 @@ async function fetchUniversities(){
             headers: {
                 'Accept' : 'application/json'
             }, 
-            mode: 'no-cors'
         });
 
         const data = await response.json();
         const uniSelect = document.getElementById('userSelectSpacing');
 
         //a default option before user inputs something
-        universitySelect.innerHTML='';
+        uniSelect.innerHTML='';
         const defaultOption = document.createElement('option');
         defaultOption.textContent= 'Select University';
         defaultOption.value = '';
-        universitySelect.appendChild(defaultOption);
+        uniSelect.appendChild(defaultOption);
 
         if (data.results && Array.isArray(data.results)){
             data.results.forEach(university => {
-                const option = document.getElementById('option');
+                const option = document.createElement('option');
                 option.textContent = university;
                 option.value = university;
-                universitySelect.appendChild(option);
+                uniSelect.appendChild(option);
 
             })
         } else{
@@ -146,6 +145,11 @@ async function fetchUniversities(){
     }catch(error){
         console.log("error fetching unis");
     }
+}
+
+function getSelectedUni(){
+    const uniSelect = document.getElementById('userSelectSpacing');
+    return uniSelect.value;
 }
 
 window.onload = fetchUniversities;

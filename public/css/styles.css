@@ -222,6 +222,13 @@ input[type="text"]{
     text-decoration: underline;
 }
 
+#register{
+    margin-left: 10px;
+}
+
+#login{
+    margin-left: 10px;
+}
 
 
 
