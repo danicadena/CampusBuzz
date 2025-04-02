@@ -9,14 +9,16 @@ html, body{
     text-align: center;
     color: #fff;
     font-size: 40px;
+    top: 50%;
 }
+
 #registerInfo{
     position: fixed;
     width: 400px;
     text-align: center;
     color: #fff;
     font-size: 40px;
-    top: 40%;
+    top: 50%;
 }
 
 .loginForm{
@@ -30,32 +32,95 @@ html, body{
 }
 
 .loginCont{
-    width: 60%;
+    width: 80%;
 }
 
 #inner-title{
     position: fixed;
-    top: 100px;
+    right: 110px;
+    top: 80px;
     font-size: 80px;
 }
 
-#registerBeeImage{
+#accountBeeImage{
     position: fixed;
     height: 500px;
+    top: 70px;
     left: 120px;
 }
 
+
 #returnLogin{
+    position: fixed;
+    width: 400px;
+    text-align: center;
     color: #fff;
-    top: 400px;
+    font-size: 30px;
+    top: 80%;
+    left: 10%;
 }
 
-
 .input{
-    width: 100%;
+    width: 600px;
+    text-align: center;
 }
 
 .input:focus{
     background-color: #E4BC67;
 }
+
+.registerCont{
+    width: 80%;
+}
+
+.returnLink{
+    position: fixed;
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+    top: 80%;
+    left: 32%;
+    text-decoration: underline;
+}
+
+#register.returnLink{
+    left: 31%;
+}
+
+#spacing.col{
+    margin-top: 20px;
+    left: 25%;
+}
+
+#userSelect{
+    width: 200px;
+    height: 35px;
+    margin-left: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+select[name="userType"] option{
+    font-size: 5px;
+}
+
+#userSelectSpacing{
+    width: 200px;
+    height: 35px;
+    margin-left: 2px;
+    text-align: center;
+    font-size: 20px;
+}
+
+input[type="text"]#usernameInp, input[type="text"]#passwordInp{
+    background-color:#D9D9D9;
+    border: none;
+    width: 290px;
+    height: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+
+
 

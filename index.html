@@ -14,18 +14,72 @@
 	<body>
     
     <nav class="navbar navbar-expand-sl navbar-light">
-        <a class="nav-item nav-link" href="#">About</a>
-        <a class="nav-item nav-link" href="#">Meet the Team</a>
+        <a class="nav-item nav-link" href="#about">About</a>
+        <a class="nav-item nav-link" href="#meetTeam"><span>Meet the Team</span></a>
         <a class="nav-item nav-link" href="login.html">Log In</a>
         <a class="nav-item nav-link" href="register.html">Register</a>   
     </nav>
 
     <div class = "title-cont">  
       <div class="img-cont">
-        <img id="beeImage" src='./public/images/beeImage.png'/>
+        <img class="beeImageIndex" id="firstBee" src='./public/images/beeImage.png'/>
+        <img class="beeImageIndex" id="secondBee" src='./public/images/beeImage.png'/>
+        <img class="beeImageIndex" id="thirdBee" src='./public/images/beeImage.png'/>
       </div>
       <h1 id="title">Welcome to Campus Buzz!</h1>
     </div>
+
+    
+      <div class="col">
+        <div class="row">
+          <div id="about">
+            <h2 id="sub-titles">About</h2>
+            <div class="row">
+              <div class="col">
+              <p id="aboutInfo">Campus Buzz connects and organizes university events for users! 
+                Join Registered Student Organizations (RSOs) and ...
+              </p>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <img id="fourthBee" src='./public/images/beeImage.png'/>
+                <p id="aboutContEvent">View Upcoming Events</p>
+              </div>
+            </div>
+                <div class = "row">
+                  <div class="col">
+                    <img class="commentImage" src='./public/images/comment.png'>
+                    <p id="aboutContComment">Comment and rate events </p>
+                  </div>
+                </div>
+
+                <p id="aboutInfo">Organize your events so you can keep busy as a bee! </p>
+              </div>
+            </div>
+        </div>
+
+        <div id="meetTeam">
+          <h2 id="sub-titles">Meet the team!</h2>
+          <div class="iconBeeCont">
+            <img class="iconBee" id="FirstMember" src="./public/images/iconBeeImage.png"/>
+            <img class="iconBee" id="SecondMember" src="./public/images/iconBeeImage.png"/>
+          </div>
+
+          <div class="memberInfoCont">
+              <p id="memberInfo"><a class="githubLink" href="https://github.com/danicadena">Daniela Cadena</a></p>
+              <p id="memberInfo"><a  class="githubLink" href="https://github.com/kegrimes">Katelyn Grimes</a></p>
+          </div>
+
+          <div class="githubInfoCont">
+            <img class="githubIcon" src='./public/images/githubIcon.png'>
+            <p id="githubInfo"><a class="githubLink" href="https://github.com/danicadena/CampusBuzz"> Visit our repo!</a></p>
+          </div>
+
+        </div>
+    
+
 
 
 
@@ -35,6 +89,24 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="./public/js/script.js"></script>
+    <script>
+
+      //once we make sure dom cont loaded... if user selects nav bar items -> jump to that section! 
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector('a[href="#about"]').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('about').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        document.querySelector('a[href="#meetTeam"]').addEventListener('click', function(e){
+          e.preventDefault();
+          document.getElementById('meetTeam').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+
+
+    </script>
 	</body>
   </html>
 

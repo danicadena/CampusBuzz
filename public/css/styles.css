@@ -1,6 +1,9 @@
+
 html, body{
     font-family: "Jersey 10", sans-serif;
     background-color: #E4BC67 !important;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .links{
@@ -13,10 +16,21 @@ a{
     font-size: 30px;
 }
 
+a.githubLink{
+    color: black;
+    font-size: 40px;
+}
+
+.nav-item.nav-link span{
+    white-space: nowrap;
+    display: inline-block;
+}
+
 .return{
     max-width: fit-content;
     position: fixed;
     left: 30px;
+    text-decoration: underline;
 }
 
 
@@ -25,19 +39,17 @@ a{
     margin-top: 200px;
     display: flex;
     justify-content: center;
+    height: 100vh;
 }
 
 #title{
+    position: absolute;
+    width: 800px;
     color: #fff;
     font-size: 130px;
     font-weight: 400;
     text-align: center;
 }
-
-.img-cont{
-   
-}
-
 
 #beeImage{
     width: 100%;
@@ -56,6 +68,168 @@ a{
 .returnLogin{
     position: fixed;
 }
+
+.pageButtons{
+    position: fixed;
+    border: 2px solid black;
+    background-color: #E4BC67;
+    padding: 5px 70px;
+    font-size: 25px;
+    margin-top: 50px;
+    margin-left: 200px;
+}
+
+.fieldTitles{
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+
+input[type="text"]{
+    background-color:#D9D9D9;
+    border: none;
+    width: 250px;
+    height: 30px;
+    text-align: center;
+}
+
+.beeImage{
+    position: fixed;
+    height: 500px;
+}
+
+.beeImageIndex{
+    position: absolute;
+    height: 460px;
+}
+
+#firstBee.beeImageIndex{
+    top: 400px;
+    right: 75%;
+}
+
+#secondBee.beeImageIndex{
+    top: 20px;
+    right: 60%;
+}
+
+#thirdBee.beeImageIndex{
+    top: 300px;
+    right: 6%;
+}
+
+#about{
+    height: 200vh; 
+    background-color: #fff;
+    width: 100vw;
+    text-align: center;
+}
+
+#sub-titles{
+    text-align: center;
+    font-size: 100px;
+}
+
+#aboutInfo{
+    padding-top: 120px;
+    text-align: center;
+    font-size: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+#fourthBee.beeImageIndex{
+    margin-top: 4%;
+}
+
+.commentImage{
+    width: 15%;
+    position: relative;
+    margin-top: 145px;
+
+}
+
+#aboutContEvent{
+    width: 250px;
+    margin: 0 auto;
+    margin-top: -190px;
+    font-size: 40px;
+}
+
+#aboutContComment{
+    width: 250px;
+    margin: 0 auto;
+    margin-top: 60px;
+    font-size: 40px;
+}
+
+#fourthBee{
+    margin-top: -80px;
+    position: relative;
+    height: 500px;
+}
+
+#meetTeam{
+    height: 150vh; 
+    background-color: #fff;
+    width: 100vw;
+    overflow-y: hidden;
+}
+
+.iconBeeCont{
+    display: flex;
+    gap: 360px;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconBee{
+    height: 300px;
+    margin-top: 120px; 
+}
+
+.memberInfoCont{
+    display: flex;
+    gap: 440px;
+    justify-content: center;
+    align-items: center;
+}
+
+#memberInfo{
+    font-size: 40px;
+    width: 220px;
+    text-decoration: underline;
+}
+
+.githubInfoCont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.githubIcon{
+    margin-top: 100px;
+    height: 200px;
+    display: block;
+}
+
+#githubInfo{
+    margin-top: 20px;
+    font-size: 40px;
+    width: 220px;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
 
 
 

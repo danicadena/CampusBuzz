@@ -18,67 +18,66 @@
                 <div class="col">
                     <a class="return" href="index.html">&ltReturn</a>
                     <div class="img-cont">
-                        <img id="registerBeeImage" src='./public/images/beeImage.png'/>
-                        <p id="registerInfo">Before you become a busy bee.... Register Here!</p>
+                        <img id="accountBeeImage" src='./public/images/beeImage.png'/>
+                        <p id="registerInfo">Before you become a busy bee.... Make an account!</p>
                     </div>
                     
                     <div class="returnToLogin">
-                        <p id="returnLogin">Already a user? Log in <a class="returnLogin" href="login.html">   here</a></p>
-                        
+                        <p id="returnLogin">Already a user? Log in</p>   
+                        <a class="returnLink" href="login.html">  here</a>
                     </div>
 
                     
                 </div>
                 <div class="col-6">
                     <div class="loginForm">
-                        <div class="loginCont">
+                        <div class="registerCont">
                             <div id ="inner-title">Regsiter Form</div>
                             <div class="input">
                                 <div class="row">
                                     <div class="col">
-                                    <h2>First Name</h2>
-                                    <input type="text" id="firstNameInp" placeholder="First Name"><br>
+                                        <h2 class="fieldTitles">First Name</h2>
+                                        <input type="text" id="firstNameInp" placeholder="First Name"><br>
                                 </div>
                                 <div class="col">
-                                    <h2> Last Name </h2>
+                                    <h2 class="fieldTitles"> Last Name </h2>
                                     <input type="text" id="lastNameInp" placeholder="Last Name"><br>
                                 </div>
                             </div>
                                 <div class ="row">
                                     <div class="col">
-                                        <h2>Email</h2>
+                                        <h2 class="fieldTitles">Email</h2>
                                         <input type="text" id="emailInp" placeholder="Email"><br>
                                     </div>
                                     <div class="col">
-                                        <h2>Username </h2>
+                                        <h2 class="fieldTitles">Username </h2>
                                         <input type="text" id="userInp" placeholder="Username"><br>
                                     </div>
                                   </div>
                                 <div class="row">
                                     <div class="col">
-                                        <h2> Password </h2>
+                                        <h2 class="fieldTitles"> Password </h2>
                                         <input type="text" id="passInp" placeholder="Password"><br>
                                         </div>
                                         <div class="col">
-                                            <h2>Select university</h2>
+                                            <h2 class="fieldTitles">Select university</h2>
                                         <!-- temp values for now... TODO: connect to fetch unis -->
-                                        <select name="University" id="University">
-                                            <option value="UCF">UCF</option>
-                                            <option value="UF">UF</option>
-                                        </select><br>
-
+                                            <select name="University" id="userSelectSpacing">
+                                            </select><br>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
-                                        <h2>Select your user type</h2>
-                                         <select name="userType" id="userType">
+                                    <div class="col" id="spacing">
+                                        <h2 class="fieldTitles">Select your user type</h2>
+                                         <select name="userType" id="userSelect">
                                             <option value>Student</option>
                                             <option value>Super Admin</option>
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                                <button class="pageButtons" onclick="doRegister();">Register</button>
+                                <span id = "registerRes"></span>
                         </div>
                     </div>
                 </div>

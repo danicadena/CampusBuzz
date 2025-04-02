@@ -18,23 +18,28 @@
             <div class="col">
                 <a class="return" href="index.html"> &ltReturn</a>
                 <div class="img-cont">
-                    <img id="beeImage" src='./public/images/beeImage.png'/>
-                    <p id="loginInfo">Welcome back! Log In Now!</p>
+                    <img id="accountBeeImage" src='./public/images/beeImage.png'/>
+                    <p id="loginInfo">Welcome back! Please enter your details</p>
+                </div>
+
+                <div class="returnToLogin">
+                    <p id="returnLogin">New user? Register</p>   
+                    <a class="returnLink" id="register" href="register.html">here</a>
                 </div>
 
 
             </div>
             <div class="col-6">
                 <div class ="loginForm">
-                    <div id="loginCont">
-                         <div id="inner-title">Log In Form</div>
+                    <div id="loginCont" style="width: 80%">
+                         <div id="inner-title" style="right: 12%">Log In Form</div>
                          <div class="input">
                             <h2>Username</h2>
-                            <input type="username" id="usernameInp" placeholder="User"><br>
+                            <input type="text" id="usernameInp" placeholder="User"><br>
                             <h2>Password</h2>
-                            <input type="password" id="passwordInp" placeholder="Password">
+                            <input type="text" id="passwordInp" placeholder="Password">
                          </div>
-                         <br><button onclick="doLogin();">Submit</button>
+                         <br><button class="pageButtons" onclick="doLogin();">Submit</button>
 
                          <span id="loginRes"></span>
                     </div>
