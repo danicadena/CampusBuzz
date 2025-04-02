@@ -52,12 +52,13 @@ async function doRegister(){
     let email = document.getElementById("emailInp").value;
     let firstName = document.getElementById("firstNameInp").value;
     let lastName = document.getElementById("lastNameInp").value;
-    let userType = document.getElementById("userSelect").value; //check since dropdown:
+    let userType = getSelectedUser();//check since dropdown:
     let username = document.getElementById("userInp").value;
     let password = document.getElementById("passInp").value;
     let university = getSelectedUni(); //check since dropdown:
 
     document.getElementById("registerRes").innerHTML= "";
+    console.log("user type: " + userType);
 
 
     let registerInfo = {
@@ -150,6 +151,11 @@ async function fetchUniversities(){
 function getSelectedUni(){
     const uniSelect = document.getElementById('userSelectSpacing');
     return uniSelect.value;
+}
+
+function getSelectedUser(){
+    const userSelect = document.getElementById("userSelect");
+    return userSelect.value;
 }
 
 window.onload = fetchUniversities;
