@@ -14,7 +14,7 @@
         $uids = [];
 
         // get uids from Users
-        foreach($email as $emails)
+        foreach($emails as $email)
         {
             $getUID = $conn->prepare("SELECT UID FROM Users WHERE Email=?");
             $getUID->bind_param("s", $email);
