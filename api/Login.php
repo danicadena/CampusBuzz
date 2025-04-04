@@ -13,14 +13,14 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT UID,First,Last FROM Users WHERE Username=? AND Password=?");
+		$stmt = $conn->prepare("SELECT UID,First,Last,User_Type FROM Users WHERE Username=? AND Password=?");
 		$stmt->bind_param("ss", $inData["Username"], $inData["Password"]);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
 		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo( $row['First'], $row['Last'], $row['UID'] );
+			returnWithInfo( $row['First'], $row['Last'], $row['UID'], $row['User_Type'] );
 		}
 		else
 		{
@@ -44,13 +44,13 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"uid":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"uid":0,"firstName":"","lastName":"","user_type":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $firstName, $lastName, $uid )
+	function returnWithInfo( $firstName, $lastName, $uid, $type )
 	{
-		$retValue = '{"id":' . $uid . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{"id":' . $uid . ',"user_type":"' . $type . '","firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	

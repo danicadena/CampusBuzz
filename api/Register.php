@@ -9,20 +9,16 @@
     $userType = $inData["User_Type"];
     $uniName = isset($inData["University_name"]) ? $inData["University_name"] : null;
 
-	// Phone needed if userType is Admin
-	$phone = isset($inData["Phone"]) ? $inData["Phone"] : null;
-
 	// validate fields
-	if(($userType === 'Student' || $userType === 'Admin') && empty($uniName))
+	if($userType === 'Student' && empty($uniName))
 	{
-		returnWithError("Must belong to a university!");
+		returnWithError("Student must belong to a university!");
 		return;
 	}
 
 	if($userType === 'SuperAdmin')
 	{
 		$uniName = null;
-		$phone = null;
 	}
 
 	// connect to database
@@ -52,19 +48,7 @@
 		$uid = $conn->insert_id;
 		$stmt->close();
 
-		if ($userType === 'Admin')
-		{
-			if ($phone === null)
-			{
-				returnWithError("Phone number is required!", 400);
-				return;
-			}
-			$adminStmt = $conn->prepare("INSERT INTO Admins (UID, Phone) VALUES (?,?)");
-			$adminStmt->bind_param("is", $uid, $phone);
-			$adminStmt->execute();
-			$adminStmt->close();
-		}
-		elseif ($userType === "SuperAdmin")
+		if ($userType === "SuperAdmin")
 		{
 			$superStmt = $conn->prepare("INSERT INTO SuperAdmins (UID) VALUES (?)");
 			$superStmt->bind_param("i", $uid);
@@ -72,8 +56,15 @@
 			$superStmt->close();
 		}
 
+		$getinfo = $conn->prepare("SELECT First,User_Type FROM Users WHERE UID=?");
+		$getinfo->bind_param("i", $uid);
+		$getinfo->execute();
+		$getinfo->bind_result($first, $type);
+		$getinfo->fetch();
+		$getinfo->close();
+
 		$conn->close();
-		returnWithError("");
+		returnWithInfo($first, $uid, $type);
 	}
 
     function getRequestInfo()
@@ -85,6 +76,12 @@
 	{
 		header('Content-type: application/json');
 		echo $obj;
+	}
+
+	function returnWithInfo( $firstName, $uid, $type )
+	{
+		$retValue = '{"id":' . $uid . ',"user_type":"' . $type . '","firstName":"' . $firstName . '","error":""}';
+		sendResultInfoAsJson( $retValue );
 	}
 	
 	function returnWithError( $err, $statusCode = 200)
