@@ -121,6 +121,8 @@ async function doAddEvent(){
 	let type = getSelectedEvent()
     let adminID = localStorage.getItem("UID");
 
+    let locID;
+
     document.getElementById("eventRes").innerHTML = "";
 
     let url = urlBase + 'GetLocID.' + extension;
@@ -141,8 +143,8 @@ async function doAddEvent(){
             mode : 'no-cors'
         });
 
-        const data = await response.json();
-        console.log("data recieved: ", data);
+        locID = await response.json();
+        console.log("data recieved: ", locID);
         
         if (data.error && data.error !== ""){
             //if error finding location make fields blank
@@ -154,7 +156,7 @@ async function doAddEvent(){
     }
 
 	let eventInfo = {
-		LocID: data.LocID,
+		LocID: locID,
 		Event_time: time,
 		Date: date,
 		Event_name: name,
@@ -177,6 +179,9 @@ async function doAddEvent(){
             body: JSON.stringify(eventInfo),
             mode : 'no-cors'
         });
+
+        const data = await response.json();
+        console.log("data recieved: ", data);
 
         if (data.error && data.error !== ""){
             //if error adding an event make all the fields blank
