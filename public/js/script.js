@@ -37,6 +37,7 @@ async function doLogin(){
             document.getElementById("usernameInp") = "";
             document.getElementById("passwordInp") = "";
         } else{
+            localStorage.setItem("UID", response.UID);
             window.location.href = "dashboard.html";
         }
 
@@ -109,6 +110,92 @@ async function doRegister(){
 
 }
 
+async function doAddEvent(){
+	let uni = document.getElementById("uniInput").value
+	let time = document.getElementById("timeInput").value
+	let date = document.getElementById("dateInput").value
+	let desc = document.getElementById("descInput").value
+	let name = document.getElementById("nameInput").value
+	let type = getSelectedEvent()
+    let adminID = localStorage.getItem("UID");
+
+    let url1 = urlBase + 'GetLocID.' + extension;
+	console.log("url: ", url1);
+
+    let uniName = {
+        Lname: uni
+    }
+
+	// get LocID with api
+	try{
+        const response = await fetch (url1, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(uniName),
+            mode : 'no-cors'
+        });
+
+        const data = await response.json();
+        let id = data.LocID;
+        console.log("data recieved: ", data);
+        
+        if (data.error && data.error !== ""){
+            //if error finding location make fields blank
+            document.getElementById("uniInput").value= "";
+        }
+
+    }catch(error){
+        document.getElementById("eventRes").innerHTML= "failed add event";
+    }
+
+	let eventInfo = {
+		LocID: id,
+		Event_time: time,
+		Date: date,
+		Event_name: name,
+		Description: desc,
+		Event_type: type,
+		Admins_ID: adminID
+	}
+
+	console.log("info being sent to backend: ", eventInfo);
+	let url = urlBase + 'CreateEvent.' + extension;
+	console.log("url: ", url);
+
+	// add event api
+	try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(eventInfo),
+            mode : 'no-cors'
+        });
+
+        if (data.error && data.error !== ""){
+            //if error adding an event make all the fields blank
+            document.getElementById("uniInput").value= "";
+            document.getElementById("timeInput").value = "";
+            document.getElementById("dateInput").value = "";
+            document.getElementById("descInput").value = ""; 
+            document.getElementById("nameInput").value = "";
+            document.getElementById("eventSelect").value = "";
+        }
+        else{
+            //otherwise go back to dashboard
+            window.location.href = "dashboard.html";
+            showToast("Add event successful!", 3000);
+        }
+
+    }catch(error){
+        document.getElementById("eventRes").innerHTML= "failed add event";
+    }
+
+}
+
 //for the university dropdown we will connect to uni locations from db
 async function fetchUniversities(){
     try{
@@ -148,6 +235,18 @@ async function fetchUniversities(){
     }
 }
 
+function showToast(message = "Success!", duration = 3000) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+        toast.classList.add("hidden");
+    }, duration);
+}
+
 function getSelectedUni(){
     const uniSelect = document.getElementById('userSelectSpacing');
     return uniSelect.value;
@@ -156,6 +255,11 @@ function getSelectedUni(){
 function getSelectedUser(){
     const userSelect = document.getElementById("userSelect");
     return userSelect.value;
+}
+
+function getSelectedEvent(){
+    const eventSelect = document.getElementById('eventSelect');
+    return eventSelect.value;
 }
 
 window.onload = fetchUniversities;
