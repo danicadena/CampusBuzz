@@ -37,7 +37,9 @@ async function doLogin(){
             document.getElementById("usernameInp") = "";
             document.getElementById("passwordInp") = "";
         } else{
-            localStorage.setItem("UID", response.UID);
+            localStorage.setItem("UID", data.UID);
+            localStorage.setItem("first_name", data.firstName);
+            localStorage.setItem("user_type", data.user_type);
             window.location.href = "dashboard.html";
         }
 

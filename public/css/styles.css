@@ -22,8 +22,10 @@ a.githubLink{
 }
 
 .nav-item.nav-link span{
+    z-index: 1;
     white-space: nowrap;
     display: inline-block;
+    
 }
 
 .return{
@@ -109,6 +111,7 @@ input[type="text"]{
 }
 
 #secondBee.beeImageIndex{
+    z-index: 100;
     top: 20px;
     right: 60%;
 }
