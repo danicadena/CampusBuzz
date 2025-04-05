@@ -28,7 +28,7 @@
 
 #leftCol h2, #rightCol h2 {
     align-self: flex-start;
-    margin-left: 24%;
+    margin-left: 18%;
 }
 
 .eventContainer{
@@ -59,7 +59,7 @@ input[type="text"]#uniInput, #timeInput, #dateInput, #descInput, #nameInp{
     padding: 5px 70px;
     font-size: 25px;
     margin-top: 500px;
-    margin-left: 725px;
+    margin-left: 720px;
 }
 
 
