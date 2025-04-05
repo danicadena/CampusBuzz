@@ -176,6 +176,9 @@ async function doAddEvent(){
             mode : 'no-cors'
         });
 
+        const data = await response.json();
+        console.log("data recieved: ", data);
+
         if (data.error && data.error !== ""){
             //if error adding an event make all the fields blank
             document.getElementById("uniInput").value= "";
