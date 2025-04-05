@@ -39,7 +39,7 @@ async function doLogin(){
             document.getElementById("usernameInp") = "";
             document.getElementById("passwordInp") = "";
         } else{
-            localStorage.setItem("UID", data.id);
+            localStorage.setItem("id", data.id);
             localStorage.setItem("first_name", data.firstName);
             localStorage.setItem("user_type", data.user_type);
             window.location.href = "dashboard.html";
@@ -399,9 +399,9 @@ function getSelectedEvent(){
 async function getRsos(){
     let url = urlBase + 'GetRSOGroups.'+ extension;
 
-    const id = localStorage.getItem("UID");
+    const id = localStorage.getItem("ic");
 
-    let userInf = {UID : id};
+    let userInf = {id : id};
     console.log('info sent to backend: ', userInf);
 
     try{
