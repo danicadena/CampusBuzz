@@ -399,7 +399,7 @@ function getSelectedEvent(){
 async function getRsos(){
     let url = urlBase + 'GetRSOGroups.'+ extension;
 
-    const id = localStorage.getItem("ic");
+    const id = localStorage.getItem("id");
 
     let userInf = {id : id};
     console.log('info sent to backend: ', userInf);
