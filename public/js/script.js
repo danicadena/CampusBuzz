@@ -396,4 +396,52 @@ function getSelectedEvent(){
     return eventSelect.value;
 }
 
-window.onload = fetchUniversities;
+async function getRsos(){
+    let url = urlBase + 'GetRSOGroups.'+extension;
+
+    const id = localStorage.getItem("UID");
+
+    let userInf = {UID : id};
+    console.log('info sent to backend: ', userInf);
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            header: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userInf),
+            mode : 'no-cors'
+        });
+        
+        const rsoRes = await response.json();
+        console.log('data recieved ', results);
+
+        if (rsoRes.error && rsoRes.error !== ""){
+            console.log('error: ', rsoRes.error);
+        }else{
+            //if an rso is found make elements for each one 
+            const rsoContainer = document.getElementById("rsoCont");
+            const rsoList = rsoRes.results;
+
+            rsoContainer.innerHTML= `<p id="rsoTitle">Your RSOs:</p>`;
+
+            rsoList.forEach(rso => {
+                const rsoDiv = document.createElement('div');
+                rsoDiv.classList.add('rsoCard');  
+                rsoDiv.innerHTML = `
+                    <h3>${rso.RSO_name}</h3>
+                `;
+                rsoContainer.appendChild(rsoDiv);
+            });
+
+        }
+    } catch(error){
+        console.log('Error fetching RSOS');
+    }
+}
+
+window.onload = function (){
+    getRsos();
+    fetchUniversities();
+}

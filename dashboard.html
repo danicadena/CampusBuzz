@@ -23,7 +23,7 @@
                           Options....
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Add RSO</a>
+                          <a class="dropdown-item" href="createRSO.html">Add RSO</a>
                         </div>
                     </div>
                 </div>
@@ -47,6 +47,11 @@
                 
                 <div id="rsoCont">
                     <p id="rsoTitle">Your RSOs:</p>
+                    <div class ="row">
+                        <div class = "col">
+                            
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -61,7 +66,7 @@
                           Options....
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Add RSO</a>
+                          <a class="dropdown-item" href="createRSO.html">Add RSO</a>
                           <a class="dropdown-item" href="addEvent.html">Add Event</a>
                         </div>
                     </div>
@@ -72,13 +77,35 @@
     
             </div>
 
-            <h2 id="welcomeText">Welcome </h2>
+            <h2 id="welcomeAdmin">Welcome </h2>
+
+            <div class="welcomeSection">
+                <p id="dashboardInfo"> View your university events below!</p>
+            </div>
+
+            <div class="eventCont">
+                <div id="rsoCard">
+                    
+                </div>
+                
+                <div id="rsoCont">
+                    <p id="rsoTitle">Your RSOs:</p>
+                    <div class ="row">
+                        <div class = "col">
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
 
         </div>
 
         <!--SUPERADMIN DASHBOARD-->
         <div id ="superAdminDashboard" style = "display: none">
+
+            <h2 id="welcomeSuperAdmin">Welcome</h2>
 
         </div>
         
@@ -99,9 +126,11 @@
                     document.getElementById('studentDashboard').style.display = "block";
                 }
                 else if(userType === "Admin"){
+                    document.getElementById('welcomeAdmin').textContent = `Welcome ${name}!`;
                     document.getElementById('adminDashboard').style.display = "block";
                 }
                 else{
+                    document.getElementById('welcomeSuperAdmin').textContent = `Welcome ${name}!`;
                     document.getElementById('superAdminDashboard').style.display = "block";
 
                 }
