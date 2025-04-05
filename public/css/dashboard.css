@@ -109,3 +109,10 @@ input[type="search"]{
     margin-top: 30px;
     margin-left: 15px;
 }
+
+#welcomeAdmin{
+    margin-top: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 120px;
+}
