@@ -46,14 +46,10 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo($results)
-    {
-        $retValue = json_encode([
-            "results" => $results,
-            "error" => ""
-        ]);
-
-        sendResultInfoAsJson($retValue);
-    }
+	function returnWithInfo( $id )
+	{
+		$retValue = '{"LocID":' . $id . ',"error":""}';
+		sendResultInfoAsJson( $retValue );
+	}
 	
 ?>
