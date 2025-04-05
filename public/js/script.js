@@ -112,6 +112,7 @@ async function doRegister(){
 
 }
 
+// add an event
 async function doAddEvent(){
 	let uni = document.getElementById("uniInput").value
 	let time = document.getElementById("timeInput").value
@@ -152,7 +153,8 @@ async function doAddEvent(){
         }
 
     }catch(error){
-        document.getElementById("eventRes").innerHTML= "failed to add event!";
+        document.getElementById("eventRes").innerHTML= "choose a different location!";
+        return;
     }
 
 	let eventInfo = {
@@ -204,7 +206,126 @@ async function doAddEvent(){
 
 }
 
-//for the university dropdown we will connect to uni locations from db
+// option to add more members to RSO when creating
+async function doAddMemberField(){
+    let count = 4;
+
+    document.getElementById("addMemberBtn").addEventListener("click", () => {
+        count++;
+
+        const header = document.createElement("h2");
+        header.textContent = `Member ${count}:`;
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = `m${count}Input`;
+        input.classList.add("memberInp");
+
+        const container = document.getElementById("fields");
+        const button = document.getElementById("addMemberBtn");
+
+        container.insertBefore(header, button);
+        container.insertBefore(input, button);
+    })
+}
+
+// create an RSO
+async function doCreateRSO(){
+    let admin = document.getElementById("adminInput").value;
+
+    let members = []
+    members.push(admin);
+    let inputs = document.querySelectorAll(".memberInp").value;
+
+    inputs.forEach(input => {
+        if(input.value !== ""){
+            members.push(input.value);
+        }
+    });
+
+    let name = document.getElementById("nameInput").value;
+    let phone = document.getElementById("phoneInput").value;
+
+    document.getElementById("rsoRes").innerHTML= "";
+
+    let uids = {
+        Emails: members
+    };
+
+    console.log("info being sent to backend: ",  uids);
+    let url = urlBase + 'GetUserIDforRSO.'+ extension;
+    console.log("url: " , url);
+
+    let data;
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(uids),
+            mode : 'no-cors'
+        });
+
+        data = await response.json();
+        console.log("data recieved: ", data);
+        
+        if (data.error && data.error !== ""){
+            //if error finding uids make all email fields blank
+            document.getElementById("adminInput").value= "";
+            
+            let inputs = document.querySelectorAll(".memberInp");
+            inputs.forEach(input => input.value = "")
+                return;
+        }
+    }catch(error){
+        document.getElementById("rsoRes").innerHTML= "need at least 4 other members!";
+        return;
+    }
+
+    let rsoInfo = {
+        UIDs: data.uids,
+        Student_promoted: uids.Emails[0],
+        Admin_phone: phone,
+        RSO_name: name
+    };
+
+    console.log("info being sent to backend: ",  rsoInfo);
+    let url1 = urlBase + 'CreateRSO.'+ extension;
+    console.log("url: " , url1);
+
+    try{
+        const response = await fetch (url1, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(rsoInfo),
+            mode : 'no-cors'
+        });
+
+        const data = await response.json();
+        console.log("data recieved: ", data);
+        
+        if (data.error && data.error !== ""){
+            //if error creating an rso make all fields blank
+            document.getElementById("adminInput").value= "";
+            inputs.forEach(input => input.value = "");
+            document.getElementById("phoneInput");
+            document.getElementById("nameInput");
+        }
+        else{
+            //otherwise go back to dashboard
+            window.location.href = "dashboard.html";
+            showToast("Add rso successful!", 3000);
+        }
+    }catch(error){
+        document.getElementById("rsoRes").innerHTML= "failed to add rso!";
+    }
+
+}
+
+// for the university dropdown we will connect to uni locations from db
 async function fetchUniversities(){
     try{
         let url = urlBase + 'GetLocations.'+extension;
@@ -243,6 +364,7 @@ async function fetchUniversities(){
     }
 }
 
+// temporary pop up message for success
 function showToast(message = "Success!", duration = 3000) {
     const toast = document.getElementById("toast");
     toast.textContent = message;
