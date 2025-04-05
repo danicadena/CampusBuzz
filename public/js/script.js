@@ -121,8 +121,8 @@ async function doAddEvent(){
 
     document.getElementById("eventRes").innerHTML = "";
 
-    let url1 = urlBase + 'GetLocID.' + extension;
-	console.log("url: ", url1);
+    let url = urlBase + 'GetLocID.' + extension;
+	console.log("url: ", url);
 
     let uniName = {
         Lname: uni
@@ -163,8 +163,8 @@ async function doAddEvent(){
 	}
 
 	console.log("info being sent to backend: ", eventInfo);
-	let url = urlBase + 'CreateEvent.' + extension;
-	console.log("url: ", url);
+	let url1 = urlBase + 'CreateEvent.' + extension;
+	console.log("url: ", url1);
 
 	// add event api
 	try{
