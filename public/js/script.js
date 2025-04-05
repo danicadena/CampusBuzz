@@ -414,23 +414,25 @@ async function getRsos(){
         });
         
         const rsoRes = await response.json();
-        console.log('data recieved ', results);
+        console.log('data recieved ', rsoRes);
 
         if (rsoRes.error && rsoRes.error !== ""){
             console.log('error: ', rsoRes.error);
         }else{
             //if an rso is found make elements for each one 
-            if (Array.isArray(rsoRes.results)) {
-                const rsoContainer = document.getElementById("rsoCont");
-                const rsoList = rsoRes.results;
+            if (Array.isArray(rsoRes.results) && rsoRes.results.length > 0) {
+                const rsoContainer = document.getElementById("rsoListContainer");
+                rsoContainer.innerHTML =''; 
 
-                rsoContainer.innerHTML = `<p id="rsoTitle">Your RSOs:</p>`;
-
-                rsoList.forEach(rso => {
+                rsoRes.results.forEach(rso => {
                     const rsoDiv = document.createElement('div');
-                    rsoDiv.classList.add('rsoCard');  
+                    rsoDiv.classList.add('col-md-4', 'mb-3'); 
                     rsoDiv.innerHTML = `
-                        <h3>${rso.RSO_name}</h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${rso.RSO_name}</h5>
+                            </div>
+                        </div>
                     `;
                     rsoContainer.appendChild(rsoDiv);
                 });
