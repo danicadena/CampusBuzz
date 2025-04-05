@@ -119,6 +119,8 @@ async function doAddEvent(){
 	let type = getSelectedEvent()
     let adminID = localStorage.getItem("UID");
 
+    document.getElementById("eventRes").innerHTML = "";
+
     let url1 = urlBase + 'GetLocID.' + extension;
 	console.log("url: ", url1);
 
