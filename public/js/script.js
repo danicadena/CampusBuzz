@@ -401,7 +401,7 @@ async function getRsos(){
 
     const id = localStorage.getItem("id");
 
-    let userInf = {id : id};
+    let userInf = {UID : id};
     console.log('info sent to backend: ', userInf);
 
     try{
@@ -414,7 +414,7 @@ async function getRsos(){
         });
         
         const rsoRes = await response.json();
-        console.log('data recieved ', rsoRes);
+        console.log('data recieved:  ', rsoRes);
 
         if (rsoRes.error && rsoRes.error !== ""){
             console.log('error: ', rsoRes.error);
@@ -437,7 +437,8 @@ async function getRsos(){
                     rsoContainer.appendChild(rsoDiv);
                 });
             } else {
-                console.log('No results found');
+                console.log('No results found or invalid response structure');
+                document.getElementById('rsoCont').innerHTML = `<p>No RSOs found.</p>`;
             }
         }
     } catch(error){
