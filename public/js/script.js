@@ -38,6 +38,8 @@ async function doLogin(){
             document.getElementById("passwordInp") = "";
         } else{
             localStorage.setItem("UID", response.UID);
+            localStorage.setItem("first_name", response.firstName);
+            localStorage.setItem("user_type", response.user_type);
             window.location.href = "dashboard.html";
         }
 
