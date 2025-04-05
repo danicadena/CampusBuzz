@@ -150,7 +150,7 @@ async function doAddEvent(){
         }
 
     }catch(error){
-        document.getElementById("eventRes").innerHTML= "failed add event";
+        document.getElementById("eventRes").innerHTML= "failed to add event!";
     }
 
 	let eventInfo = {
@@ -197,7 +197,7 @@ async function doAddEvent(){
         }
 
     }catch(error){
-        document.getElementById("eventRes").innerHTML= "failed add event";
+        document.getElementById("eventRes").innerHTML= "failed to add event!";
     }
 
 }
