@@ -115,7 +115,7 @@ async function doAddEvent(){
 	let time = document.getElementById("timeInput").value
 	let date = document.getElementById("dateInput").value
 	let desc = document.getElementById("descInput").value
-	let name = document.getElementById("nameInput").value
+	let name = document.getElementById("nameInp").value
 	let type = getSelectedEvent()
     let adminID = localStorage.getItem("UID");
 
