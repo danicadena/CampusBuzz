@@ -122,7 +122,7 @@ async function doAddEvent(){
 	let desc = document.getElementById("descInput").value
 	let name = document.getElementById("nameInp").value
 	let type = getSelectedEvent()
-    let adminID = localStorage.getItem("UID");
+    let adminID = localStorage.getItem("id");
 
     let locID;
 
@@ -407,11 +407,10 @@ async function getRsos(){
     try{
         const response = await fetch (url, {
             method: 'POST', 
-            header: {
+            headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(userInf),
-            mode : 'no-cors'
         });
         
         const rsoRes = await response.json();
@@ -421,20 +420,23 @@ async function getRsos(){
             console.log('error: ', rsoRes.error);
         }else{
             //if an rso is found make elements for each one 
-            const rsoContainer = document.getElementById("rsoCont");
-            const rsoList = rsoRes.results;
+            if (Array.isArray(rsoRes.results)) {
+                const rsoContainer = document.getElementById("rsoCont");
+                const rsoList = rsoRes.results;
 
-            rsoContainer.innerHTML= `<p id="rsoTitle">Your RSOs:</p>`;
+                rsoContainer.innerHTML = `<p id="rsoTitle">Your RSOs:</p>`;
 
-            rsoList.forEach(rso => {
-                const rsoDiv = document.createElement('div');
-                rsoDiv.classList.add('rsoCard');  
-                rsoDiv.innerHTML = `
-                    <h3>${rso.RSO_name}</h3>
-                `;
-                rsoContainer.appendChild(rsoDiv);
-            });
-
+                rsoList.forEach(rso => {
+                    const rsoDiv = document.createElement('div');
+                    rsoDiv.classList.add('rsoCard');  
+                    rsoDiv.innerHTML = `
+                        <h3>${rso.RSO_name}</h3>
+                    `;
+                    rsoContainer.appendChild(rsoDiv);
+                });
+            } else {
+                console.log('No results found');
+            }
         }
     } catch(error){
         console.log('Error fetching RSOS');
