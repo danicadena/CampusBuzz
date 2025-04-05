@@ -2,6 +2,8 @@
 const urlBase = 'http://Campusbuzzz.xyz/api/';
 const extension = 'php';
 
+let memberCount = 4;
+
 async function doLogin(){
      let user = document.getElementById("usernameInp").value;
      let password = document.getElementById("passwordInp").value;
@@ -208,28 +210,27 @@ async function doAddEvent(){
 
 // option to add more members to RSO when creating
 async function doAddMemberField(){
-    let count = 4;
+    memberCount++;
 
-    document.getElementById("addMemberBtn").addEventListener("click", () => {
-        count++;
+    const header = document.createElement("h2");
+    header.textContent = `Member ${memberCount}:`;
 
-        const header = document.createElement("h2");
-        header.textContent = `Member ${count}:`;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = `m${memberCount}Input`;
+    input.classList.add("memberInp");
+    input.style.marginBottom = "50px";
+    input.style.width = "500px";
+    input.style.height = "40px";
+    
+    const br = document.createElement("br");
 
-        const input = document.createElement("input");
-        input.type = "text";
-        input.id = `m${count}Input`;
-        input.classList.add("memberInp");
+    const container = document.getElementById("fields");
+    const button = document.getElementById("addMemberBtn");
 
-        const container = document.getElementById("fields");
-        const button = document.getElementById("addMemberBtn");
-
-        const br = document.createElement("br");
-
-        container.insertBefore(header, button);
-        container.insertBefore(input, button);
-        container.insertBefore(br, button);
-    })
+    container.insertBefore(header, button);
+    container.insertBefore(input, button);
+    container.insertBefore(br, button);
 }
 
 // create an RSO
