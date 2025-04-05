@@ -39,7 +39,7 @@ async function doLogin(){
             document.getElementById("usernameInp") = "";
             document.getElementById("passwordInp") = "";
         } else{
-            localStorage.setItem("UID", data.UID);
+            localStorage.setItem("UID", data.id);
             localStorage.setItem("first_name", data.firstName);
             localStorage.setItem("user_type", data.user_type);
             window.location.href = "dashboard.html";
@@ -397,7 +397,7 @@ function getSelectedEvent(){
 }
 
 async function getRsos(){
-    let url = urlBase + 'GetRSOGroups.'+extension;
+    let url = urlBase + 'GetRSOGroups.'+ extension;
 
     const id = localStorage.getItem("UID");
 
