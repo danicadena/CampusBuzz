@@ -111,7 +111,6 @@ async function doRegister(){
 }
 
 async function doAddEvent(){
-    console.log("inside add event");
 	let uni = document.getElementById("uniInput").value
 	let time = document.getElementById("timeInput").value
 	let date = document.getElementById("dateInput").value
