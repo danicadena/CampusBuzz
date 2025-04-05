@@ -224,8 +224,11 @@ async function doAddMemberField(){
         const container = document.getElementById("fields");
         const button = document.getElementById("addMemberBtn");
 
+        const br = document.createElement("br");
+
         container.insertBefore(header, button);
         container.insertBefore(input, button);
+        container.insertBefore(br, button);
     })
 }
 
