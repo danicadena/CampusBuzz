@@ -154,7 +154,7 @@ async function doAddEvent(){
     }
 
 	let eventInfo = {
-		LocID: locID.LocID,
+		LocID: locID,
 		Event_time: time,
 		Date: date,
 		Event_name: name,
