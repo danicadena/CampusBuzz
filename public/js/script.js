@@ -130,7 +130,7 @@ async function doAddEvent(){
 
 	// get LocID with api
 	try{
-        const response = await fetch (url1, {
+        const response = await fetch (url, {
             method: 'POST', 
             headers:{
                 'Content-type': 'application/json'
@@ -140,7 +140,6 @@ async function doAddEvent(){
         });
 
         const data = await response.json();
-        let id = data.LocID;
         console.log("data recieved: ", data);
         
         if (data.error && data.error !== ""){
@@ -153,7 +152,7 @@ async function doAddEvent(){
     }
 
 	let eventInfo = {
-		LocID: id,
+		LocID: data.LocID,
 		Event_time: time,
 		Date: date,
 		Event_name: name,
@@ -168,7 +167,7 @@ async function doAddEvent(){
 
 	// add event api
 	try{
-        const response = await fetch (url, {
+        const response = await fetch (url1, {
             method: 'POST', 
             headers:{
                 'Content-type': 'application/json'
