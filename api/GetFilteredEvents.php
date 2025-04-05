@@ -19,7 +19,7 @@
             SELECT E.Events_ID, E.LocID, E.Event_name, E.Date, E.Event_time, E.Description, E.Event_type, E.Approval_Status FROM Events_At E
             WHERE E.Event_type = 'Public'
         ");
-        $filterPublic->execite();
+        $filterPublic->execute();
         $result1 = $filterPublic->get_result();
 
         while ($row = $result1->fetch_assoc()) {
