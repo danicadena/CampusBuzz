@@ -146,13 +146,15 @@ async function doAddEvent(){
             mode : 'no-cors'
         });
 
-        locID = await response.json();
-        console.log("data recieved: ", locID);
+        const data = await response.json();
+        console.log("data recieved: ", data);
         
         if (data.error && data.error !== ""){
             //if error finding location make fields blank
             document.getElementById("uniInput").value= "";
         }
+
+        locID = data.LocID;
 
     }catch(error){
         document.getElementById("eventRes").innerHTML= "choose a different location!";
@@ -198,8 +200,8 @@ async function doAddEvent(){
         }
         else{
             //otherwise go back to dashboard
-            window.location.href = "dashboard.html";
             showToast("Add event successful!", 3000);
+            window.location.href = "dashboard.html";
         }
 
     }catch(error){
