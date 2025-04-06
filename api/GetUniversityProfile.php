@@ -1,9 +1,5 @@
 <?php
 
-	$inData = getRequestInfo();
-
-	$uniID = $inData["Uni_ID"];
-
 	$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
 	if ($conn->connect_error) 
 	{
