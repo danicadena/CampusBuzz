@@ -122,7 +122,7 @@ async function doAddEvent(){
 	let desc = document.getElementById("descInput").value
 	let name = document.getElementById("nameInp").value
 	let type = getSelectedEvent()
-    let adminID = localStorage.getItem("id");
+    let adminID = Number(localStorage.getItem("id"));
 
     let locID;
 
