@@ -14,13 +14,16 @@
         $rsos = [];
 
         // get a universities's rso names
-		$get = $conn->prepare("SELECT RSO_name FROM RSOs_Creates WHERE Email_domain = ?");
+		$get = $conn->prepare("SELECT RSO_name,RSOs_ID FROM RSOs_Creates WHERE Email_domain = ?");
         $get->bind_param("s", $domain);
         $get->execute();
         $result = $get->get_result();
 
         while ($row = $result->fetch_assoc()) {
-            $rsos[] = $row['RSO_name'];
+            $rsos[] = [
+				"name" => $row['RSO_name'];
+				"id" => $row['RSOs_ID'];
+			]
         }
 
         $get->close();
