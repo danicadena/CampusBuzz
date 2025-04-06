@@ -396,13 +396,64 @@ function getSelectedEvent(){
     return eventSelect.value;
 }
 
+async function getEvents(){
+    const id = localStorage.getItem("id");
+
+    let url = urlBase + 'GetFilteredEvents.' + extension;
+
+    let search = { UID : id};
+
+    try{
+        const response = await fetch (url,{
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(search),
+        });
+
+        const eventRes = await response.json();
+
+        if (eventRes.error && eventRes.error !== ""){
+            console.log('api error:', eventRes.error);
+        } else{
+            if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
+                const eventContainer = document.getElementById("rsoCard"); // 
+                eventContainer.innerHTML = ''; 
+
+                eventRes.results.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.classList.add('col-md-4', 'mb-3'); 
+                    eventDiv.innerHTML = `
+                        <div class=" card eventcard">
+                            <div class="card-body">
+                                <h5 class="card-title">${event.Event_name}</h5>
+                                <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>
+                                <p class="card-text">${event.Description}</p>
+                            </div>
+                        </div>
+                    `;
+                    rsoContainer.appendChild(eventDiv);
+
+                });
+            }
+            else{
+                console.log('No results found or invalid response structure');
+            }
+        }
+    }catch(error){
+        console.log('Error fetching Events');
+
+    }
+    
+}
+
 async function getRsos(){
     let url = urlBase + 'GetRSOGroups.'+ extension;
 
     const id = localStorage.getItem("id");
 
     let userInf = {UID : id};
-    console.log('info sent to backend: ', userInf);
 
     try{
         const response = await fetch (url, {
@@ -414,7 +465,6 @@ async function getRsos(){
         });
         
         const rsoRes = await response.json();
-        console.log('data recieved:  ', rsoRes);
 
         if (rsoRes.error && rsoRes.error !== ""){
             console.log('error: ', rsoRes.error);
@@ -447,6 +497,7 @@ async function getRsos(){
 }
 
 window.onload = function (){
+    getEvents();
     getRsos();
     fetchUniversities();
 }
