@@ -25,6 +25,10 @@
     padding: 40px;
 }
 
+.card{
+    border: none;
+}
+
 .rsoCard{
     background-color:#D9D9D9;
     width: 500px;
