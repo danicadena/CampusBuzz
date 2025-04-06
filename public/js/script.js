@@ -800,7 +800,7 @@ async function sendComment(){
             headers:{
                 'Content-Type': 'application/json'
             }, 
-            body: stringify.JSON(addCommentPayload)
+            body: JSON.stringify(addCommentPayload)
         })
 
         const sendCommentInfo = await response.json();
