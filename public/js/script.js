@@ -454,6 +454,10 @@ async function getAllRSOs(){
         else{
             if (Array.isArray(data.results) && data.results.length > 0){
                 const rsoContainer = document.getElementById("rsoCont");
+                if (!rsoContainer) {
+                    console.error("RSO container element not found");
+                    return;
+                }
                 console.log("Found rsoCont:", rsoContainer);  
                 rsoContainer.innerHTML = ''; 
 
