@@ -432,6 +432,7 @@ function getSelectedEvent(){
 
 async function getAllRSOs(){
     const domain = getEmail();
+    console.log("Domain: ", domain);
     if(!domain) return;
 
     let url = urlBase + 'GetRSOs.' + extension;
@@ -453,7 +454,8 @@ async function getAllRSOs(){
         }
         else{
             if (Array.isArray(data.results) && data.results.length > 0){
-                const rsoContainer = document.getElementById("rsoCont");  
+                const rsoContainer = document.getElementById("rsoCont");
+                console.log("Found rsoCont:", rsoContainer);  
                 rsoContainer.innerHTML = ''; 
 
                 data.results.forEach(rso => {
@@ -712,9 +714,6 @@ window.onload = function (){
 
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
-    const email = localStorage.getItem("email");
-    console.log("Email from localStorage:", email);
-
     const userType = getUserType();
     console.log("User Type Detected:", userType);
 
@@ -735,5 +734,6 @@ if (window.location.pathname.includes('eventInfo.html')) {
 }
 
 if(window.location.pathname.includes('joinRSORequest.html')){
+    console.log("Running getAllRSOs() from joinRSORequest.html");
     getAllRSOs();
 }
