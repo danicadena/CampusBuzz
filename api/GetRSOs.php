@@ -29,7 +29,7 @@
             $rsos[] = [
 				"name" => $row['RSO_name'],
 				"id" => $row['RSOs_ID'],
-				"status" => $row['Approval_Status'] ?? "none";
+				"status" => $row['Approval_Status'] ?? "none"
 			];
         }
 
