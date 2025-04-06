@@ -237,6 +237,21 @@ async function doAddMemberField(){
 
 // create an RSO
 async function doCreateRSO(){
+    // enfore all fields must be filled
+    let filled = true;
+    let fields = document.querySelectorAll("input[type='text']");
+
+    fields.forEach(field => {
+        if(field.value == ""){
+            filled = false;
+        }
+    })
+
+    if(!filled){
+        document.getElementById("rsoRes").innerHTML = "There are missing fields!";
+        return;
+    }
+
     let members = []
     let inputs = document.querySelectorAll(".memberInp");
 
