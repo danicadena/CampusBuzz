@@ -415,6 +415,7 @@ function getUserID(){
     return localStorage.getItem("id");
 }
 
+// kate need this one
 function getUserType() {
     return localStorage.getItem("user_type");
 }
@@ -652,15 +653,17 @@ async function getEvents(){
                                 <p class="card-text">${event.Description}</p>
                             </div>
                         </div>
-                    `;
-                    if(getUserType() === "Admin"){
-                        eventDiv.innerHTML = `
-                        <button class="eventOptionsBtn" onclick='deleteEvent();'> Delete<button>
-                        <button class="eventOptionsBtn" onclick='updateEvent();'> Update<button>
-                        `
-                    }
+                    `;                    
                     eventContainer.appendChild(eventDiv);
 
+                    if(getUserType() === "Admin"){
+                        const adminBtns = document.createElement("div");
+                        adminBtns.innerHTML = `
+                            <button class="eventOptionsBtn" onclick='deleteEvent(${event.Events_ID});'>Delete</button>
+                            <button class="eventOptionsBtn" onclick='updateEvent(${event.Events_ID});'>Update</button>
+                        `;
+                        eventDiv.appendChild(adminBtns);
+                    }
                 });
             }
             else{
@@ -860,7 +863,7 @@ async function sendComment(){
 
         }else{
             console.log('success adding comment');
-            showToast('Comment sent!');
+            getComments();
         }
 
     }catch (error){
@@ -869,15 +872,16 @@ async function sendComment(){
 
 }
 
-async function deleteEvent(){    
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('eventId');
+async function deleteEvent(eventId){   
+    const confirmDel = confirm("Are you sure you want to delete this event?") 
+    if (!confirmDel) return;
+
+    const url = urlBase + 'DeleteEvent.' + extension;
 
     const delPayload ={
         Events_ID: eventId
     };
 
-    const url = urlBase + 'DeleteEvent.' + extension;
     console.log('del payload: ', delPayload);
 
     try {
@@ -886,19 +890,21 @@ async function deleteEvent(){
             headers:{
                 'Content-Type' : 'application/json'
             },
-            body: stringify.JSON(delPayload)
+            body: JSON.stringify(delPayload)
         })
 
         const data = await response.json();
         if (data.error && data.error !== ""){
-            console.log('error deleting event')
+            alert("Error deleting event: " + result.error);
         } else{
-            showToast('Success deleting event');
+            alert("Event deleted successfully!"); 
+            getEvents();
         }
 
 
     }catch (error){
         console.log('Error deleting event');
+        alert("Something went wrong when deleting");
 
     }
 }
@@ -941,12 +947,8 @@ async function deleteComment(){
 }
 
 //TODO: 
-async function updateEvent(){
-    const id = localStorage.getItem("id");
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('eventId');
-
+async function updateEvent(eventId){
+   console.log("UPDATE PRESSED")
 }
 
 async function updateComment(){

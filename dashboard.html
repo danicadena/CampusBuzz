@@ -96,7 +96,7 @@
         </div>
 
         <!--SUPERADMIN DASHBOARD-->
-        <div id ="superAdminDashboard" style = "display: none">
+        <div id ="superAdminDashboard" style = "display: block">
 
             <h2 id="welcomeSuperAdmin">Welcome </h2>
 
@@ -129,6 +129,8 @@
                 else if(userType === "Admin"){
                     document.getElementById('welcomeAdmin').textContent = `Welcome ${name}!`;
                     document.getElementById('adminDashboard').style.display = "block";
+                    getEvents();
+                    getRsos();
                 }
                 else if(userType === "SuperAdmin"){
                     document.getElementById('welcomeSuperAdmin').textContent = `Welcome ${name}!`;

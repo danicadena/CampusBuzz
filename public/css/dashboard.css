@@ -19,7 +19,7 @@ html,body{
     height: 100vh;
     display: flex;
     justify-content: space-between;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 #functionality{
