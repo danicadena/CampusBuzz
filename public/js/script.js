@@ -240,7 +240,6 @@ async function doCreateRSO(){
     let admin = document.getElementById("adminInput").value;
 
     let members = []
-    members.push(admin);
     let inputs = document.querySelectorAll(".memberInp");
 
     inputs.forEach(input => {
