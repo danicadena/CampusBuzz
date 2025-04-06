@@ -44,9 +44,9 @@
 }
 
 .rsoButton{
-    padding: 16px;
+    padding: 12px 24px;
     border: none;
-    font-size: 12px;
+    font-size: 20px;
     color: white;
     width: 30%;
 }
