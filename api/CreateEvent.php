@@ -1,131 +1,125 @@
 <?php
 
-	$inData = getRequestInfo();
+$inData = getRequestInfo();
 
-	$locID = (int)$inData["LocID"];
-	$time = $inData["Event_time"];
-	$date = $inData["Date"];
-	$name = $inData["Event_name"];
-	$description = $inData["Description"];
-	$type = $inData["Event_type"];
-	$approval = 'pending';
-	$adminID = (int)$inData["Admins_ID"];
-	$rsoID = isset($inData["RSOs_ID"]) ? (int)$inData["RSOs_ID"] : null;
+$locID = (int)$inData["LocID"];
+$time = $inData["Event_time"];
+$date = $inData["Date"];
+$name = $inData["Event_name"];
+$description = $inData["Description"];
+$type = $inData["Event_type"];
+$approval = 'pending';
+$adminID = (int)$inData["Admins_ID"];
+$rsoID = isset($inData["RSOs_ID"]) ? (int)$inData["RSOs_ID"] : null;
 
-	$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
-	if ($conn->connect_error) {
-		returnWithError($conn->connect_error, 404);
-	} else {
-		$conn->begin_transaction();
+$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
+if ($conn->connect_error) {
+    returnWithError($conn->connect_error, 404);
+} else {
+    $conn->begin_transaction();
 
-		try {
-			// Validate location exists
-			$checkStmt = $conn->prepare("SELECT LocID FROM Locations WHERE LocID = ?");
-			$checkStmt->bind_param("i", $locID);
-			$checkStmt->execute();
-			$checkStmt->store_result();
-			if ($checkStmt->num_rows == 0) {
-				throw new Exception("Location not found in database!");
-			}
-			$checkStmt->close();
+    try {
+        // 1. Validate location exists
+        $checkStmt = $conn->prepare("SELECT LocID FROM Locations WHERE LocID = ?");
+        $checkStmt->bind_param("i", $locID);
+        $checkStmt->execute();
+        $checkStmt->store_result();
+        if ($checkStmt->num_rows == 0) {
+            throw new Exception("Location not found in database!");
+        }
+        $checkStmt->close();
 
-			// Check for duplicate event
-			$duplicateCheck = $conn->prepare("SELECT Events_ID FROM Events_At WHERE LocID = ? AND Event_time = ? AND Date = ?");
-			$duplicateCheck->bind_param("iss", $locID, $time, $date);
-			$duplicateCheck->execute();
-			$duplicateCheck->store_result();
-			if ($duplicateCheck->num_rows > 0) {
-				throw new Exception("An event already exists at this location and time!");
-			}
-			$duplicateCheck->close();
+        // 2. Check for duplicate event
+        $duplicateCheck = $conn->prepare("SELECT Events_ID FROM Events_At WHERE LocID = ? AND Event_time = ? AND Date = ?");
+        $duplicateCheck->bind_param("iss", $locID, $time, $date);
+        $duplicateCheck->execute();
+        $duplicateCheck->store_result();
+        if ($duplicateCheck->num_rows > 0) {
+            throw new Exception("An event already exists at this location and time!");
+        }
+        $duplicateCheck->close();
 
-			// Get the next auto-increment Events_ID
-			$result = $conn->query("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'CampusBuzz' AND TABLE_NAME = 'Events_At'");
-			$row = $result->fetch_assoc();
-			$eventID = (int)$row['AUTO_INCREMENT'];
+        // 3. Insert into Events_At
+        $stmt = $conn->prepare("INSERT INTO Events_At (LocID, Event_time, Date, Event_name, Description, Event_type, Approval_Status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issssss", $locID, $time, $date, $name, $description, $type, $approval);
+        $stmt->execute();
+        $eventID = $conn->insert_id;
+        $stmt->close();
 
-			// Insert into the type-specific table FIRST
-			if ($type === 'Public') {
-				$stmt = $conn->prepare("INSERT INTO Public_Events_Creates (Events_ID, Admins_ID) VALUES (?, ?)");
-				$stmt->bind_param("ii", $eventID, $adminID);
-				$stmt->execute();
-				$stmt->close();
-			} elseif ($type === "Private") {
-				$stmt = $conn->prepare("INSERT INTO Private_Events_Creates (Events_ID, Admins_ID) VALUES (?, ?)");
-				$stmt->bind_param("ii", $eventID, $adminID);
-				$stmt->execute();
-				$stmt->close();
-			} elseif ($type === "RSO") {
-				// Validate RSO
-				$checkRSO = $conn->prepare("SELECT RSOs_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
-				$checkRSO->bind_param("i", $rsoID);
-				$checkRSO->execute();
-				$checkRSO->store_result();
-				if ($checkRSO->num_rows == 0) {
-					throw new Exception("RSO not found!");
-				}
-				$checkRSO->close();
+        // 4. Insert into related table
+        if ($type === 'Public') {
+            $stmt = $conn->prepare("INSERT INTO Public_Events_Creates (Events_ID, Admins_ID) VALUES (?, ?)");
+            $stmt->bind_param("ii", $eventID, $adminID);
+            $stmt->execute();
+            $stmt->close();
+        } elseif ($type === "Private") {
+            $stmt = $conn->prepare("INSERT INTO Private_Events_Creates (Events_ID, Admins_ID) VALUES (?, ?)");
+            $stmt->bind_param("ii", $eventID, $adminID);
+            $stmt->execute();
+            $stmt->close();
+        } elseif ($type === "RSO") {
+            // Validate RSO
+            $checkRSO = $conn->prepare("SELECT RSOs_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
+            $checkRSO->bind_param("i", $rsoID);
+            $checkRSO->execute();
+            $checkRSO->store_result();
+            if ($checkRSO->num_rows == 0) {
+                throw new Exception("RSO not found!");
+            }
+            $checkRSO->close();
 
-				// Verify admin owns the RSO
-				$ownerStmt = $conn->prepare("SELECT Admins_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
-				$ownerStmt->bind_param("i", $rsoID);
-				$ownerStmt->execute();
-				$ownerStmt->bind_result($ownerAdminID);
-				$ownerStmt->fetch();
-				$ownerStmt->close();
+            // Verify admin owns the RSO
+            $ownerStmt = $conn->prepare("SELECT Admins_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
+            $ownerStmt->bind_param("i", $rsoID);
+            $ownerStmt->execute();
+            $ownerStmt->bind_result($ownerAdminID);
+            $ownerStmt->fetch();
+            $ownerStmt->close();
 
-				if ($ownerAdminID !== $adminID) {
-					throw new Exception("Not authorized to create events for this RSO!");
-				}
+            if ((int)$ownerAdminID !== (int)$adminID) {
+                throw new Exception("Not authorized to create events for this RSO!");
+            }
 
-				// Insert into RSO events table
-				$rsoStmt = $conn->prepare("INSERT INTO RSO_Events_Owns (Events_ID, RSOs_ID) VALUES (?, ?)");
-				$rsoStmt->bind_param("ii", $eventID, $rsoID);
-				$rsoStmt->execute();
-				$rsoStmt->close();
-			} else {
-				throw new Exception("Invalid event type: $type");
-			}
+            // Insert RSO event
+            $rsoStmt = $conn->prepare("INSERT INTO RSO_Events_Owns (Events_ID, RSOs_ID) VALUES (?, ?)");
+            $rsoStmt->bind_param("ii", $eventID, $rsoID);
+            $rsoStmt->execute();
+            $rsoStmt->close();
 
-			// Now insert into Events_At (after the type-specific table insert)
-			$stmt = $conn->prepare("INSERT INTO Events_At (Events_ID, LocID, Event_time, Date, Event_name, Description, Event_type, Approval_Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-			$stmt->bind_param("iissssss", $eventID, $locID, $time, $date, $name, $description, $type, $approval);
-			$stmt->execute();
-			$stmt->close();
+            // Auto-approve RSO event
+            $approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
+            $approve->bind_param("i", $eventID);
+            $approve->execute();
+            $approve->close();
+        } else {
+            throw new Exception("Invalid event type: $type");
+        }
 
-			// Auto-approve RSO events
-			if ($type === "RSO") {
-				$approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
-				$approve->bind_param("i", $eventID);
-				$approve->execute();
-				$approve->close();
-			}
+        $conn->commit();
+        $conn->close();
+        sendResultInfoAsJson(json_encode(["error" => "", "eventID" => $eventID]));
 
-			$conn->commit();
-			$conn->close();
-			sendResultInfoAsJson(json_encode(["error" => "", "eventID" => $eventID]));
+    } catch (Exception $e) {
+        $conn->rollback();
+        $conn->close();
+        returnWithError("Event creation failed: " . $e->getMessage(), 500);
+    }
+}
 
-		} catch (Exception $e) {
-			$conn->rollback();
-			$conn->close();
-			returnWithError("Event creation failed: " . $e->getMessage(), 500);
-		}
-	}
+function getRequestInfo()
+{
+    return json_decode(file_get_contents('php://input'), true);
+}
 
-	function getRequestInfo()
-	{
-		return json_decode(file_get_contents('php://input'), true);
-	}
+function sendResultInfoAsJson($obj)
+{
+    header('Content-type: application/json');
+    echo $obj;
+}
 
-	function sendResultInfoAsJson($obj)
-	{
-		header('Content-type: application/json');
-		echo $obj;
-	}
-
-	function returnWithError($err, $statusCode = 200)
-	{
-		http_response_code($statusCode);
-		sendResultInfoAsJson(json_encode(["error" => $err]));
-	}
+function returnWithError($err, $statusCode = 200)
+{
+    http_response_code($statusCode);
+    sendResultInfoAsJson(json_encode(["error" => $err]));
+}
 ?>
