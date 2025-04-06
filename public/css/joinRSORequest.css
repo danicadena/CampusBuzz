@@ -13,6 +13,10 @@
     margin: auto;
 }
 
+.rsoContainer{
+    width: 100vw;
+}
+
 .rsoGrid{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

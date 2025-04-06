@@ -434,15 +434,6 @@ async function getAllRSOs(){
     const domain = getEmail();
     if(!domain) return;
 
-    console.log("getAllRSOs() running");
-
-    const rsoContainer = document.getElementById("rsoCont");
-    console.log("rsoCont from getAllRSOs:", rsoContainer);
-
-    if (!rsoContainer) {
-    alert("rsoCont not found in DOM!");
-}
-
     let url = urlBase + 'GetRSOs.' + extension;
     
     try{
@@ -736,7 +727,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if(window.location.pathname.includes('joinRSORequest')){
+    if(window.location.pathname.includes('joinRSORequest.html')){
         console.log(" DOM loaded, running getAllRSOs()");
         getAllRSOs();
     }
