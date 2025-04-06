@@ -71,6 +71,9 @@
     justify-content: center;
     padding-bottom: 10px;
     margin-top: auto;
+    position: absolute;
+    bottom: 20px;  
+    left: 0;
 }
 
 .request{
