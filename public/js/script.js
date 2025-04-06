@@ -248,7 +248,7 @@ async function doCreateRSO(){
     })
 
     if(!filled){
-        document.getElementById("rsoRes").innerHTML = "There are missing fields!";
+        document.getElementById("rsoRes").innerHTML = "there are missing fields!";
         return;
     }
 

@@ -77,8 +77,7 @@ input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInpu
     color: red;
     text-align: center;
     display: block;
-    margin-top: 4.5% auto 0 auto;
-    width: fit-content;
+    margin-top: 4.5%;
 }
 
 #toast {
