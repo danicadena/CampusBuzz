@@ -415,12 +415,13 @@ async function getEvents(){
         });
 
         const eventRes = await response.json();
+        console.log("API response:", eventRes);
 
         if (eventRes.error && eventRes.error !== ""){
             console.log('api error:', eventRes.error);
         } else{
             if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
-                const eventContainer = document.getElementById("rsoCard"); // 
+                const eventContainer = document.getElementById("rsoCard");  
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
