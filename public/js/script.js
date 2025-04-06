@@ -436,7 +436,8 @@ function getSelectedEvent(){
 
 async function getAllRSOs(){
     const domain = getEmail();
-    if(!domain) return;
+    const uid = getUserID();
+    if(!domain || !uid) return;
 
     let url = urlBase + 'GetRSOs.' + extension;
     
@@ -446,7 +447,10 @@ async function getAllRSOs(){
             headers:{
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({Domain: domain}),
+            body: JSON.stringify({
+                UID, uid,
+                Domain: domain
+            }),
         });
 
         const data = await response.json();
@@ -462,7 +466,6 @@ async function getAllRSOs(){
                     console.error("RSO container element not found");
                     return;
                 }
-                console.log("Found rsoCont:", rsoContainer);  
                 rsoContainer.innerHTML = ''; 
 
                 data.results.forEach(rso => {
@@ -472,13 +475,15 @@ async function getAllRSOs(){
                     let statusClass = 'request';
                     let status = 'Request';
 
-                    if(rso.status == 'joined'){
+                    if(rso.status == 'approved'){
                         statusClass = 'joined';
                         status = 'Joined';
+                        disabled = true;
                     }
                     else if (rso.status == 'pending'){
                         statusClass = 'pending';
                         status = 'Pending';
+                        disabled = true;
                     }
 
                     rsoDiv.innerHTML = `
