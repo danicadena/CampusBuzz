@@ -14,7 +14,7 @@
         $get->execute();
         $result = $get->get_result();
 
-        if ($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $universities[] = $row;
         }
 
