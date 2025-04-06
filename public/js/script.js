@@ -441,8 +441,7 @@ async function getAllRSOs(){
 
     if (!rsoContainer) {
     alert("rsoCont not found in DOM!");
-    }
-
+}
 
     let url = urlBase + 'GetRSOs.' + extension;
     
@@ -737,7 +736,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if(window.location.pathname.includes('joinRSORequest.html')){
+    if(window.location.pathname.includes('joinRSORequest')){
+        console.log(" DOM loaded, running getAllRSOs()");
         getAllRSOs();
     }
 })
