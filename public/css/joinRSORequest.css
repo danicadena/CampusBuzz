@@ -47,10 +47,10 @@
 }
 
 .cardTitle{
+    background-color: #D9D9D9;
     text-align: center;
-    font-size: 22px;
+    font-size: 100px;
     padding: 10px;
-    font-weight: bold;
     color: black;
     width: 100%;
 }
@@ -60,11 +60,15 @@
 }
 
 .request{
-    background-color: #333;
+    background-color: white;
+    color: black;
 }
 .pending{
     background-color: gray;
+    color: white;
+
 }
 .joined{
     background-color: green;
+    color: white;
 }
