@@ -13,11 +13,42 @@
     margin: auto;
 }
 
-.cards{
+.rsoGrid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    padding: 20px;
+}
+
+.rsoCard{
     background-color:#D9D9D9;
-    padding: 150px;
-    margin-left: 20%;
-    margin-top: 30px;
-    width: 20%;
-    height: 50%;                 
+    width: 150px;
+    height: 100px;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rsoButton{
+    padding: 4px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border-radius: 3px;
+}
+
+.request{
+    background-color: #333;
+}
+.pending{
+    background-color: gray;
+}
+.joined{
+    background-color: green;
 }

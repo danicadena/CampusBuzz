@@ -415,9 +415,81 @@ function getUserType() {
     return localStorage.getItem("user_type");
 }
 
+function getEmail(){
+    const email = localStorage.getItem("email");
+    return email.split('@')[1];
+}
+
 function getSelectedEvent(){
     const eventSelect = document.getElementById('eventSelect');
     return eventSelect.value;
+}
+
+async function getRSOs(){
+    const domain = getEmail();
+
+    let url = urlBase + 'GetRSOs.' + extension;
+    
+    try{
+        const response = await fetch (url,{
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(search),
+        });
+
+        const data = await response.json();
+        console.log("API response:", data);
+
+        if(data.error && data.error !== ""){
+            console.log('api error:', data.error);
+        }
+        else{
+            if (Array.isArray(data.results) && data.results.length > 0){
+                const rsoContainer = document.getElementById("rsoCont");  
+                rsoContainer.innerHTML = ''; 
+
+                data.results.forEach(rso => {
+                    const rsoDiv = document.createElement('div');
+                    rsoDiv.classList.add('rsoCard');
+
+                    let statusClass = 'request';
+                    let status = 'Request';
+
+                    if(rso.status == 'joined'){
+                        statusClass = 'joined';
+                        status = 'Joined';
+                    }
+                    else if (rso.status == 'pending'){
+                        statusClass = 'pending';
+                        status = 'Pending';
+                    }
+
+                    rsoDiv.innerHTML = `
+                        <div class="card">
+                            <h5 class="cardTitle>${rso.name}</h5>
+                            <button class="rsoButton ${statusClass}" ${status === 'Request' ? `onclick='requestJoin(${rso.id})'` : 'disabled'}>
+                                ${status}
+                            </button>
+                        </div>
+                    `;
+
+                    rsoContainer.appendChild(rsoDiv);
+                });
+
+            }else {
+                console.log('No results found');
+            }
+        }
+    }catch(error){
+        console.log('Error fetching RSOs');
+    }
+
+}
+
+async function requestJoin(){
+
 }
 
 async function getEvents(){
