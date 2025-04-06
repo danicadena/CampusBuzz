@@ -42,6 +42,7 @@ async function doLogin(){
             localStorage.setItem("id", data.id);
             localStorage.setItem("first_name", data.firstName);
             localStorage.setItem("user_type", data.user_type);
+            localStorage.setItem("email", data.email);
             window.location.href = "dashboard.html";
         }
 
@@ -707,7 +708,6 @@ window.onload = function (){
     getEvents();
     getRsos();
     fetchUniversities();
-    getAllRSOs();
 }
 
 // on window load
@@ -729,4 +729,8 @@ document.addEventListener("DOMContentLoaded", () => {
 if (window.location.pathname.includes('eventInfo.html')) {
     getEventInfo();
     getComments();
+}
+
+if(window.location.pathname.includes('joinRSORequest.html')){
+    getAllRSOs();
 }
