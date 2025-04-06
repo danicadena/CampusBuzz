@@ -596,7 +596,7 @@ async function getEvents(){
                                 <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>
                                 <p class="card-text">${event.Description}</p>
                                 <div class="eventBtnCont>
-                                    <button class="eventBtn" onclick='deleteEvent();'>Delete</button>  
+                                    <button class="eventBtn" onclick='deleteEvent();'>Delete</button>
                                     <button class="eventBtn" onclick='updateEvent();'>Update</button>
                                 </div>
                             </div>
@@ -767,10 +767,10 @@ async function getComments(){
 
 
 async function sendComment(){
-    let userId = Number(localStorage.getItem("id"));
+    const userId = Number(localStorage.getItem("id"));
 
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('eventId');
+    const eventId = Number(urlParams.get('eventId'));
 
     const rating = Number(document.getElementById("ratingInfo").value.trim());
     const commentText = document.getElementById("comment").value.trim();
