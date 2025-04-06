@@ -728,6 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(window.location.pathname.includes('joinRSORequest.html')){
+        console.log("FOUND!!!!!");
         getAllRSOs();
     }
 })
