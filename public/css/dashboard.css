@@ -118,13 +118,6 @@ input[type="search"]{
     font-size: 120px;
 }
 
-#welcomeSuperAdmin{
-    margin-top: 10px;
-    color: #fff;
-    text-align: center;
-    font-size: 120px;
-}
-
 #card-title{
     font-size: 40px 
 }
@@ -135,4 +128,12 @@ input[type="search"]{
 
 a{
     color: royalblue;
+}
+
+
+#welcomeSuperAdmin{
+    margin-top: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 120px;
 }
