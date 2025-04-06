@@ -27,22 +27,21 @@
 
 .card{
     border: none;
+    border: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #D9D9D9;
+    width: 500px;
+    height: 500px;
+    padding: 30px 20px;
 }
 
 .rsoCard{
-    background-color:#D9D9D9;
-    width: 500px;
-    height: 500px;
-    text-align: center;
-    padding: 30px 20px;
-    font-weight: bold;
-    font-size: 14px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    border: none;
-    position: relative;
+    height: 100%;
 }
 
 .rsoButton{
@@ -51,18 +50,19 @@
     font-size: 20px;
     color: white;
     width: 30%;
+    min-width: 120px;
 }
 
 .cardTitle{
-    background-color: #D9D9D9;
     text-align: center;
     font-size: 90px;
-    padding: 0 20px;
     color: black;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
+    word-break: break-word;
 }
 
 .cardButtonWrapper {
@@ -71,9 +71,6 @@
     justify-content: center;
     padding-bottom: 10px;
     margin-top: auto;
-    position: absolute;
-    bottom: 20px;  
-    left: 0;
 }
 
 .request{
