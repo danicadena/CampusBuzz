@@ -417,6 +417,10 @@ function getUserType() {
 
 function getEmail(){
     const email = localStorage.getItem("email");
+    if(!email){
+        console.error("Email not found");
+        return null;
+    }
     return email.split('@')[1];
 }
 
@@ -427,6 +431,7 @@ function getSelectedEvent(){
 
 async function getAllRSOs(){
     const domain = getEmail();
+    if(!domain) return;
 
     let url = urlBase + 'GetRSOs.' + extension;
     
@@ -436,7 +441,7 @@ async function getAllRSOs(){
             headers:{
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(search),
+            body: JSON.stringify({Domain: domain}),
         });
 
         const data = await response.json();
