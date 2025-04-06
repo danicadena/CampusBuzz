@@ -395,6 +395,11 @@ function getSelectedUser(){
     return userSelect.value;
 }
 
+// kate need this one
+function getUserType() {
+    return localStorage.getItem("user_type");
+}
+
 function getSelectedEvent(){
     const eventSelect = document.getElementById('eventSelect');
     return eventSelect.value;
@@ -509,7 +514,7 @@ window.onload = function (){
 
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
-    const userType = getSelectedUser();
+    const userType = getUserType();
     console.log("User Type Detected:", userType);
 
     if(userType == "Admin"){
