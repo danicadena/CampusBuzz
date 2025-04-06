@@ -86,3 +86,8 @@
     background-color: green;
     color: white;
 }
+
+.request:hover {
+    border: 2px solid black;
+    cursor: pointer;
+}
