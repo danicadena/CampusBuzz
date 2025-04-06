@@ -11,7 +11,7 @@
     $adminID = $inData["Admins_ID"];
 
 	// SuperAdmin_ID added once event is approved
-    $superID = isset($inData["SuperAdmins_ID"]) ? $inData["SuperAdmins_ID"] : null;
+    $superID = null;
     $rsoID = isset($inData["RSOs_ID"]) ? $inData["RSOs_ID"] : null;
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
