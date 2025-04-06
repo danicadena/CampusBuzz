@@ -428,7 +428,7 @@ async function getEvents(){
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('col-md-4', 'mb-3'); 
                     eventDiv.innerHTML = `
-                        <div class=" card eventcard">
+                        <div class="eventcard">
                             <div class="card-body">
                                 <h5 class="card-title">${event.Event_name}</h5>
                                 <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>

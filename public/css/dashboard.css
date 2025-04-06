@@ -80,7 +80,7 @@ input[type="search"]{
     background-color: #D9D9D9;
     height: 300px;
     width: 950px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #rsoTitle{
