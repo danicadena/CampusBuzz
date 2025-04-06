@@ -425,16 +425,21 @@ async function getEvents(){
             console.log('api error:', eventRes.error);
         } else{
             if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
-                const eventContainer = document.getElementById("rsoCard");  
+                const eventContainer = document.getElementById("eventCardContainer");  
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
+                    //make a rso card for each event and send each to the event info page 
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('rsoCard'); 
                     eventDiv.innerHTML = `
                         <div class="eventcard">
                             <div class="card-body">
-                                <h5 class="card-title">${event.Event_name}</h5>
+                                <h5 class="card-title" >
+                                    <a href="eventInfo.html?eventId=${event.Events_ID}" class="event-link">
+                                        ${event.Event_name}
+                                     </a>
+                                </h5>
                                 <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>
                                 <p class="card-text">${event.Description}</p>
                             </div>
@@ -503,6 +508,42 @@ async function getRsos(){
     }
 }
 
+async function getEventInfo(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+    if (!eventId) return;
+    const url = urlBase + 'GetEvent.'+ extension;
+
+    const eventPayload = {
+        Events_ID : eventId
+    };
+
+    try{
+        const response = await fetch ( url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventPayload)
+        })
+
+        const eventInfoData = await response.json();
+
+        document.getElementById('eventName').innerText = eventInfoData.results.Event_name;
+        document.getElementById('eventDate').innerText = eventInfoData.results.Date;
+        document.getElementById('eventTime').innerText = eventInfoData.results.Event_time;
+        document.getElementById('eventDescription').innerText = eventInfoData.results.Description;
+        document.getElementById('eventType').innerText = `Type: ${eventInfoData.results.Event_type}`;
+
+
+      
+    } catch (error){
+        console.log('error fetching event info');
+    }
+
+}
+
 window.onload = function (){
     getEvents();
     getRsos();
@@ -523,3 +564,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("adminOnly")?.classList.add("hidden");
     }
 })
+
+
+if (window.location.pathname.includes('eventDetails.html')) {
+    getEventInfo();
+}

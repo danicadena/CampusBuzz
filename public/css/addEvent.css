@@ -1,3 +1,7 @@
+html, body{
+    overflow: scroll;
+}
+
 #eventTitle{
     color: #fff;
     font-size: 130px;
@@ -92,4 +96,28 @@ input[type="text"]#uniInput, #timeInput, #dateInput, #descInput, #nameInp{
 
 #toast.hidden {
     display: none;
+}
+
+
+/**********************
+CSS FOR EVENT INFO PAGE 
+***********************/
+
+.eventSection{
+    height: 40vh;
+}
+
+.commentSection{
+    background-color: #fff;
+    height: 100vh;
+   
+}
+
+#eventInfo{
+    color: #fff;
+    font-size: 50px;
+    text-align: center;
+}
+.return{
+    position: absolute;
 }
