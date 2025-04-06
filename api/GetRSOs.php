@@ -23,7 +23,7 @@
             $rsos[] = [
 				"name" => $row['RSO_name'],
 				"id" => $row['RSOs_ID']
-			]
+			];
         }
 
         $get->close();
