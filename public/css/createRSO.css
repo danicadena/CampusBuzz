@@ -73,8 +73,8 @@ input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInpu
     margin-left: 35%;
 }
 
-#rsoRes{
-    color: red !important;
+#rsoResStudent, #rsoResAdmin{
+    color: red;
     text-align: center;
     display: block;
     margin-top: 0%;

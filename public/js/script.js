@@ -247,9 +247,12 @@ async function doCreateRSO(){
         }
     })
 
+    let resBox = document.getElementById("rsoResStudent") || document.getElementById("rsoResAdmin");
+
     if(!filled){
-        document.getElementById("rsoRes").innerHTML = "there are missing fields!";
-        return;
+        if(resBox){
+            resBox.innerHTML = "there are missing fields!";
+        }        return;
     }
 
     let members = []
@@ -266,7 +269,7 @@ async function doCreateRSO(){
     let phoneElement = document.getElementById("phoneInput");
     let phone = phoneElement ? phoneElement.value : "";
 
-    document.getElementById("rsoRes").innerHTML= "";
+    if (resBox) resBox.innerHTML = "";
 
     let uids = {
         Emails: members
@@ -292,14 +295,14 @@ async function doCreateRSO(){
         
         if (data.error && data.error !== ""){
             //if error finding uids make all email fields blank
-            document.getElementById("adminInput").value= "";
-            
             let inputs = document.querySelectorAll(".memberInp");
             inputs.forEach(input => input.value = "")
-                return;
+            return;
         }
     }catch(error){
-        document.getElementById("rsoRes").innerHTML= "need at least 4 other members!";
+        if (resBox){
+            resBox.innerHTML = "need at least 4 other members!";
+        }
         return;
     }
 
