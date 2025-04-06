@@ -479,10 +479,13 @@ async function getAllRSOs(){
 
                     rsoDiv.innerHTML = `
                         <div class="card">
-                            <h5 class="cardTitle>${rso.name}</h5>
-                            <button class="rsoButton ${statusClass}" ${status === 'Request' ? `onclick='requestJoin(${rso.id})'` : 'disabled'}>
-                                ${status}
-                            </button>
+                            <h5 class="cardTitle">${rso}</h5>
+                            <div class="cardButtonWrapper">
+                                <button class="rsoButton ${statusClass}" 
+                                    ${status === 'Request' ? `onclick='requestJoin("${rso}")'` : 'disabled'}>
+                                    ${status}
+                                </button>
+                            </div>
                         </div>
                     `;
 
