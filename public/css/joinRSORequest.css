@@ -40,6 +40,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     border: none;
     position: relative;
 }
@@ -69,9 +70,7 @@
     display: flex;
     justify-content: center;
     padding-bottom: 10px;
-    position: absolute;
-    bottom: 20px;
-    left: 0;
+    margin-top: auto;
 }
 
 .request{
