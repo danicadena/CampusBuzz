@@ -556,7 +556,7 @@ async function requestJoin(rsoID){
 }
 
 async function getEvents(){
-    const id = localStorage.getItem("id");
+    const id = getUserID();
 
     let url = urlBase + 'GetFilteredEvents.' + extension;
 
@@ -772,7 +772,7 @@ async function sendComment(){
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('eventId');
 
-    const rating = document.getElementById("ratingInfo").value.trim();
+    const rating = Number(document.getElementById("ratingInfo").value.trim());
     const commentText = document.getElementById("comment").value.trim();
 
     const addCommentPayload={
@@ -802,6 +802,7 @@ async function sendComment(){
             console.log('comment could not be made');
 
         }else{
+            console.log('success adding comment');
             showToast('Comment sent!');
         }
 
