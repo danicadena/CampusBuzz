@@ -143,7 +143,7 @@ async function doAddEvent(){
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(uniName),
-            //mode : 'no-cors'
+            mode : 'no-cors'
         });
 
         const data = await response.json();
@@ -183,7 +183,7 @@ async function doAddEvent(){
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(eventInfo),
-            //mode : 'no-cors'
+            mode : 'no-cors'
         });
 
         const data = await response.json();
