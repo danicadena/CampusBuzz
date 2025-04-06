@@ -2,6 +2,7 @@
 
 	$inData = getRequestInfo();
 
+	$uid = $inData["UID"];
 	$domain = $inData["Domain"];
 
 	$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
@@ -14,15 +15,21 @@
         $rsos = [];
 
         // get a universities's rso names
-		$get = $conn->prepare("SELECT RSO_name,RSOs_ID FROM RSOs_Creates WHERE Email_domain = ?");
-        $get->bind_param("s", $domain);
+		$get = $conn->prepare("
+			SELECT R.RSO_name, R.RSOs_ID, J.Approval_Status 
+			FROM RSOs_Creates R
+			LEFT JOIN Joins J ON R.RSOs_ID = J.RSOs_ID AND J.UID = ?
+			WHERE R.Email_domain = ?
+		");
+        $get->bind_param("is", $uid, $domain);
         $get->execute();
         $result = $get->get_result();
 
         while ($row = $result->fetch_assoc()) {
             $rsos[] = [
 				"name" => $row['RSO_name'],
-				"id" => $row['RSOs_ID']
+				"id" => $row['RSOs_ID'],
+				"status" => $row['Approval_Status'] ?? "none";
 			];
         }
 
