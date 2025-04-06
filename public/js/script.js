@@ -421,13 +421,12 @@ async function getEvents(){
             console.log('api error:', eventRes.error);
         } else{
             if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
-                const eventContainer = document.getElementById("rsoCardCont");  
+                const eventContainer = document.getElementById("rsoCard");  
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('rsoCard'); 
-                    
                     eventDiv.innerHTML = `
                         <div class="eventcard">
                             <div class="card-body">
