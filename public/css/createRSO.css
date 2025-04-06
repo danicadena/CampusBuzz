@@ -10,6 +10,10 @@
     padding-top: 20px;
 }
 
+.hidden {
+    display: none !important;
+  }
+
 #rsoTitle{
     color: #fff;
     font-size: 100px;

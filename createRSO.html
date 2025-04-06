@@ -48,7 +48,7 @@
         </div>
 
         <div class="eventContainer" id="bottomPart">
-            <div class="row">
+            <div class="row" id="studentOnly">
                 <div class="col" id="bottomFields">
                     <br>
                     <h2 id="fieldName">Name of RSO:</h2>
@@ -56,6 +56,17 @@
 
                     <h2 id="fieldName">Admin Contact Information:</h2>
                     <input type="text" id="phoneInput" placeholder="XXX-XXX-XXXX"><br>
+
+                    <button class="rsoButton" onclick="doCreateRSO();">Submit</button>
+                    <span id ="rsoRes"></span>
+                </div>
+            </div>
+
+            <div class="row" id="adminOnly">
+                <div class="col" id="bottomFields">
+                    <br>
+                    <h2 id="fieldName">Name of RSO:</h2>
+                    <input type="text" id="nameInput"><br>
 
                     <button class="rsoButton" onclick="doCreateRSO();">Submit</button>
                     <span id ="rsoRes"></span>

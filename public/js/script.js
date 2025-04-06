@@ -250,7 +250,9 @@ async function doCreateRSO(){
     });
 
     let name = document.getElementById("nameInput").value;
-    let phone = document.getElementById("phoneInput").value;
+
+    let phoneElement = document.getElementById("phoneInput").value;
+    let phone = phoneElement ? phoneElement.value : "";
 
     document.getElementById("rsoRes").innerHTML= "";
 
@@ -504,3 +506,15 @@ window.onload = function (){
     getRsos();
     fetchUniversities();
 }
+
+// on window load
+document.addEventListener("DOMContentLoaded", () => {
+    const userType = getSelectedUser();
+
+    if(userType == "Admin"){
+        document.getElementById("studentOnly")?.classList.add("hidden");
+    }
+    else{
+        document.getElementById("adminOnly")?.classList.add("hidden");
+    }
+})
