@@ -411,6 +411,10 @@ function getSelectedUser(){
     return userSelect.value;
 }
 
+function getUserID(){
+    return localStorage.getItem("id");
+}
+
 // kate need this one
 function getUserType() {
     return localStorage.getItem("user_type");
@@ -479,10 +483,10 @@ async function getAllRSOs(){
 
                     rsoDiv.innerHTML = `
                         <div class="card">
-                            <div class="cardTitle">${rso}</div>
+                            <div class="cardTitle">${rso.name}</div>
                             <div class="cardButtonWrapper">
                                 <button class="rsoButton ${statusClass}" 
-                                    ${status === 'Request' ? `onclick='requestJoin("${rso}")'` : 'disabled'}>
+                                    ${status === 'Request' ? `onclick='requestJoin("${rso.id}")'` : 'disabled'}>
                                     ${status}
                                 </button>
                             </div>
@@ -502,8 +506,53 @@ async function getAllRSOs(){
 
 }
 
-async function requestJoin(){
+async function requestJoin(rsoID){
+    const button = event.target;
+    const card = button.closest('.card');
 
+    // change state of button
+    button.classList.remove('request');
+    button.classList.add('pending');
+    button.textContent = 'Pending';
+    button.disabled = true;
+
+    const uid = getUserID();
+
+    let url = urlBase + 'RequestJoin.'+ extension;
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                UID: uid,
+                RSO_name: rsoID
+            }),
+        });
+
+        const data = await response.json();
+        console.log("Request join response:", data);
+
+        if(data.error && data.error !== ""){
+            console.log('Error requesting to join:', data.error);
+            // Revert button state if there's an error
+            button.classList.remove('pending');
+            button.classList.add('request');
+            button.textContent = 'Request';
+            button.disabled = false;
+        } else {
+            showToast("Request to join successful!");
+        }
+    } catch(error) {
+        console.log('Error requesting to join RSO:', error);
+        // Revert button state if there's an error
+        button.classList.remove('pending');
+        button.classList.add('request');
+        button.textContent = 'Request';
+        button.disabled = false;
+    }
 }
 
 async function getEvents(){
