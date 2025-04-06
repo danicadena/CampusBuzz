@@ -578,7 +578,7 @@ async function getEvents(){
         });
 
         const eventRes = await response.json();
-        console.log("API response:", eventRes);
+        console.log("API response (list of events):", eventRes);
 
         if (eventRes.error && eventRes.error !== ""){
             console.log('api error:', eventRes.error);
@@ -604,7 +604,7 @@ async function getEvents(){
                             </div>
                         </div>
                     `;
-                    if(getUserType() === 'Admin'){
+                    if(getUserType() === "Admin"){
                         eventDiv.innerHTML = `
                         <button class="eventOptionsBtn" onclick='deleteEvent();'> Delete<button>
                         <button class="eventOptionsBtn" onclick='updateEvent();'> Update<button>
@@ -797,7 +797,7 @@ async function sendComment(){
     try{
         const response = await fetch (url, {
             method: 'POST', 
-            header:{
+            headers:{
                 'Content-Type': 'application/json'
             }, 
             body: stringify.JSON(addCommentPayload)
@@ -815,7 +815,7 @@ async function sendComment(){
         }
 
     }catch (error){
-        console.log('Error adding comment ');
+        console.log('Error adding comment:' , error);
     }
 
 }
