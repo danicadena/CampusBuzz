@@ -20,7 +20,7 @@
 	}
 	else
 	{
-		$conn->begin_transaction(); // ✅ Start transaction
+		$conn->begin_transaction(); 
 
 		try {
 			// Step 1: Check if location exists
@@ -44,6 +44,12 @@
 				throw new Exception("An event already exists at this location and time!");
 			}
 			$duplicateCheck->close();
+
+			$validTypes = ["Public", "Private", "RSO"];
+			if (!in_array($type, $validTypes)) {
+				returnWithError("Invalid event type: $type", 400);
+				exit;
+			}
 
 			// Step 3: Insert event
 			$stmt = $conn->prepare("INSERT INTO Events_At (LocID, Event_time, Date, Event_name, Description, Event_type, Approval_Status) VALUES (?, ?, ?, ?, ?, ?, ?)");
