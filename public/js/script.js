@@ -510,6 +510,7 @@ window.onload = function (){
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
     const userType = getSelectedUser();
+    console.log("User Type Detected:", userType);
 
     if(userType == "Admin"){
         document.getElementById("studentOnly")?.classList.add("hidden");
