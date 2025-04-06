@@ -20,6 +20,8 @@
 
         $get->close();
 		$conn->close();
+
+		returnWithInfo($universities);
 	}
 
 	function getRequestInfo()
