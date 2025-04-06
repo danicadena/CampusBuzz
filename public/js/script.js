@@ -425,7 +425,7 @@ function getSelectedEvent(){
     return eventSelect.value;
 }
 
-async function getRSOs(){
+async function getAllRSOs(){
     const domain = getEmail();
 
     let url = urlBase + 'GetRSOs.' + extension;
@@ -702,6 +702,7 @@ window.onload = function (){
     getEvents();
     getRsos();
     fetchUniversities();
+    getAllRSOs();
 }
 
 // on window load
