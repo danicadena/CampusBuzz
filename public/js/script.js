@@ -601,13 +601,15 @@ async function getEvents(){
                                 </h5>
                                 <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>
                                 <p class="card-text">${event.Description}</p>
-                                <div class="eventBtnCont>
-                                    <button class="eventBtn" onclick='deleteEvent();'>Delete</button>
-                                    <button class="eventBtn" onclick='updateEvent();'>Update</button>
-                                </div>
                             </div>
                         </div>
                     `;
+                    if(getUserType() === 'Admin'){
+                        eventDiv.innerHTML = `
+                        <button class="eventOptionsBtn" onclick='deleteEvent();'> Delete<button>
+                        <button class="eventOptionsBtn" onclick='updateEvent();'> Update<button>
+                        `
+                    }
                     eventContainer.appendChild(eventDiv);
 
                 });
