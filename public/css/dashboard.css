@@ -116,3 +116,11 @@ input[type="search"]{
     text-align: center;
     font-size: 120px;
 }
+
+#card-title{
+    font-size: 40px 
+}
+
+.card{
+    margin-left: 10px
+}
