@@ -10,8 +10,6 @@
 	$approval = 'pending';
     $adminID = $inData["Admins_ID"];
 
-	// SuperAdmin_ID added once event is approved
-    $superID = null;
     $rsoID = isset($inData["RSOs_ID"]) ? $inData["RSOs_ID"] : null;
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
@@ -60,16 +58,16 @@
         // create public event
 		if ($type === 'Public')
 		{
-			$publicStmt = $conn->prepare("INSERT INTO Public_Events_Creates (Events_ID, Admins_ID, SuperAdmins_ID) VALUES (?,?,?)");
-			$publicStmt->bind_param("iii", $eventID, $adminID, $superID);
+			$publicStmt = $conn->prepare("INSERT INTO Public_Events_Creates (Events_ID, Admins_ID) VALUES (?,?)");
+			$publicStmt->bind_param("ii", $eventID, $adminID);
 			$publicStmt->execute();
 			$publicStmt->close();
 		}
         // create private event
 		elseif ($type === "Private")
 		{
-			$privateStmt = $conn->prepare("INSERT INTO Private_Events_Creates (Events_ID, Admins_ID, SuperAdmins_ID) VALUES (?,?,?)");
-			$privateStmt->bind_param("iii", $eventID, $adminID, $superID);
+			$privateStmt = $conn->prepare("INSERT INTO Private_Events_Creates (Events_ID, Admins_ID) VALUES (?,?)");
+			$privateStmt->bind_param("ii", $eventID, $adminID);
 			$privateStmt->execute();
 			$privateStmt->close();
 		}
