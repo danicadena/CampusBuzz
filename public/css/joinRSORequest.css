@@ -20,9 +20,9 @@
 .rsoGrid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    gap: 40px;
     justify-items: center;
-    padding: 4opx;
+    padding: 40px;
 }
 
 .rsoCard{
@@ -30,7 +30,7 @@
     width: 500px;
     height: 500px;
     text-align: center;
-    padding: 20px;
+    padding: 30px 20px;
     font-weight: bold;
     font-size: 14px;
     display: flex;
@@ -42,21 +42,26 @@
     padding: 16px;
     border: none;
     font-size: 12px;
-    font-weight: bold;
     color: white;
 }
 
 .cardTitle{
     background-color: #D9D9D9;
     text-align: center;
-    font-size: 100px;
-    padding: 10px;
+    font-size: 90px;
+    padding: 0 20px;
     color: black;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cardButtonWrapper {
-    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
 }
 
 .request{
