@@ -421,7 +421,7 @@ async function getEvents(){
             console.log('api error:', eventRes.error);
         } else{
             if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
-                const eventContainer = document.getElementById("rsoCardCont");  
+                const eventContainer = document.getElementById("rsoCard");  
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
