@@ -432,7 +432,6 @@ function getSelectedEvent(){
 
 async function getAllRSOs(){
     const domain = getEmail();
-    console.log("Domain: ", domain);
     if(!domain) return;
 
     let url = urlBase + 'GetRSOs.' + extension;
@@ -714,16 +713,22 @@ window.onload = function (){
 
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
-    const userType = getUserType();
-    console.log("User Type Detected:", userType);
+    if(window.location.pathname.includes('addEvent.html')){
+        const userType = getUserType();
+        console.log("User Type Detected:", userType);
 
-    if(userType == "Admin"){
-        console.log("Hidding student");
-        document.getElementById("studentOnly")?.classList.add("hidden");
+        if(userType == "Admin"){
+            console.log("Hidding student");
+            document.getElementById("studentOnly")?.classList.add("hidden");
+        }
+        else{
+            console.log("Hidding admin");
+            document.getElementById("adminOnly")?.classList.add("hidden");
+        }
     }
-    else{
-        console.log("Hidding admin");
-        document.getElementById("adminOnly")?.classList.add("hidden");
+
+    if(window.location.pathname.includes('joinRSORequest.html')){
+        getAllRSOs();
     }
 })
 
@@ -731,9 +736,4 @@ document.addEventListener("DOMContentLoaded", () => {
 if (window.location.pathname.includes('eventInfo.html')) {
     getEventInfo();
     getComments();
-}
-
-if(window.location.pathname.includes('joinRSORequest.html')){
-    console.log("Running getAllRSOs() from joinRSORequest.html");
-    getAllRSOs();
 }
