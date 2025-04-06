@@ -237,8 +237,6 @@ async function doAddMemberField(){
 
 // create an RSO
 async function doCreateRSO(){
-    let admin = document.getElementById("adminInput").value;
-
     let members = []
     let inputs = document.querySelectorAll(".memberInp");
 
@@ -291,7 +289,7 @@ async function doCreateRSO(){
     }
 
     let rsoInfo = {
-        UIDs: data.uids,
+        UIDs: data,
         Student_promoted: uids.Emails[0],
         Admin_phone: phone,
         RSO_name: name
