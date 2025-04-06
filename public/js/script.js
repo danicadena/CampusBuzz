@@ -518,9 +518,11 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("User Type Detected:", userType);
 
     if(userType == "Admin"){
+        console.log("Hidding student");
         document.getElementById("studentOnly")?.classList.add("hidden");
     }
     else{
+        console.log("Hidding admin");
         document.getElementById("adminOnly")?.classList.add("hidden");
     }
 })
