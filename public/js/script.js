@@ -415,7 +415,6 @@ function getUserID(){
     return localStorage.getItem("id");
 }
 
-// kate need this one
 function getUserType() {
     return localStorage.getItem("user_type");
 }
