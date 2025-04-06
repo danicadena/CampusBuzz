@@ -126,7 +126,7 @@
                     document.getElementById('welcomeAdmin').textContent = `Welcome ${name}!`;
                     document.getElementById('adminDashboard').style.display = "block";
                 }
-                else{
+                else if(userType === "SuperAdmin"){
                     document.getElementById('welcomeSuperAdmin').textContent = `Welcome ${name}!`;
                     document.getElementById('superAdminDashboard').style.display = "block";
 
