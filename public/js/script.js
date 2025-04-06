@@ -448,7 +448,7 @@ async function getAllRSOs(){
                 'Content-type': 'application/json'
             },
             body: JSON.stringify({
-                UID, uid,
+                UID: uid,
                 Domain: domain
             }),
         });
@@ -474,6 +474,7 @@ async function getAllRSOs(){
 
                     let statusClass = 'request';
                     let status = 'Request';
+                    let disabled = false;
 
                     if(rso.status == 'approved'){
                         statusClass = 'joined';
