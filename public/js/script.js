@@ -435,7 +435,7 @@ async function getEvents(){
                     eventDiv.innerHTML = `
                         <div class="eventcard">
                             <div class="card-body">
-                                <h5 class="card-title" >
+                                <h5 class="event-title" >
                                     <a href="eventInfo.html?eventId=${event.Events_ID}" class="event-link">
                                         ${event.Event_name}
                                      </a>
@@ -519,6 +519,9 @@ async function getEventInfo(){
         Events_ID : eventId
     };
 
+    console.log('event id ', eventPayload);
+
+
     try{
         const response = await fetch ( url, {
             method: 'POST',
@@ -529,13 +532,13 @@ async function getEventInfo(){
         })
 
         const eventInfoData = await response.json();
+        console.log('event info: ', eventInfoData);
 
         document.getElementById('eventName').innerText = eventInfoData.results.Event_name;
         document.getElementById('eventDate').innerText = eventInfoData.results.Date;
         document.getElementById('eventTime').innerText = eventInfoData.results.Event_time;
         document.getElementById('eventDescription').innerText = eventInfoData.results.Description;
         document.getElementById('eventType').innerText = `Type: ${eventInfoData.results.Event_type}`;
-
 
       
     } catch (error){

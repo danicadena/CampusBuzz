@@ -19,6 +19,7 @@ html,body{
     height: 100vh;
     display: flex;
     justify-content: space-between;
+    overflow: auto;
 }
 
 #functionality{
@@ -48,15 +49,19 @@ input[type="search"]{
 }
 
 .addRso{
-    margin-left: 20px;
-    margin-top: 55px;
-    position: relative;
+    display: flex;
+    justify-content: center; 
+    margin: 20px 0;
+}
+
+.eventcard {
     background-color: #D9D9D9;
-    height: 50px;
-    width: 50px;
-    border: none;
-    font-size: 40px;
-    cursor: pointer;
+    width: 950px;
+    height: 300px;
+    overflow: auto;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
 }
 
 #rsoCont{
@@ -123,4 +128,8 @@ input[type="search"]{
 
 .card{
     margin-left: 10px
+}
+
+a{
+    color: royalblue;
 }
