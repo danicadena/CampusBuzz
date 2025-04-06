@@ -426,7 +426,7 @@ async function getEvents(){
 
                 eventRes.results.forEach(event => {
                     const eventDiv = document.createElement('div');
-                    eventDiv.classList.add('col-md-4', 'mb-3'); 
+                    eventDiv.classList.add('rsoCard'); 
                     eventDiv.innerHTML = `
                         <div class="eventcard">
                             <div class="card-body">
