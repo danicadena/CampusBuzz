@@ -110,7 +110,7 @@ CSS FOR EVENT INFO PAGE
 .commentSection{
     background-color: #fff;
     height: 100vh;
-   
+    overflow: auto;
 }
 
 #eventInfo{
@@ -118,6 +118,45 @@ CSS FOR EVENT INFO PAGE
     font-size: 50px;
     text-align: center;
 }
+
 .return{
     position: absolute;
+}
+
+#eventName{
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+}
+
+#eventDate{
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+}
+
+#eventTime{
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+}
+
+#eventDescription{
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+}
+
+#eventType{
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+}
+
+#commentInfo{
+    text-align: center;
+    font-size: 30px;
+    display: block;
+    margin: 0 auto;
+    width: 350px;
 }

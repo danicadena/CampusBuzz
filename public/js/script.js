@@ -547,6 +547,67 @@ async function getEventInfo(){
 
 }
 
+async function getComments(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+    if (!eventId) return;
+    const url = urlBase + 'GetComments.'+ extension;
+
+    const commentPayload={
+        Events_ID : eventId
+    };
+
+    console.log('comment info sent to api: ', commentPayload);
+
+    try{
+        const response = await fetch (url,{
+            method: 'POST',
+            headers:{
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(commentPayload)
+        })
+
+        const commentInfo = await response.json();
+
+        if (commentInfo.error && commentInfo.error !== ""){
+            console.log('error: ', commentInfo.error);
+        }else{
+            //if a comment or multiple comments iterate through the array 
+            if (Array.isArray(commentInfo.results) && commentInfo.results.length > 0) {
+                document.getElementById('commentStatus').innerText = ''
+
+                const commentCont = document.getElementById("commentCont");
+                commentCont.innerHTML =''; 
+
+                commentInfo.results.forEach(comment => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.classList.add('col-md-4', 'mb-3'); 
+                    commentDiv.innerHTML = `
+                        <div class="commentCard">
+                            <div class="card-body">
+                                <h5 class="commentText">${comment.Text}</h5>
+                                <p class="card-text"><small class="text-muted">${comment.Timestamp}</small></p>
+                                <p class="card-text">${comment.Rating}</p>
+                            </div>
+                        </div>
+                    `;
+                    commentCont.appendChild(commentDiv);
+                });
+            } else {
+                console.log('No results found or invalid response structure');
+                document.getElementById('commentStatus').innerHTML = `<p>No Comments found.</p>`;
+            }
+        }
+
+
+
+    }catch(error){
+        console.log('Error fetching comments');
+    }
+}
+
 window.onload = function (){
     getEvents();
     getRsos();
@@ -569,6 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 
-if (window.location.pathname.includes('eventDetails.html')) {
+if (window.location.pathname.includes('eventInfo.html')) {
     getEventInfo();
+    getComments();
 }
