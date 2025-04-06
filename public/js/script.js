@@ -957,6 +957,7 @@ window.onload = function (){
     getEvents();
     getRsos();
     fetchUniversities();
+    getUniversityProfiles();
 }
 
 // on window load
