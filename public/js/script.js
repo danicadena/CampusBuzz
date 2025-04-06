@@ -546,6 +546,10 @@ async function getEvents(){
                                 </h5>
                                 <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>
                                 <p class="card-text">${event.Description}</p>
+                                <div class="eventBtnCont>
+                                    <button class="eventBtn" onclick='deleteEvent();'>Delete</button>  
+                                    <button class="eventBtn" onclick='updateEvent();'>Update</button>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -710,6 +714,136 @@ async function getComments(){
     }catch(error){
         console.log('Error fetching comments');
     }
+}
+
+
+async function sendComment(){
+    let userId = Number(localStorage.getItem("id"));
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+    const rating = document.getElementById("ratingInfo").value.trim();
+    const commentText = document.getElementById("comment").value.trim();
+
+    const addCommentPayload={
+        UID : userId,
+        Events_ID : eventId, 
+        Rating : rating, 
+        Text : commentText
+    };
+
+    const url = urlBase + 'AddComment.'+ extension;
+
+    console.log('info sent to backend for adding comment: ', addCommentPayload);
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            header:{
+                'Content-Type': 'application/json'
+            }, 
+            body: stringify.JSON(addCommentPayload)
+        })
+
+        const sendCommentInfo = await response.json();
+        
+        //in the case that you can
+        if (sendCommentInfo && sendCommentInfo.error !== ""){
+            console.log('comment could not be made');
+
+        }else{
+            showToast('Comment sent!');
+        }
+
+    }catch (error){
+        console.log('Error adding comment ');
+    }
+
+}
+
+async function deleteEvent(){    
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+    const delPayload ={
+        Events_ID: eventId
+    };
+
+    const url = urlBase + 'DeleteEvent.' + extension;
+    console.log('del payload: ', delPayload);
+
+    try {
+        const response = await fetch (url, {
+            method: 'POST',
+            headers:{
+                'Content-Type' : 'application/json'
+            },
+            body: stringify.JSON(delPayload)
+        })
+
+        const data = await response.json();
+        if (data.error && data.error !== ""){
+            console.log('error deleting event')
+        } else{
+            showToast('Success deleting event');
+        }
+
+
+    }catch (error){
+        console.log('Error deleting event');
+
+    }
+}
+
+async function deleteComment(){
+    const id = localStorage.getItem("id");
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+    const delPayload={
+        UID: id,
+        Events_ID: eventId
+    };
+
+    const url = urlBase + 'DeleteComment.' + extension;
+    console.log('del payload: ', delPayload);
+
+    try {
+        const response = await fetch (url, {
+            method: 'POST',
+            headers:{
+                'Content-Type' : 'application/json'
+            },
+            body: stringify.JSON(delPayload)
+        })
+
+        const data = await response.json();
+        if (data.error && data.error !== ""){
+            console.log('error deleting comment')
+        } else{
+            showToast('Success deleting comment');
+        }
+
+
+    }catch (error){
+        console.log('error deleting comment');
+
+    }
+}
+
+//TODO: 
+async function updateEvent(){
+    const id = localStorage.getItem("id");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
+
+}
+
+async function updateComment(){
+  
 }
 
 window.onload = function (){
