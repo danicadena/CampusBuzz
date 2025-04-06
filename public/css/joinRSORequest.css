@@ -46,6 +46,15 @@
     color: white;
 }
 
+.cardTitle{
+    text-align: center;
+    font-size: 22px;
+    padding: 10px;
+    font-weight: bold;
+    color: black;
+    width: 100%;
+}
+
 .cardButtonWrapper {
     margin-top: auto;
 }
