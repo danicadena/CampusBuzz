@@ -289,7 +289,7 @@ async function doCreateRSO(){
     }
 
     let rsoInfo = {
-        UIDs: data,
+        UIDs: data.results,
         Student_promoted: uids.Emails[0],
         Admin_phone: phone,
         RSO_name: name
