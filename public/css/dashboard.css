@@ -111,7 +111,14 @@ input[type="search"]{
     margin-left: 15px;
 }
 
-#welcomeAdmin, #welcomeSuperAdmin{
+#welcomeAdmin{
+    margin-top: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 120px;
+}
+
+#welcomeSuperAdmin{
     margin-top: 10px;
     color: #fff;
     text-align: center;
