@@ -712,6 +712,9 @@ window.onload = function (){
 
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
+    const email = localStorage.getItem("email");
+    console.log("Email from localStorage:", email);
+
     const userType = getUserType();
     console.log("User Type Detected:", userType);
 
