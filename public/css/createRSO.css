@@ -74,6 +74,7 @@ input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInpu
 }
 
 #rsoRes{
+    color: black;
     text-align: center;
     display: block;
     margin-top: 4.5%;
