@@ -436,7 +436,7 @@ async function getEvents(){
                             </div>
                         </div>
                     `;
-                    rsoContainer.appendChild(eventDiv);
+                    eventContainer.appendChild(eventDiv);
 
                 });
             }
