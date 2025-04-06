@@ -145,3 +145,38 @@ a{
     justify-items: center;
     padding: 40px;
 }
+
+.superContainer{
+    width: 100vw;
+}
+
+.uniCard{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.uniCardClass{
+    border: none;
+    border: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #D9D9D9;
+    width: 500px;
+    height: 500px;
+    padding: 30px 20px;
+}
+
+.cardTitle{
+    text-align: center;
+    font-size: 50px;
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    word-break: break-word;
+}

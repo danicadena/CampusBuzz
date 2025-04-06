@@ -435,7 +435,52 @@ function getSelectedEvent(){
 }
 
 async function getUniversityProfiles(){
-    
+    let url = urlBase + 'GetUniversityProfile.' + extension;
+
+    try{
+        const response = await fetch (url,{
+            method: 'GET',
+            headers:{
+                'Content-type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        console.log("API response:", data);
+
+        if(data.error && data.error !== ""){
+            console.log('api error:', data.error);
+        }
+        else{
+            if (Array.isArray(data.results) && data.results.length > 0){
+                const superContainer = document.getElementById("superCont");
+                if (!superContainer) {
+                    console.error("Super container element not found");
+                    return;
+                }
+                superContainer.innerHTML = ''; 
+
+                data.results.forEach(uni => {
+                    const superDiv = document.createElement('div');
+                    superDiv.classList.add('uniCard');
+
+                    superDiv.innerHTML = `
+                        <div class="uniCardClass">
+                            <div class="cardTitle">${uni.Uni_name}</div>
+                           
+                        </div>
+                    `;
+
+                    superContainer.appendChild(superDiv);
+                });
+
+            }else {
+                console.log('No results found');
+            }
+        }
+    }catch(error){
+        console.log('Error fetching Universities');
+    }
 }
 
 async function getAllRSOs(){
