@@ -434,6 +434,10 @@ function getSelectedEvent(){
     return eventSelect.value;
 }
 
+async function getUniversityProfiles(){
+    
+}
+
 async function getAllRSOs(){
     const domain = getEmail();
     const uid = getUserID();

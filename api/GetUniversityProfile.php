@@ -11,18 +11,15 @@
 	} 
 	else
 	{
+		$universities = [];
+
         // get a university's profile
-		$get = $conn->prepare("SELECT LocID, Uni_name, Student_num, Profile_pic FROM University WHERE Uni_ID = ?");
-        $get->bind_param("i", $uniID);
+		$get = $conn->prepare("SELECT Uni_ID, LocID, Uni_name, Student_num, Profile_pic FROM University");
         $get->execute();
         $result = $get->get_result();
 
         if ($row = $result->fetch_assoc()) {
-            returnWithInfo($row);
-        }
-        else
-        {
-            returnWithError("University not found!");
+            $universities[] = $row;
         }
 
         $get->close();

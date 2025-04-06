@@ -137,3 +137,11 @@ a{
     text-align: center;
     font-size: 120px;
 }
+
+.superGrid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    justify-items: center;
+    padding: 40px;
+}
