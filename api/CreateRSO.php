@@ -9,8 +9,10 @@
 
 	$uidList = $inData["UIDs"];
     $newAdmin = $inData["Student_promoted"];
-	$phone = $inData["Admin_phone"];
 	$rsoName = $inData["RSO_name"];
+
+	// admins can create RSOs - already in database
+	$phone = isset($inData["Admin_phone"]) ? $inData["Admin_phone"] = null;
 
     $conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz"); 	
     if( $conn->connect_error )
@@ -52,6 +54,7 @@
 		}
 
 		$first = $domains[0];
+
 		$same = true;
 
 		foreach($domains as $d)
@@ -69,18 +72,31 @@
 			return;
 		}
 
-		// promote student to Admin
-		$addAdmin = $conn->prepare("INSERT into Admins (UID, Phone) VALUES (?, ?)");
-		$addAdmin->bind_param("is", $newAdmin, $phone);
-		$addAdmin->execute();
-		$adminID = $conn->insert_id;
-		$addAdmin->close();
+		// check if student promoted is already an admin
+		$check = $conn->prepare("SELECT UID from Admins WHERE UID = ?");
+		$check->bind_param("i", $uidList[0]);
+		$check->execute();
+		$check->store_result();
+		$adminFound = $check->num_rows > 0;
+		$check->close();
+		
+		if($adminFound){
+			continue;
+		}
+		else{
+			// promote student to Admin
+			$addAdmin = $conn->prepare("INSERT into Admins (UID, Phone) VALUES (?, ?)");
+			$addAdmin->bind_param("is", $newAdmin, $phone);
+			$addAdmin->execute();
+			$adminID = $conn->insert_id;
+			$addAdmin->close();
 
-		// change student user_type to Admin
-		$updateStudent = $conn->prepare("UPDATE Users SET User_Type = 'Admin' WHERE UID = ?");
-		$updateStudent->bind_param("i", $newAdmin);
-		$updateStudent->execute();
-		$updateStudent->close();
+			// change student user_type to Admin
+			$updateStudent = $conn->prepare("UPDATE Users SET User_Type = 'Admin' WHERE UID = ?");
+			$updateStudent->bind_param("i", $newAdmin);
+			$updateStudent->execute();
+			$updateStudent->close();
+		}
 
 		// create the RSO with new admin
 		$stmt = $conn->prepare("INSERT into RSOs_Creates (Admins_ID, RSO_name, Email_domain) VALUES(?,?,?)");
