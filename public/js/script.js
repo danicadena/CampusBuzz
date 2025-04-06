@@ -250,6 +250,7 @@ async function doCreateRSO(){
 
     let phoneElement = document.getElementById("phoneInput").value;
     let phone = phoneElement ? phoneElement.value : "";
+    console.log(phone);
 
     document.getElementById("rsoRes").innerHTML= "";
 
