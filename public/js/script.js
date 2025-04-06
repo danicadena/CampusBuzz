@@ -241,7 +241,7 @@ async function doCreateRSO(){
 
     let members = []
     members.push(admin);
-    let inputs = document.querySelectorAll(".memberInp").value;
+    let inputs = document.querySelectorAll(".memberInp");
 
     inputs.forEach(input => {
         if(input.value !== ""){
