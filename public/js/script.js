@@ -812,7 +812,7 @@ async function getComments(){
                                 <h5 class="commentText">${comment.Text}</h5>
                                 <p class="card-text"><small class="text-muted">${comment.Timestamp}</small></p>
                                 <p class="card-text">${comment.Rating}</p>
-                                ${comment.User_ID === Number(localStorage.getItem("id")) ? `
+                                  ${Number(comment.User_ID) === userId ? `
                                     <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${comment.Events_ID})">Delete</button>
                                     <button class="btn btn-warning" onclick="editComment(${comment.UID}, ${comment.Events_ID}, ${comment.Rating}, '${comment.Text}')">Edit</button>
                                 ` : ''}
@@ -962,37 +962,60 @@ async function updateEvent(){
     if (!eventId)  return;
 
     const eventPayload = {
-        Events_ID: eventId,
-        Admins_ID: id,  
-        Event_time: document.getElementById('eventTime').value,
-        Date: document.getElementById('eventDate').value,
-        Event_name: document.getElementById('eventName').value,
-        Description: document.getElementById('eventDescription').value
+        Events_ID: eventId
     };
 
-    console.log('Updated Event Payload:', eventPayload);
+    document.getElementById("updateEventModal").style.display = "block";
 
-    const url = urlBase + 'UpdateEvent.' + extension;
+    const eventInfo = await getEventInfo();
 
-    try {
-        const response = await fetch (url, {
-            method: 'POST', 
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify(eventPayload)
-        });
+    document.getElementById('eventName').value = eventInfo.Event_name || '';
+    document.getElementById('eventLocation').value = eventInfo.Event_location || '';
+    document.getElementById('eventTime').value = eventInfo.Event_time || '';
+    document.getElementById('eventDate').value = eventInfo.Date || '';
+    document.getElementById('eventDesc').value = eventInfo.Description || '';
 
-        const data = await response.json();
 
-        if (response.ok){
-            alert('Event updated successfully!');
-        } else{
-            alert('Failed to update event');
+    document.getElementById('saveEventButton').addEventListener('click', async () => {
+        const eventPayload = {
+            Events_ID: eventId,
+            Admins_ID: id,
+            Event_time: document.getElementById('eventTime').value,
+            Date: document.getElementById('eventDate').value,
+            Event_name: document.getElementById('eventName').value,
+            Event_location: document.getElementById('eventLocation').value,
+            Description: document.getElementById('eventDesc').value
+        };
+
+        console.log('Updated Event Payload:', eventPayload);
+        const url = urlBase + 'UpdateEvent.' + extension;
+
+        try {
+            const response = await fetch (url, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                body: JSON.stringify(eventPayload)
+            });
+
+            const data = await response.json();
+
+            if (data.success){
+                alert('Event updated successfully!');
+                document.getElementById("updateEventModal").style.display = "none"; 
+                getEvents();
+            } else{
+                alert('Failed to update event');
+            }
+        } catch (error){
+           alert('An error occurred while updating the event');
         }
-    } catch (error){
-        alert('An error occurred while updating the event');
-    }
+    });
+
+    document.getElementById('cancelButton').addEventListener('click', () => {
+        document.getElementById("updateEventModal").style.display = "none"; 
+    });
 }
 
 function editComment(userId, eventId, currentRating, currentText) {

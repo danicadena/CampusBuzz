@@ -105,6 +105,7 @@ CSS FOR EVENT INFO PAGE
 
 .eventSection{
     height: 50vh;
+    overflow-y: auto;
 }
 
 .commentSection{
@@ -230,9 +231,15 @@ strong{
 }
 
 .commentCard {
-    width: 300px;
+    width: 350px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 15px;
     background-color: lightgray;
+}
+
+#commentStatus{
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
 }
