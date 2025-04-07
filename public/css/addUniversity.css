@@ -89,3 +89,9 @@ input[type="text"]#studentInp{
 .uniButton:hover{
     border: 2px solid black;
 }
+
+#universityRes{
+    text-align: center;
+    display: block;
+    margin-top: 4.5%;
+}

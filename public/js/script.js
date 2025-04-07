@@ -1108,7 +1108,91 @@ async function fetchUniversitiesForProfile(){
 }
 
 async function doAddUniversity(){
+	let enrollment = document.getElementById("studentInp").value
+	let uni = getSelectedUniToCreate();
+    let uid = Number(localStorage.getItem("id"));
+
+    document.getElementById("universityRes").innerHTML = "";
+
+    const imagePathMap = {
+        "University of Central Florida": "/public/images/ucf.png",
+        "University of Texas": "/public/images/texas.png",
+        "University of Cincinnati": "/public/images/cincy.png",
+        "University of Florida": "/public/images/florida.png",
+        "Baylor University": "/public/images/baylor.png",
+        "Iowa State University": "/public/images/iowa.png",
+        "University of Kansas": "/public/images/kansas.png",
+        "Kansas State University": "/public/images/kstate.png",
+        "Stanford University": "/public/images/stanford.png",
+        "Harvard University": "/public/images/harvard.png"
+    };
     
+    const path = imagePathMap[uni] || "";
+
+    let url = urlBase + 'GetSuperID.' + extension;
+	console.log("url: ", url);
+
+    let superAdmin;
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                UID: uid
+            }),
+            mode : 'no-cors'
+        });
+
+        const superID = await response.json();
+        console.log("data recieved: ", superID);
+
+        if (superID.error && superID.error !== ""){
+            document.getElementById("studentInp").value= "";
+            document.getElementById("userSelectUniversity").value = "";
+            return;
+        }
+
+        superAdmin = superID.SuperAdmins_ID;
+    }
+    catch(error){
+        console.error("Failed to get super admin");
+        return;
+    }
+
+    let url1 = urlBase + 'CreateUniversity.' + extension;
+	console.log("url: ", url1);
+
+	try{
+        const response = await fetch (url1, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                Uni_name: uni,
+                Student_num: enrollment,
+                Profile_pic: path,
+                SuperAdmins_ID: superAdmin
+            }),
+            mode : 'no-cors'
+        });
+
+        const data = await response.json();
+        console.log("data recieved: ", data);
+        
+        if (data.error && data.error !== ""){
+            document.getElementById("studentInp").value= "";
+            document.getElementById("userSelectUniversity").value = "";
+        }
+        else{
+            showToast("Add university successful!", 3000);
+            window.location.href = "dashboard.html";
+        }
+    }catch(error){
+        document.getElementById("universityRes").innerHTML= "failed to add university!";
+    }
 }
 
 
