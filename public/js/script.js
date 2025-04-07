@@ -406,6 +406,11 @@ function getSelectedUni(){
     return uniSelect.value;
 }
 
+function getSelectedUniToCreate(){
+    const uniSelect = document.getElementById('userSelectUniversity');
+    return uniSelect.value;
+}
+
 function getSelectedUser(){
     const userSelect = document.getElementById("userSelect");
     return userSelect.value;
@@ -1098,7 +1103,7 @@ async function fetchUniversitiesForProfile(){
         }
 
     }catch(error){
-        console.log("error fetching unis");
+        console.log("Error fetching universities to create");
     }
 }
 
