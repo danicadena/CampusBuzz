@@ -1225,11 +1225,42 @@ async function fetchUniversityInfo(uniID){
     }
 }
 
+async function approveEvent(eventID, button){
+    let url = urlBase + 'ApproveEvents.' + extension;
+
+    try{
+        const response = await fetch (url,{
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                Events_ID: eventID
+            })
+        });
+
+        const data = await response.json();
+        console.log("API response:", data);
+
+        if(data.error && data.error !== ""){
+            console.log('api error:', data.error);
+        }
+        else{
+            button.textContent = "Approved";
+            button.classList.remove("approveBtn");
+            button.classList.add("approvedBtn");
+            button.disabled = true;
+        }
+    }catch(error){
+        console.error("Error approving event");
+    }
+}
+
 async function getSuperEvents(){
     const params = new URLSearchParams(window.location.search);
     const uniID = params.get('uni_id');
     if(!uniID){
-        console.error("uni_if not found");
+        console.error("uni_id not found");
         return;
     }
 
@@ -1280,6 +1311,18 @@ async function getSuperEvents(){
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('eventCard');
 
+                    const approvedMarkup = `
+                        <div class="approveWrapper">
+                            <button class="approvedBtn" disabled>Approved</button>
+                        </div>
+                    `;
+
+                    const pendingMarkup = `
+                        <div class="approveWrapper">
+                            <button class="approveBtn" onclick="approveEvent(${event.Events_ID}, this)">Approve</button>
+                        </div>
+                    `;
+
                     eventDiv.innerHTML = `
                         <div class="eventCardClass">
                             <div class="cardHeader">
@@ -1288,12 +1331,7 @@ async function getSuperEvents(){
                             </div>
                             <div class="cardDescription">${event.Description}</div>
                             <div class="cardDate">${formattedDate} at ${formattedTime}</div>
-
-                            ${needsApproval ? `
-                                <div class="approveWrapper">
-                                  <button class="approveBtn" onclick="approveEvent(${event.Events_ID})">Approve</button>
-                                </div>
-                              ` : ''}
+                            ${event.Approval_Status === "approved" ? approvedMarkup : event.Approval_Status === "pending" ? pendingMarkup : ""}
                         </div>
                     `;
 
