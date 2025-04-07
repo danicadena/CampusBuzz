@@ -1062,12 +1062,52 @@ async function updateComment(userId, eventId, newRating, newText){
     }
 }
 
+// drop down menu for university profiles to create
+async function fetchUniversitiesForProfile(){
+    try{
+        let url = urlBase + 'GetLocations.'+extension;
+        console.log("url: " + url);
+        const response = await fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept' : 'application/json'
+            }, 
+        });
+
+        const data = await response.json();
+        const uniSelect = document.getElementById('userSelectUniversity');
+
+        //a default option before user inputs something
+        uniSelect.innerHTML='';
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent= 'Select University';
+        defaultOption.value = '';
+        uniSelect.appendChild(defaultOption);
+
+        if (data.results && Array.isArray(data.results)){
+            data.results.forEach(university => {
+                const option = document.createElement('option');
+                option.textContent = university;
+                option.value = university;
+                uniSelect.appendChild(option);
+
+            })
+        } else{
+            console.log("no unis found in the response");
+        }
+
+    }catch(error){
+        console.log("error fetching unis");
+    }
+}
+
 
 window.onload = function (){
     getEvents();
     getRsos();
     fetchUniversities();
     getUniversityProfiles();
+    fetchUniversitiesForProfile();
 }
 
 // on window load

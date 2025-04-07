@@ -5,16 +5,33 @@
         <meta charset="utf-8">
         <meta name = "viewport" content="width=device-width, initla-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link href="./public/css/styles.css" rel="stylesheet"> 
-        <link href="./public/css/login.css" rel="stylesheet">   
-        <link href="./public/css/dashboard.css" rel="stylesheet">   
+        <link href="./public/css/styles.css" rel="stylesheet">  
+        <link href="./public/css/addUniversity.css" rel="stylesheet">   
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
     </head>
 
     <body>
-        <h1>Add University</h1>
+        <div class="uniContainer">
+            <div class="row">
+                <div class="col">
+                    <a class="return" href="dashboard.html"> &ltReturn</a>
+                    <h2 id="uniTitle">Add University Profile</h2>
+                    <h3 id="uniDesc">To create a university's profile, select one below and add the corresponding information:</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="uniContainer">
+            <div class="row">
+                <div class="col" id="fields">
+                    <h2 id="fieldTitle">University:</h2>
+                    <select name="University" id="userSelectUniversity">
+                    </select><br>
+                </div>
+            </div>
+        </div>
 
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
