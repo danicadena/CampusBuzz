@@ -1022,7 +1022,8 @@ function editComment(userId, eventId, currentRating, currentText) {
 
     const submitButton = document.querySelector('.submitComment');
     submitButton.innerText = "Update Comment";
-    submitButton.setAttribute('onclick', `updateComment(${userId}, ${eventId}, '${currentText}')`);
+    submitButton.removeEventListener('click', sendComment);
+    submitButton.addEventListener('click', () => updateComment(userId, eventId, document.getElementById("ratingInfo").value, document.getElementById("comment").value));
 }
 
 
@@ -1046,15 +1047,18 @@ async function updateComment(userId, eventId, newRating, newText){
         });
 
         const data = await response.json();
+        console.log('API Response:', data);
 
         if (data.success) {
             console.log('Comment updated successfully');
             getComments();
+            
             const submitButton = document.querySelector('.submitComment');
             submitButton.innerText = "Submit";
-            submitButton.setAttribute('onclick', 'sendComment();');
+            submitButton.removeEventListener('click', updateComment);
+            submitButton.addEventListener('click', sendComment);
         } else {
-             alert("Error updating ");
+             alert("Error updating comment");
         }
     } catch (error) {
         console.error('Error updating comment', error);
