@@ -46,10 +46,17 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $name, $num, $pic )
+	function returnWithInfo($name, $num, $pic)
 	{
-		$retValue = '{"Uni_name":' . $name . ',"Student_num":' . $num . ',"Profile_pic":' . $pic . ',"error":""}';
-		sendResultInfoAsJson( $retValue );
+		$retValue = json_encode([
+			"result" => [
+				"Uni_name" => $name,
+				"Student_num" => $num,
+				"Profile_pic" => $pic
+			],
+			"error" => ""
+		]);
+		sendResultInfoAsJson($retValue);
 	}
 	
 ?>
