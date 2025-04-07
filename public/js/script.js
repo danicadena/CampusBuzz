@@ -1112,7 +1112,6 @@ window.onload = function (){
     getEvents();
     getRsos();
     fetchUniversities();
-    getUniversityProfiles();
 }
 
 // on window load
@@ -1139,6 +1138,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if(window.location.pathname.includes('addUniversity.html')){
         console.log(" DOM loaded, running fetchUniversitiesForProfile()");
         fetchUniversitiesForProfile();
+    }
+
+    if(window.location.pathname.includes('dashboard.html')){
+        getUniversityProfiles();
     }
 })
 
