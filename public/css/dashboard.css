@@ -200,7 +200,7 @@ a{
     margin-bottom: 20px;
 }
 
-.cardBottomRow {
+.bottomRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
