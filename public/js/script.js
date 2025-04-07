@@ -1225,10 +1225,73 @@ async function fetchUniversityInfo(uniID){
     }
 }
 
+async function getSuperEvents(){
+    const params = new URLSearchParams(window.location.search);
+    const uniID = params.get('uni_id');
+    if(!uniID){
+        console.error("uni_if not found");
+        return;
+    }
+
+    let url = urlBase + 'GetSuperEvents.' + extension;
+
+    try{
+        const response = await fetch (url,{
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                Uni_ID: uniID
+            })
+        });
+
+        const data = await response.json();
+        console.log("API response:", data);
+
+        if(data.error && data.error !== ""){
+            console.log('api error:', data.error);
+        }
+        else{
+            if (Array.isArray(data.results) && data.results.length > 0){
+                const eventContainer = document.getElementById("eventCont");
+                if (!eventContainer) {
+                    console.error("Event container not found");
+                    return;
+                }
+                eventContainer.innerHTML = ''; 
+
+                data.results.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.classList.add('eventCard');
+
+                    eventDiv.innerHTML = `
+                        <div class="eventCardClass">
+                            <div class="cardTitle">${event.Event_name}}</div>
+                            <div class="cardType">${event.Event_type}}</div>
+                            <div class="cardDescription">${event.Description}</div>
+                            <div class="cardDate">${event.Date} at ${event.Event_time}</div>
+                            <div class="cardTime">${event.Event_time}</div>
+                        </div>
+                    `;
+
+                    eventContainer.appendChild(eventDiv);
+                });
+
+            }else {
+                console.log('No results found');
+            }
+        }
+    }catch(error){
+        console.log('Error fetching events');
+    }
+}
+
 window.onload = function (){
     getEvents();
     getRsos();
     fetchUniversities();
+    getSuperEvents();
 }
 
 // on window load
