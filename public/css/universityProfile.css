@@ -12,8 +12,13 @@
     margin: auto;
 }
 
+#info{
+    margin-bottom: 50px;
+}
+
 #bottomSection{
     background-color: white !important;
+    padding: 20px;
 }
 
 #profileImg{
