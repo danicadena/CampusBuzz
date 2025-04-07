@@ -1075,6 +1075,7 @@ async function fetchUniversitiesForProfile(){
         });
 
         const data = await response.json();
+        console.log("Uncreated Universities: ", data);
         const uniSelect = document.getElementById('userSelectUniversity');
 
         //a default option before user inputs something
