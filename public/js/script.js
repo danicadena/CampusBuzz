@@ -1193,6 +1193,36 @@ async function doAddUniversity(){
     }
 }
 
+async function fetchUniversityInfo(uniID){
+    let url = urlBase + 'GetAUniversityByID.' + extension;
+	console.log("url: ", url);
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                Uni_ID: uniID
+            })
+        });
+
+        const data = await response.json();
+        console.log("data recieved: ", data);
+
+        if (data.error && data.error !== ""){
+            console.error("Failed to fetch university info");
+            return;
+        }
+        else{
+            document.getElementById("profileName").textContent = `Name: ${data.result.Uni_name}`;
+            document.getElementById("profileEnrollment").textContent = `Student Enrollment: ${data.result.Student_num}`;
+        }
+    }catch(error){
+        console.error("Failed to fetch university info");
+    }
+}
 
 window.onload = function (){
     getEvents();
