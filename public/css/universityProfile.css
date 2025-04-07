@@ -1,0 +1,17 @@
+#profileTitle{
+    color: #fff;
+    font-size: 130px;
+    text-align: center;
+}
+
+#profileInfo{
+    color: #fff;
+    font-size: 60px;
+    text-align: left;
+    width: 60%;
+    margin: auto;
+}
+
+#bottomSection{
+    background-color: #D9D9D9 !important;
+}
