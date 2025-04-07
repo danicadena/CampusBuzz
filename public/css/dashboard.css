@@ -187,4 +187,15 @@ a{
     color: black;
     width: 100%;
     word-break: break-word;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.cardPhoto{
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: contain;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
