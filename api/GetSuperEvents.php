@@ -31,9 +31,9 @@
         $getPrivate = $conn->prepare("
             SELECT E.Events_ID, E.Event_name, E.Date, E.Event_time, E.Description, E.Approval_Status, L.Lname
             FROM Events_At E
-            JOIN Private_Events_Creates PE ON E.Events_ID = PE.Events_ID
+            JOIN Private_Events_Creates P ON E.Events_ID = P.Events_ID
             JOIN Locations L ON E.LocID = L.LocID
-            WHERE PE.Uni_ID = ?
+            WHERE E.LocID = ?
         ");
         $getPrivate->bind_param("i", $uniID);
         $getPrivate->execute();
