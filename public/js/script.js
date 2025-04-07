@@ -634,7 +634,7 @@ async function getEvents(){
             console.log('api error:', eventRes.error);
         } else{
             if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
-                const eventContainer = document.getElementById("eventCardContainer");  
+                const eventContainer = getUserType() === "Admin" ? document.getElementById("adminEventCardContainer") : document.getElementById("eventCardContainer");
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
@@ -983,7 +983,6 @@ document.addEventListener("DOMContentLoaded", () => {
         getAllRSOs();
     }
 })
-
 
 if (window.location.pathname.includes('eventInfo.html')) {
     getEventInfo();
