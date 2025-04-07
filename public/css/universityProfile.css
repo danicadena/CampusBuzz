@@ -17,8 +17,8 @@
 }
 
 #profileImg{
-    max-width: 100%;
+    width: 200px;
     height: auto;
     display: block;
-    margin: 0 auto;
+    margin-right: 100px;
 }
