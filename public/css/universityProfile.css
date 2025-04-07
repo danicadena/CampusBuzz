@@ -13,12 +13,28 @@
 }
 
 #bottomSection{
-    background-color: #D9D9D9 !important;
+    background-color: white !important;
 }
 
 #profileImg{
     width: 200px;
     height: auto;
     display: block;
-    margin-right: 100px;
+    margin-right: 120px;
+}
+
+#eventTitle{
+    color: black;
+    font-size: 50px;
+    text-align: center;
+    width: 60%;
+    margin: auto;
+}
+
+#eventDesc{
+    color: black;
+    font-size: 40px;
+    text-align: center;
+    width: 60%;
+    margin: auto;
 }
