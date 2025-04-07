@@ -1113,7 +1113,6 @@ window.onload = function (){
     getRsos();
     fetchUniversities();
     getUniversityProfiles();
-    fetchUniversitiesForProfile();
 }
 
 // on window load
@@ -1142,4 +1141,8 @@ document.addEventListener("DOMContentLoaded", () => {
 if (window.location.pathname.includes('eventInfo.html')) {
     getEventInfo();
     getComments();
+}
+
+if(window.location.pathname.includes('addUniversity.html')){
+    fetchUniversitiesForProfile();
 }
