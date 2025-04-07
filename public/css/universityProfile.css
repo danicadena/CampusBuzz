@@ -63,6 +63,13 @@
     padding: 30px 20px;
 }
 
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 .cardTitle{
     text-align: left;
     font-size: 50px;
@@ -70,7 +77,11 @@
     width: 100%;
 }
 
-.cardType,
+.cardType{
+    font-size: 18px;
+    color: royalblue;
+}
+
 .cardDescription,
 .cardDate,
 .cardTime {
