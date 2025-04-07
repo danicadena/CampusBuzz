@@ -1262,6 +1262,20 @@ async function getSuperEvents(){
                 eventContainer.innerHTML = ''; 
 
                 data.results.forEach(event => {
+                    // format date and time
+                    const formattedDate = new Date(event.Date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                
+                    const formattedTime = new Date(`1970-01-01T${event.Event_time}Z`).toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+                    
+
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('eventCard');
 
@@ -1272,7 +1286,7 @@ async function getSuperEvents(){
                                 <div class="cardType">${event.Event_type}</div>
                             </div>
                             <div class="cardDescription">${event.Description}</div>
-                            <div class="cardDate">${event.Date} at ${event.Event_time}</div>
+                            <div class="cardDate">${formattedDate} at ${formattedTime}</div>
                         </div>
                     `;
 
