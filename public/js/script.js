@@ -1269,7 +1269,7 @@ async function getSuperEvents(){
                         day: 'numeric'
                     });
                 
-                    const formattedTime = new Date(`1970-01-01T${event.Event_time}Z`).toLocaleTimeString('en-US', {
+                    const formattedTime = new Date(`1970-01-01T${event.Event_time}`).toLocaleTimeString('en-US', {
                         hour: 'numeric',
                         minute: '2-digit',
                         hour12: true
