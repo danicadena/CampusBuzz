@@ -86,14 +86,14 @@
 .cardDescription {
     font-size: 20px;
     color: #333;
-    line-height: 1.0;
+    line-height: 1.4;
 }
 
 .cardDate,
 .cardTime {
     font-size: 35px;
     color: #333;
-    line-height: 1.0;
+    line-height: 1.4;
 }
 
 .approveWrapper {
