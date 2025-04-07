@@ -103,6 +103,7 @@
     padding: 8px 16px;
     border: none;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .approveBtn:hover{
