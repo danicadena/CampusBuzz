@@ -103,5 +103,8 @@
     padding: 8px 16px;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
+  }
+
+  .approveBtn:hover{
+    border: 2px solid white;
   }
