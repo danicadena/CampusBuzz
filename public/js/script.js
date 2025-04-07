@@ -665,7 +665,7 @@ async function getEvents(){
                         const adminBtns = document.createElement("div");
                         adminBtns.innerHTML = `
                             <button class="eventOptionsBtn" onclick='deleteEvent(${event.Events_ID});'>Delete</button>
-                            <button class="eventOptionsBtn" onclick='updateEvent(${event.Events_ID});'>Update</button>
+                            <button class="eventOptionsBtn" onclick='updateEvent();'>Update</button>
                         `;
                         eventDiv.appendChild(adminBtns);
                     }
@@ -812,6 +812,10 @@ async function getComments(){
                                 <h5 class="commentText">${comment.Text}</h5>
                                 <p class="card-text"><small class="text-muted">${comment.Timestamp}</small></p>
                                 <p class="card-text">${comment.Rating}</p>
+                                ${comment.User_ID === Number(localStorage.getItem("id")) ? `
+                                    <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${comment.Events_ID})">Delete</button>
+                                    <button class="btn btn-warning" onclick="editComment(${comment.UID}, ${comment.Events_ID}, ${comment.Rating}, '${comment.Text}')">Edit</button>
+                                ` : ''}
                             </div>
                         </div>
                     `;
@@ -914,19 +918,17 @@ async function deleteEvent(eventId){
     }
 }
 
-async function deleteComment(){
-    const id = localStorage.getItem("id");
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('eventId');
+//TODO: 
+async function deleteComment(userId, eventId){
+    const confirmDel = confirm("Are you sure you want to delete this event?") 
+    if (!confirmDel) return;
 
     const delPayload={
-        UID: id,
+        UID: userId,
         Events_ID: eventId
     };
 
     const url = urlBase + 'DeleteComment.' + extension;
-    console.log('del payload: ', delPayload);
 
     try {
         const response = await fetch (url, {
@@ -934,31 +936,110 @@ async function deleteComment(){
             headers:{
                 'Content-Type' : 'application/json'
             },
-            body: stringify.JSON(delPayload)
+            body: JSON.stringify(delPayload)
         })
 
         const data = await response.json();
-        if (data.error && data.error !== ""){
-            console.log('error deleting comment')
-        } else{
-            showToast('Success deleting comment');
-        }
 
+        if (data.success){
+            getComments();
+        } else{
+            alert('Error deleting comment!');
+        }
+    
 
     }catch (error){
         console.log('error deleting comment');
+    }
+}
+ 
+async function updateEvent(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventId = urlParams.get('eventId');
 
+    const id = getUserID();
+
+    if (!eventId)  return;
+
+    const eventPayload = {
+        Events_ID: eventId,
+        Admins_ID: id,  
+        Event_time: document.getElementById('eventTime').value,
+        Date: document.getElementById('eventDate').value,
+        Event_name: document.getElementById('eventName').value,
+        Description: document.getElementById('eventDescription').value
+    };
+
+    console.log('Updated Event Payload:', eventPayload);
+
+    const url = urlBase + 'UpdateEvent.' + extension;
+
+    try {
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(eventPayload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok){
+            alert('Event updated successfully!');
+        } else{
+            alert('Failed to update event');
+        }
+    } catch (error){
+        alert('An error occurred while updating the event');
     }
 }
 
-//TODO: 
-async function updateEvent(eventId){
-   console.log("UPDATE PRESSED")
+function editComment(userId, eventId, currentRating, currentText) {
+    document.getElementById("ratingInfo").value = currentRating;
+    document.getElementById("comment").value = currentText;
+
+    const submitButton = document.querySelector('.submitComment');
+    submitButton.innerText = "Update Comment";
+    submitButton.setAttribute('onclick', `updateComment(${userId}, ${eventId}, '${currentText}')`);
 }
 
-async function updateComment(){
-  
+
+async function updateComment(userId, eventId, newRating, newText){
+    const updatePayload = {
+        UID: userId,
+        Events_ID: eventId,
+        Rating: newRating,
+        Text: newText
+    };
+
+    const url = urlBase + 'EditComment.' + extension;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatePayload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log('Comment updated successfully');
+            getComments();
+            const submitButton = document.querySelector('.submitComment');
+            submitButton.innerText = "Submit";
+            submitButton.setAttribute('onclick', 'sendComment();');
+        } else {
+             alert("Error updating ");
+        }
+    } catch (error) {
+        console.error('Error updating comment', error);
+    }
 }
+
 
 window.onload = function (){
     getEvents();

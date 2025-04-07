@@ -20,6 +20,7 @@ html,body{
     display: flex;
     justify-content: space-between;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #functionality{
@@ -79,10 +80,15 @@ input[type="search"]{
     display: block;
     margin: 0 auto;
     background-color: #D9D9D9;
-    height: 300px;
-    width: 550px;
+    height: 200px;
+    width: 850px;
     overflow: auto;
     margin-bottom: 15px;
+}
+
+#adminEventCardContainer {
+    display: block;
+    margin: 0 auto;
 }
 
 #rsoTitle{
