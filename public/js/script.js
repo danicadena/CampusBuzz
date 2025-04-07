@@ -1135,6 +1135,11 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(" DOM loaded, running getAllRSOs()");
         getAllRSOs();
     }
+
+    if(window.location.pathname.includes('addUniversity.html')){
+        console.log(" DOM loaded, running fetchUniversitiesForProfile()");
+        fetchUniversitiesForProfile();
+    }
 })
 
 
@@ -1143,6 +1148,3 @@ if (window.location.pathname.includes('eventInfo.html')) {
     getComments();
 }
 
-if(window.location.pathname.includes('addUniversity.html')){
-    fetchUniversitiesForProfile();
-}
