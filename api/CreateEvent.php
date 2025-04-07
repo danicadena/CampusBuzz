@@ -71,12 +71,6 @@
 			$privateStmt->bind_param("ii", $eventID, $adminID);
 			$privateStmt->execute();
 			$privateStmt->close();
-
-			// change approval status to approved because super admin does not need to approve
-			$approve = $conn->prepare("UPDATE Events_At SET Approval_Status = 'approved' WHERE Events_ID = ?");
-			$approve->bind_param("i", $eventID);
-			$approve->execute();
-			$approve->close();
 		}
         // create RSO event
         elseif ($type === "RSO")

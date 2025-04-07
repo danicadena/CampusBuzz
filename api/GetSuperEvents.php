@@ -11,7 +11,7 @@
 
         // get all public events
         $getPublic = $conn->prepare("
-            SELECT E.Events_ID, E.Event_name, E.Date, E.Event_time, E.Description, L.Lname
+            SELECT E.Events_ID, E.Event_name, E.Date, E.Event_time, E.Description, E.Approval_Status, L.Lname
             FROM Events_At E
             JOIN Public_Events_Creates P ON E.Events_ID = P.Events_ID
             JOIN Locations L ON E.LocID = L.LocID
