@@ -1065,7 +1065,7 @@ async function updateComment(userId, eventId, newRating, newText){
 // drop down menu for university profiles to create
 async function fetchUniversitiesForProfile(){
     try{
-        let url = urlBase + 'GetLocations.'+extension;
+        let url = urlBase + 'GetUncreatedUniversity.'+extension;
         console.log("url: " + url);
         const response = await fetch(url,{
             method: 'GET',
