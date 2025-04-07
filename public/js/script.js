@@ -705,7 +705,7 @@ async function getRsos(){
         }else{
             //if an rso is found make elements for each one 
             if (Array.isArray(rsoRes.results) && rsoRes.results.length > 0) {
-                const rsoContainer = document.getElementById("rsoListContainer");
+                const rsoContainer = getUserType() === "Admin" ? document.getElementById("rsoListAdminContainer") : document.getElementById("rsoListContainer");
                 rsoContainer.innerHTML =''; 
 
                 rsoRes.results.forEach(rso => {
