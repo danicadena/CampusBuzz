@@ -214,4 +214,19 @@ a{
     padding: 10px 20px;
     text-decoration: none;
   }
+
+  .cardImageWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px; 
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .cardImageWrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
   
