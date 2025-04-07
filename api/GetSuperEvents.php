@@ -1,15 +1,18 @@
 <?php
 
+	$inData = getRequestInfo();
+	$uniID = $inData["Uni_ID"];
+
 	$conn = new mysqli("localhost", "campusbuzz", "campus4Buzz", "CampusBuzz");
 	if ($conn->connect_error) 
 	{
-		returnWithError( $conn->connect_error );
+		returnWithError($conn->connect_error);
 	} 
 	else
 	{
         $events = [];
 
-        // get all public events
+        // Get all public events
         $getPublic = $conn->prepare("
             SELECT E.Events_ID, E.Event_name, E.Date, E.Event_time, E.Description, E.Approval_Status, L.Lname
             FROM Events_At E
@@ -17,13 +20,30 @@
             JOIN Locations L ON E.LocID = L.LocID
         ");
         $getPublic->execute();
-        $allPublic = $getPublic->get_result();
+        $publicResults = $getPublic->get_result();
 
-        while ($row = $allPublic->fetch_assoc()) {
+        while ($row = $publicResults->fetch_assoc()) {
             $events[] = $row;
         }
-
         $getPublic->close();
+
+        // Get private events for a specific university
+        $getPrivate = $conn->prepare("
+            SELECT E.Events_ID, E.Event_name, E.Date, E.Event_time, E.Description, E.Approval_Status, L.Lname
+            FROM Events_At E
+            JOIN Private_Events_Creates PE ON E.Events_ID = PE.Events_ID
+            JOIN Locations L ON E.LocID = L.LocID
+            WHERE PE.Uni_ID = ?
+        ");
+        $getPrivate->bind_param("i", $uniID);
+        $getPrivate->execute();
+        $privateResults = $getPrivate->get_result();
+
+        while ($row = $privateResults->fetch_assoc()) {
+            $events[] = $row;
+        }
+        $getPrivate->close();
+
 		$conn->close();
         returnWithInfo($events);
 	}
@@ -33,20 +53,26 @@
 		return json_decode(file_get_contents('php://input'), true);
 	}
 
-	function sendResultInfoAsJson( $obj )
+	function sendResultInfoAsJson($obj)
 	{
 		header('Content-type: application/json');
 		echo $obj;
 	}
 	
 	function returnWithInfo($results)
-    {
-        $retValue = json_encode([
-            "results" => $results,
-            "error" => ""
-        ]);
+	{
+		$retValue = json_encode([
+			"results" => $results,
+			"error" => ""
+		]);
 
-        sendResultInfoAsJson($retValue);
-    }
-	
+		sendResultInfoAsJson($retValue);
+	}
+
+	function returnWithError($err)
+	{
+		$retValue = '{"error":"' . $err . '"}';
+		sendResultInfoAsJson($retValue);
+	}
+
 ?>
