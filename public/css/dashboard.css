@@ -213,11 +213,6 @@ a{
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 8px;
-    font-weight: bold;
     transition: 0.2s;
   }
   
-  .viewLink:hover {
-    background-color: #555;
-    border: 1px solid #ccc;
-  }
