@@ -468,8 +468,8 @@ async function getUniversityProfiles(){
                         <div class="uniCardClass">
                             <div class="cardTitle">${uni.Uni_name}</div>
                             <img src="${uni.Profile_pic}" class="cardPhoto" alt="${uni.Uni_name} Logo">
-                            <div class="cardInfo">Enrollment: ${uni.Student_num}</div>
-                            <div class="viewBtnWrapper">
+                            <div class="bottomRow">
+                                <div class="cardInfo">Enrollment: ${uni.Student_num}</div>
                                 <a href="universityProfile.html?uni_id=${uni.Uni_ID}" class="viewLink">View</a>
                             </div>
                         </div>
