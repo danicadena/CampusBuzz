@@ -212,7 +212,21 @@ a{
   .viewLink {
     background-color: #333;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     text-decoration: none;
   }
+
+  .cardImageWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    height: 150px;
+    width: 100%;
+  }
   
+  .cardImageWrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
