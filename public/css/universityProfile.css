@@ -92,20 +92,19 @@
 }
 
 .approveWrapper {
-    margin-top: 15px;
+    margin-top: auto;
     display: flex;
     justify-content: flex-end;
-  }
-  
-  .approveBtn {
+}
+
+.approveBtn {
     background-color: green;
     color: white;
     padding: 8px 16px;
     border: none;
     cursor: pointer;
-    margin-bottom: 5px;
-  }
+}
 
-  .approveBtn:hover{
+.approveBtn:hover{
     border: 2px solid white;
-  }
+}
