@@ -1141,8 +1141,7 @@ async function doAddUniversity(){
             },
             body: JSON.stringify({
                 UID: uid
-            }),
-            mode : 'no-cors'
+            })
         });
 
         const superID = await response.json();
@@ -1175,8 +1174,7 @@ async function doAddUniversity(){
                 Student_num: enrollment,
                 Profile_pic: path,
                 SuperAdmins_ID: superAdmin
-            }),
-            mode : 'no-cors'
+            })
         });
 
         const data = await response.json();
