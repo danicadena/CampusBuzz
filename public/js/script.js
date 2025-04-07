@@ -1107,6 +1107,10 @@ async function fetchUniversitiesForProfile(){
     }
 }
 
+async function doAddUniversity(){
+    
+}
+
 
 window.onload = function (){
     getEvents();
