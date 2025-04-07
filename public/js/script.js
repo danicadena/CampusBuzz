@@ -812,10 +812,8 @@ async function getComments(){
                                 <h5 class="commentText">${comment.Text}</h5>
                                 <p class="card-text"><small class="text-muted">${comment.Timestamp}</small></p>
                                 <p class="card-text">${comment.Rating}</p>
-                                  ${Number(comment.User_ID) === userId ? `
-                                    <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${comment.Events_ID})">Delete</button>
-                                    <button class="btn btn-warning" onclick="editComment(${comment.UID}, ${comment.Events_ID}, ${comment.Rating}, '${comment.Text}')">Edit</button>
-                                ` : ''}
+                                <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${comment.Events_ID})">Delete</button>
+                                <button class="btn btn-warning" onclick="editComment(${comment.UID}, ${comment.Events_ID}, ${comment.Rating}, '${comment.Text}')">Edit</button>
                             </div>
                         </div>
                     `;
