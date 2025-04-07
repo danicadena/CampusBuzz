@@ -1216,8 +1216,8 @@ async function fetchUniversityInfo(uniID){
             return;
         }
         else{
-            document.getElementById("profileName").textContent = `Name: ${data.result.Uni_name}`;
-            document.getElementById("profileEnrollment").textContent = `Student Enrollment: ${data.result.Student_num}`;
+            document.getElementById("profileName").textContent = `Name: <span style="color: black;">${data.result.Uni_name}`;
+            document.getElementById("profileEnrollment").textContent = `Student Enrollment: <span style="color: black;">${data.result.Student_num}`;
         }
     }catch(error){
         console.error("Failed to fetch university info");
