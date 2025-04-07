@@ -78,8 +78,9 @@
 }
 
 .cardType{
-    font-size: 18px;
+    font-size: 30px;
     color: royalblue;
+    margin-right: 10px;
 }
 
 .cardDescription,
