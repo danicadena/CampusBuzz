@@ -467,7 +467,7 @@ async function getUniversityProfiles(){
                     superDiv.innerHTML = `
                         <div class="uniCardClass">
                             <div class="cardTitle">${uni.Uni_name}</div>
-                            <div class="cardPhoto">${uni.Profile_pic}</div>
+                            <img src="${uni.Profile_pic}" class="cardPhoto" alt="${uni.Uni_name} Logo">
                             <div class="cardInfo">Enrollment: ${uni.Student_num}</div>
                            
                         </div>
