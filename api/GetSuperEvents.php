@@ -18,7 +18,9 @@
             FROM Events_At E
             JOIN Public_Events_Creates P ON E.Events_ID = P.Events_ID
             JOIN Locations L ON E.LocID = L.LocID
+			WHERE E.LocID = ?
         ");
+		$getPublic->bind_param("i", $uniID);
         $getPublic->execute();
         $publicResults = $getPublic->get_result();
 
