@@ -808,22 +808,49 @@ async function getComments(){
                 const commentCont = document.getElementById("commentCont");
                 commentCont.innerHTML =''; 
 
+                const currentUserId = getUserID();
+
                 commentInfo.results.forEach(comment => {
                     const commentDiv = document.createElement('div');
                     commentDiv.classList.add('col-md-4', 'mb-3'); 
+
+                    const commentOwner = comment.UID === currentUserId;
+                    const buttonsHTML = isOwner
+                    ? `
+                    <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${eventId})">Delete</button>
+                    <button 
+                        class="btn btn-warning editBtn"
+                            data-uid="${comment.UID}"
+                            data-eventid="${eventId}"
+                            data-rating="${comment.Rating}"
+                            data-text="${encodeURIComponent(comment.Text)}"
+                        >Edit</button>
+                    ` : '';
+
                     commentDiv.innerHTML = `
                         <div class="commentCard">
                             <div class="card-body">
                                 <h5 class="commentText">${comment.Text}</h5>
                                 <p class="card-text"><small class="text-muted">${comment.Timestamp}</small></p>
                                 <p class="card-text">${comment.Rating}</p>
-                                <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${eventId})">Delete</button>
-                                <button class="btn btn-warning" onclick="editComment(${comment.UID}, ${eventId}, ${comment.Rating}, '${comment.Text}')">Edit</button>
+                                ${buttonsHTML}
                             </div>
                         </div>
                     `;
                     commentCont.appendChild(commentDiv);
                 });
+
+                document.querySelectorAll('.editBtn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const uid = Number(button.dataset.uid);
+                        const eid = Number(button.dataset.eventid);
+                        const rating = button.dataset.rating;
+                        const text = decodeURIComponent(button.dataset.text);
+
+                        editComment(uid, eid, rating, text);
+                    });
+                });
+
             } else {
                 console.log('No results found or invalid response structure');
                 document.getElementById('commentStatus').innerHTML = `<p>No Comments found.</p>`;
@@ -923,13 +950,15 @@ async function deleteEvent(eventId){
 
 //TODO: 
 async function deleteComment(userId, eventId){
-    const confirmDel = confirm("Are you sure you want to delete this event?") 
+    const confirmDel = confirm("Are you sure you want to delete this comment?") 
     if (!confirmDel) return;
 
     const delPayload={
         UID: userId,
         Events_ID: eventId
     };
+
+    console.log("Sending delete payload:", delPayload);
 
     const url = urlBase + 'DeleteComment.' + extension;
 
@@ -943,6 +972,7 @@ async function deleteComment(userId, eventId){
         })
 
         const data = await response.json();
+        console.log("Delete response:", data);
 
         if (data.success){
             getComments();
