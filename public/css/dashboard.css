@@ -91,6 +91,11 @@ input[type="search"]{
     margin: 0 auto;
 }
 
+#eventCardContainer{
+    display: block;
+    margin: 0 auto;
+}
+
 #rsoTitle{
     font-size: 40px;
     margin-left: 10px;
@@ -236,7 +241,7 @@ a{
     max-width: 100%;
     object-fit: contain;
   }
-  
+
   #updateEventModal {
     position: fixed;
     top: 0;

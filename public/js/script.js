@@ -966,6 +966,8 @@ async function updateEvent(){
     document.getElementById("updateEventModal").style.display = "block";
 
     const eventInfo = await getEventInfo();
+    console.log(eventInfo);
+
 
     document.getElementById('eventName').value = eventInfo.Event_name || '';
     document.getElementById('eventLocation').value = eventInfo.Event_location || '';
@@ -973,47 +975,50 @@ async function updateEvent(){
     document.getElementById('eventDate').value = eventInfo.Date || '';
     document.getElementById('eventDesc').value = eventInfo.Description || '';
 
+    const saveButton = document.getElementById('saveEventButton');
 
-    document.getElementById('saveEventButton').addEventListener('click', async () => {
-        const eventPayload = {
-            Events_ID: eventId,
-            Admins_ID: id,
-            Event_time: document.getElementById('eventTime').value,
-            Date: document.getElementById('eventDate').value,
-            Event_name: document.getElementById('eventName').value,
-            Event_location: document.getElementById('eventLocation').value,
-            Description: document.getElementById('eventDesc').value
-        };
+    saveButton.removeEventListener('click', handleSaveEvent);
+    saveButton.addEventListener('click', handleSaveEvent);
 
-        console.log('Updated Event Payload:', eventPayload);
-        const url = urlBase + 'UpdateEvent.' + extension;
+}
 
-        try {
-            const response = await fetch (url, {
-                method: 'POST', 
-                headers: {
-                    'Content-Type' : 'application/json'
-                },
-                body: JSON.stringify(eventPayload)
-            });
+async function handleSaveEvent(){
+    const eventId = new URLSearchParams(window.location.search).get('eventId');
+    const id = getUserID();
 
-            const data = await response.json();
+    const eventPayload = {
+        Events_ID: eventId,
+        Admins_ID: id,
+        Event_time: document.getElementById('eventTime').value,
+        Date: document.getElementById('eventDate').value,
+        Event_name: document.getElementById('eventName').value,
+        Event_location: document.getElementById('eventLocation').value,
+        Description: document.getElementById('eventDesc').value
+    };
 
-            if (data.success){
-                alert('Event updated successfully!');
-                document.getElementById("updateEventModal").style.display = "none"; 
-                getEvents();
-            } else{
-                alert('Failed to update event');
-            }
-        } catch (error){
-           alert('An error occurred while updating the event');
+    const url = urlBase + 'UpdateEvent.' + extension;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventPayload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert('Event updated successfully!');
+            document.getElementById("updateEventModal").style.display = "none";
+            getEvents();
+        } else {
+            alert('Failed to update event');
         }
-    });
-
-    document.getElementById('cancelButton').addEventListener('click', () => {
-        document.getElementById("updateEventModal").style.display = "none"; 
-    });
+    } catch (error) {
+        alert('An error occurred while updating the event');
+    }
 }
 
 function editComment(userId, eventId, currentRating, currentText) {
