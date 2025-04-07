@@ -466,14 +466,12 @@ async function getUniversityProfiles(){
 
                     superDiv.innerHTML = `
                         <div class="uniCardClass">
-                            <div class="cardTitle">
-                                <a href="universityProfile.html?uni_id=${uni.Uni_ID}" class="cardLink">
-                                    ${uni.Uni_name}
-                                </a>
-                            </div>
+                            <div class="cardTitle">${uni.Uni_name}</div>
                             <img src="${uni.Profile_pic}" class="cardPhoto" alt="${uni.Uni_name} Logo">
                             <div class="cardInfo">Enrollment: ${uni.Student_num}</div>
-                           
+                            <div class="viewBtnWrapper">
+                                <a href="universityProfile.html?uni_id=${uni.Uni_ID}" class="viewLink">View</a>
+                            </div>
                         </div>
                     `;
 
@@ -639,7 +637,7 @@ async function getEvents(){
             console.log('api error:', eventRes.error);
         } else{
             if (Array.isArray(eventRes.results) && eventRes.results.length > 0){
-                const eventContainer = getUserType() === "Admin" ? document.getElementById("adminEventCardContainer") : document.getElementById("eventCardContainer");
+                const eventContainer = document.getElementById("eventCardContainer");  
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
@@ -988,6 +986,7 @@ document.addEventListener("DOMContentLoaded", () => {
         getAllRSOs();
     }
 })
+
 
 if (window.location.pathname.includes('eventInfo.html')) {
     getEventInfo();

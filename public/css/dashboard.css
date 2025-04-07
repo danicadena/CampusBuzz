@@ -199,3 +199,25 @@ a{
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
+.viewBtnWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding-top: 10px;
+  }
+  
+  .viewLink {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  
+  .viewLink:hover {
+    background-color: #555;
+    border: 1px solid #ccc;
+  }
