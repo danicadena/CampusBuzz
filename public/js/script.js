@@ -1270,7 +1270,7 @@ async function getSuperEvents(){
                             <div class="cardTitle">${event.Event_name}</div>
                             <div class="cardDescription">${event.Description}</div>
                             <div class="cardDate">${event.Date} at ${event.Event_time}</div>
-                            <div class="cardType">${event.Event_type}</div>
+                            <div class="cardType">${event.Event_type} Event</div>
                         </div>
                     `;
 
