@@ -1329,8 +1329,8 @@ async function getSuperEvents(){
                                 <div class="cardTitle">${event.Event_name}</div>
                                 <div class="cardType">${event.Event_type}</div>
                             </div>
-                            <div class="cardDescription">${event.Description}</div>
                             <div class="cardDate">${formattedDate} at ${formattedTime}</div>
+                            <div class="cardDescription">${event.Description}</div>
                             ${event.Approval_Status === "approved" ? approvedMarkup : event.Approval_Status === "pending" ? pendingMarkup : ""}
                         </div>
                     `;
