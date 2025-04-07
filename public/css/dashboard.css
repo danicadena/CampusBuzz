@@ -215,18 +215,17 @@ a{
     text-decoration: none;
   }
 
-  .cardImageWrapper{
+  .cardImageWrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px; 
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-
-  .cardImageWrapper img {
-    max-height: 100%;
-    max-width: auto;
-    object-fit: contain;
+    margin: 20px 0;
+    height: 150px;
+    width: 100%;
   }
   
+  .cardImageWrapper img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
