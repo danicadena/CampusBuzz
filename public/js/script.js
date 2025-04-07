@@ -1275,6 +1275,7 @@ async function getSuperEvents(){
                         hour12: true
                     });
                     
+                    const needsApproval = event.Approval_Status !== "approved";
 
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('eventCard');
@@ -1287,6 +1288,12 @@ async function getSuperEvents(){
                             </div>
                             <div class="cardDescription">${event.Description}</div>
                             <div class="cardDate">${formattedDate} at ${formattedTime}</div>
+
+                            ${needsApproval ? `
+                                <div class="approveWrapper">
+                                  <button class="approveBtn" onclick="approveEvent(${event.Events_ID})">Approve</button>
+                                </div>
+                              ` : ''}
                         </div>
                     `;
 
