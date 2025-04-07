@@ -49,20 +49,6 @@
             $addSuper->execute();
             $addSuper->close();
         }
-        elseif ($type === 'Private')
-        {
-            // approve event
-            $approve = $conn->prepare("UPDATE Events_At SET Approval_Status = ? WHERE Events_ID = ?");
-            $approve->bind_param("si", $approved, $eventID);
-            $approve->execute();
-            $approve->close();
-
-            // add super admin
-            $addSuper = $conn->prepare("UPDATE Private_Events_Creates SET SuperAdmins_ID = ? WHERE Events_ID = ?");
-            $addSuper->bind_param("si", $superID, $eventID);
-            $addSuper->execute();
-            $addSuper->close();
-        }
         else
         {
             $conn->close();
