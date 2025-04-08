@@ -1682,8 +1682,8 @@ async function getRsoStudentInfo(){
 
 async function approveStudentRequest(studentID){
     const params = new URLSearchParams(window.location.search);
-    const rsoId = params.get('rsoId');
-    const adminId = getAdminId();
+    const rsoId =Number(params.get('rsoId'));
+    const adminId = Number(getAdminId());
 
     const approvePayload= {
         Admins_ID : adminId, 
