@@ -1722,7 +1722,6 @@ async function approveStudentRequest(studentID){
 window.onload = function (){
     getEvents();
     getRsos();
-    getOwnedRsos();
     fetchUniversities();
     getSuperEvents();
 }
@@ -1755,6 +1754,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if(window.location.pathname.includes('dashboard.html')){
         getUniversityProfiles();
+        getAdmin();
+        getOwnedRsos();
     }
 })
 
