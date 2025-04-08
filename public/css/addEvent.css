@@ -104,7 +104,7 @@ CSS FOR EVENT INFO PAGE
 ***********************/
 
 .eventSection{
-    height: 50vh;
+    height: 70vh;
     overflow-y: auto;
 }
 
@@ -243,4 +243,9 @@ strong{
     color: lightgray;
     font-size: 30px;
     margin-top: 0 auto;
+}
+
+#editBtn{
+    display: block;
+    margin : 0 auto;
 }

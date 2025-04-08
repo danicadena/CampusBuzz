@@ -962,7 +962,6 @@ async function deleteEvent(eventId){
     }
 }
 
-//TODO: 
 async function deleteComment(userId, eventId){
     const confirmDel = confirm("Are you sure you want to delete this comment?") 
     if (!confirmDel) return;
@@ -988,13 +987,13 @@ async function deleteComment(userId, eventId){
         const data = await response.json();
         console.log("Delete response:", data);
 
-        if (data.success){
+        if (data.error == ""){
             getComments();
+            alert('Comment Deleted successfully!');
         } else{
             alert('Error deleting comment!');
         }
     
-
     }catch (error){
         console.log('error deleting comment');
     }
@@ -1057,7 +1056,10 @@ async function updateEvent(){
                 alert('Event updated successfully!');
                 document.getElementById("updateEventModal").style.display = "none";
                 getEventInfo();
-            } else {
+            } else if (updateData.error === "Not authorized to update this event!"){
+                alert('Not authorized to update this event!');
+            }
+            else {
                 console.log('Failed update response data:', updateData);
                 alert('Failed to update event');
             }
@@ -1104,7 +1106,7 @@ async function updateComment(userId, eventId, newRating, newText){
         const data = await response.json();
         console.log('API Response:', data);
 
-        if (data.success) {
+        if (data.error = "") {
             console.log('Comment updated successfully');
             getComments();
             
