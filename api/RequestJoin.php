@@ -34,6 +34,8 @@
         if ( $domain !== $found )
         {
             $conn->close();
+            error_log("User domain: " . $domain);
+            error_log("RSO domain: " . $found);
             returnWithError("Must be part of the same university to join!");
             return;
         }
