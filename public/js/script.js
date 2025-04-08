@@ -710,24 +710,37 @@ async function getRsos(){
                 rsoContainer.innerHTML =''; 
 
                 rsoRes.results.forEach(rso => {
-                    const rsoDiv = document.createElement('div');
-                    rsoDiv.classList.add('col-md-4', 'mb-3'); 
-                    rsoDiv.innerHTML = `
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${rso.RSO_name}</h5>
-                            </div>
-                        </div>
-                    `;
-                    rsoContainer.appendChild(rsoDiv);
+
+                    let rsoButtons = "";
+                    let rsoTitle= `<h5 class="card-title">${rso.RSO_name} | ${rso.Status} </h5>
+`
 
                     if (getUserType() === "Student"){
                         const rsoButtons = document.createElement("div");
                         rsoButtons.innerHTML=  `
                             <button class="rsoOptionBtn" onclick='deleteRSO(${rso.RSOs_ID});'> Leave RSO </button>
                         `;
-                        rsoDiv.appendChild(rsoButtons);
+                    } else if(getUserType() === "Admin"){
+                        rsoTitle=`
+                            <h5 class="card-title">
+                                <a href="RSOStatus.html?rsoId=${rso.RSOs_ID}" class="admin-rso-link">
+                                ${rso.RSO_name}
+                                </a>
+                            </h5>
+                        `;
                     }
+                    
+                    const rsoDiv = document.createElement('div');
+                    rsoDiv.classList.add('col-md-4', 'mb-3'); 
+                    rsoDiv.innerHTML = `
+                        <div class="card">
+                            <div class="card-body">
+                                ${rsoTitle}
+                                ${rsoButtons}
+                            </div>
+                        </div>
+                    `;
+                    rsoContainer.appendChild(rsoDiv);
                 });
             } else {
                 console.log('No results found or invalid response structure');
@@ -768,8 +781,10 @@ async function deleteRSO(rsoId){
 
         if (delRes.error && delRes.error !== ""){
             alert("Error deleting RSO");
+            getRsos();
         } else{
             alert("RSO Deleted successfully");
+            
         }
     } catch(error){
         console.log("error with rso del: ", error);
@@ -1551,6 +1566,107 @@ async function searchEvents(query) {
 }
 */
 
+async function getRsoStudentInfo(){
+    const params = new URLSearchParams(window.location.search);
+    const rsoId = params.get('rsoId');
+    console.log("rsoid: ", rsoId);
+
+    let url = urlBase + 'GetStudentsInRSO.' + extension;
+
+    const getRsoStudPayload = {
+        RSOs_ID : rsoId
+    };
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(getRsoStudPayload)
+        })
+
+        const rsoStudRes = await response.json();
+
+        if (rsoStudRes.error !== ""){
+            document.getElementById("studentRes").value = 'No students Found'
+        }
+        else{
+            if (Array.isArray(rsoStudRes.results) && rsoStudRes.results.length > 0){
+                const rsoStud = document.getElementById("rsoStudentCont");                
+                rsoStud.innerHTML = ''; 
+
+                rsoStud.results.forEach(student => {
+                    const studentDiv = document.createElement('div');
+
+                    studentDiv.innerHTML = `
+                            <p><strong>Student:</strong> <span>${student.First} ${student.Last}</span></p>
+                            <p><strong>Approval Status:</strong> <span>${student.Approval_Status}</span></p>
+
+                    `;
+                    
+                    if (student.Approval_Status.toLowerCase() === 'pending'){
+                        const approveButton = document.createElement('button');
+                        approveButton.textContent = 'Approve Request';
+                        approveButton.classList.add('btn', 'btn-success', 'mt-2'); 
+
+                        approveButton.addEventListener('click', () => { 
+                            approveStudentRequest(student.UID);
+                        });
+
+                        studentDiv.appendChild(approveButton);
+                    }
+                    rsoStud.appendChild(studentDiv);
+                });
+            }
+            else{
+                console.log('No results found or invalid response structure');
+            }
+        }    
+    } catch (error) {
+        console.log('error loading students: ', error);
+    }
+}
+
+async function approveStudentRequest(studentID){
+    const params = new URLSearchParams(window.location.search);
+    const rsoId = params.get('rsoId');
+    const adminId = getAdminId();
+
+    const approvePayload= {
+        Admins_ID : adminId, 
+        UID : studentID, 
+        RSOs_ID :rsoId
+    }
+
+    let url = urlBase + 'ApproveJoin.' + extension;
+
+    console.log("approvePayload: ", approvePayload);
+
+    try{
+        const response = await fetch (url, {
+            method : 'POST', 
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(approvePayload)
+        })
+
+        const data = await response.json();
+
+        if (data.error === "You are not the admin of this RSO!"){
+            alert("You are not the admin of this RSO!");
+        } else if (data.error !== ""){
+            alert("Error letting this student join")
+        } else{
+            alert("Student successfully added");
+            getRsoStudentInfo();
+        }
+    }catch(error){
+        console.log("approve error: ", error);
+    }
+}
+
 window.onload = function (){
     getEvents();
     getRsos();
@@ -1595,3 +1711,6 @@ if (window.location.pathname.includes('eventInfo.html')) {
     getComments();
 }
 
+if (window.location.pathname.includes('RSOStatus.html')) {
+    getRsoStudentInfo();
+}

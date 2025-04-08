@@ -326,3 +326,7 @@ a{
     background-color: #c82333;
     border-color: #c82333;
 }
+
+.admin-rso-link{
+    text-decoration: line;
+}
