@@ -1417,6 +1417,7 @@ document.getElementById("searchEvents").addEventListener("input", (e) => {
     }
 });
 
+/*
 async function searchEvents(query) {
     const id = getUserID();
     const url = urlBase + 'SearchEvent.' + extension;
@@ -1474,6 +1475,7 @@ async function searchEvents(query) {
         console.error("Search error:", error);
     }
 }
+    */
 
 window.onload = function (){
     getEvents();
