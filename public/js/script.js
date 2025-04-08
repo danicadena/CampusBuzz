@@ -190,18 +190,25 @@ async function doAddEvent(){
         const data = await response.json();
         console.log("data recieved: ", data);
 
-        if (data.error && data.error !== ""){
-            //if error adding an event make all the fields blank
+        if (data.error && data.error === "An event already exists at this location and time!"){
+           alert("An event already exists at this time and location");
+            //if error adding an event make all the selected fields empty
             document.getElementById("uniInput").value= "";
             document.getElementById("timeInput").value = "";
             document.getElementById("dateInput").value = "";
-            document.getElementById("descInput").value = ""; 
-            document.getElementById("nameInput").value = "";
-            document.getElementById("eventSelect").value = "";
         }
-        else{
+        else if (data.error !== ""){
+             //if error adding an event make all the fields blank
+             document.getElementById("uniInput").value= "";
+             document.getElementById("timeInput").value = "";
+             document.getElementById("dateInput").value = "";
+             document.getElementById("descInput").value = ""; 
+             document.getElementById("nameInput").value = "";
+             document.getElementById("eventSelect").value = "";
+        }    
+        else {
             //otherwise go back to dashboard
-            showToast("Add event successful!", 3000);
+            alert("Event added successfully!")
             window.location.href = "dashboard.html";
         }
 
@@ -423,6 +430,10 @@ function getUserID(){
 // kate need this one
 function getUserType() {
     return localStorage.getItem("user_type");
+}
+
+function getAdminId(){
+    return localStorage.getItem("AdminId");
 }
 
 function getEmail(){
@@ -723,6 +734,13 @@ async function getRsos(){
                         </div>
                     `;
                     rsoContainer.appendChild(rsoDiv);
+
+                    if (getUserType() === "Student"){
+                        const rsoButtons = document.createElement("div");
+                        rsoButtons.innerHTML=  `
+                            <button class="rsoOptionBtn" onclick='deleteRSO(${rso.RSOs_ID});'> Leave RSO </button>
+                        `
+                    }
                 });
             } else {
                 console.log('No results found or invalid response structure');
@@ -733,6 +751,73 @@ async function getRsos(){
         console.log('Error fetching RSOS');
     }
 }
+
+//TODO: 
+async function deleteRSO(rsoId){
+    const confirmRsoDel = confirm("Are you sure you want to delete this event?") 
+    if (!confirmRsoDel) return;
+
+    const uid = getUserId();
+
+    const delRSOPayload = {
+        UID : uid, 
+        RSOs_ID : rsoId
+    }
+
+    let url = urlBase + 'LeaveRSO.' + extension;
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(delRSOPayload)
+        });
+
+        const delRes = await response.json();
+
+        if (delRes.error && delRes.error !== ""){
+            alert("Error deleting RSO");
+        } else{
+            alert("RSO Deleted successfully");
+        }
+    } catch(error){
+        console.log("error with rso del: ", error);
+    }
+}
+
+//TODO: 
+async function getAdmin(){
+    const uid = getUserID();
+
+    const getAdminPayload = { UID: uid};
+
+    let url = urlBase + 'GetAdminID.' + extension;
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST', 
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(getAdminPayload)
+        });
+
+        const data = await response.json();
+
+        if (data.error !== ""){
+            console.log("Error fetching admin id");
+        } else {
+            localStorage.setItem("AdminId", data.Admins_ID);
+        }
+
+    } catch (error){
+        console.log('error fetching error');
+    }
+}
+
+
 
 async function getEventInfo(){
     const urlParams = new URLSearchParams(window.location.search);
@@ -1027,7 +1112,7 @@ async function updateEvent(){
     document.getElementById('saveEventButton').addEventListener('click', async () => {
         const eventPayload = {
             Events_ID: eventId,
-            Admins_ID: getUserID(),
+            Admins_ID: getAdminId(),
             Event_name: document.getElementById('eventNameInput').value,
             Event_time: document.getElementById('eventTimeInput').value,
             Date: document.getElementById('eventDateInput').value,
