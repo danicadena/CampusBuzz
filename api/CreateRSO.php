@@ -119,8 +119,8 @@
 				$status = 'pending';
 			}
 
-			$join = $conn->prepare("INSERT into Joins (UID, RSOs_ID, Approval_Status) VALUES (?,?)");
-			$join->bind_param("ii", $uid, $rsoID, $status);
+			$join = $conn->prepare("INSERT into Joins (UID, RSOs_ID, Approval_Status) VALUES (?,?,?)");
+			$join->bind_param("iis", $uid, $rsoID, $status);
 			$join->execute();
 			$join->close();
 		}
