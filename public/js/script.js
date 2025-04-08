@@ -1406,7 +1406,7 @@ async function getSuperEvents(){
 }
 
 document.getElementById("searchEvents").addEventListener("input", (e) => {
-    const query = e.target.value.trim();
+    const searchText = e.target.value.trim();
 
     if (searchText === "") {
         //show all the events
