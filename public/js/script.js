@@ -1651,7 +1651,6 @@ window.onload = function (){
     getRsos();
     getOwnedRsos();
     fetchUniversities();
-    getSuperEvents();
 }
 
 // on window load
@@ -1695,4 +1694,8 @@ if (window.location.pathname.includes('eventInfo.html')) {
 
 if (window.location.pathname.includes('RSOStatus.html')) {
     getRsoStudentInfo();
+}
+
+if(window,location.pathname.includes('universityProfile.html')){
+    getSuperEvents();
 }
