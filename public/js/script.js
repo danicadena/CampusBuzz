@@ -1178,7 +1178,12 @@ async function doAddUniversity(){
         "University of Kansas": "/public/images/kansas.png",
         "Kansas State University": "/public/images/kstate.png",
         "Stanford University": "/public/images/stanford.png",
-        "Harvard University": "/public/images/harvard.png"
+        "Harvard University": "/public/images/harvard.png",
+        "Arizona State University": "/public/images/asu.png",
+        "University of Houston": "/public/images/houston.png",
+        "Brigham Young University": "/public/images/byu.png",
+        "Texas Christian University": "/public/images/tcu.png",
+        "West Virginia University": "/public/images/west.png"
     };
     
     const path = imagePathMap[uni] || "";
