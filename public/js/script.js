@@ -347,8 +347,8 @@ async function doCreateRSO(){
         }
         else{
             //otherwise go back to dashboard
+            alert("Add RSO successful!");
             window.location.href = "dashboard.html";
-            showToast("Add rso successful!", 3000);
         }
     }catch(error){
         document.getElementById("rsoRes").innerHTML= "failed to add rso!";
@@ -1576,7 +1576,7 @@ window.onload = function (){
 
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
-    if(window.location.pathname.includes('addEvent.html')){
+    if(window.location.pathname.includes('createEvent.html')){
         const userType = getUserType();
         console.log("User Type Detected:", userType);
 
