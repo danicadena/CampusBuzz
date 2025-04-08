@@ -157,8 +157,24 @@ input[type="search"]{
 }
 
 .card{
-    margin-left: 10px
+    margin-left: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: normal;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    overflow-wrap: normal;
 }
+
+.card-body {
+    word-wrap: normal;
+    overflow-wrap: normal;
+    display: block;
+    padding-left: 3px;
+    }
 
 a{
     color: royalblue;
@@ -351,4 +367,5 @@ a{
 
 .admin-rso-link{
     text-decoration: line;
+    font-size: 20px;
 }

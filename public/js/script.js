@@ -123,7 +123,7 @@ async function doAddEvent(){
 	let desc = document.getElementById("descInput").value
 	let name = document.getElementById("nameInp").value
 	let type = getSelectedEvent()
-    let adminID = Number(localStorage.getItem("id"));
+    let adminID = Number(getAdminId());
 
     let locID;
 
@@ -1722,6 +1722,7 @@ async function approveStudentRequest(studentID){
 window.onload = function (){
     getEvents();
     getRsos();
+    getOwnedRsos();
     fetchUniversities();
     getSuperEvents();
 }
