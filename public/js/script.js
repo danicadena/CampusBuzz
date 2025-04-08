@@ -1455,8 +1455,8 @@ async function approveEvent(eventID, button){
 
 async function getSuperEvents(){
     const params = new URLSearchParams(window.location.search);
-    const uniID = Number(params.get('uni_id'));
-    uniID = 1;
+    //const uniID = Number(params.get('uni_id'));
+    const uniID = 1;
     console.log("Universtiy id:", uniID);
     if(!uniID){
         console.error("uni_id not found");
