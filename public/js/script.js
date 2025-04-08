@@ -395,19 +395,6 @@ async function fetchUniversities(){
     }
 }
 
-// temporary pop up message for success
-function showToast(message = "Success!", duration = 3000) {
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.remove("hidden");
-    toast.classList.add("show");
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-        toast.classList.add("hidden");
-    }, duration);
-}
-
 function getSelectedUni(){
     const uniSelect = document.getElementById('userSelectSpacing');
     return uniSelect.value;
@@ -427,7 +414,6 @@ function getUserID(){
     return localStorage.getItem("id");
 }
 
-// kate need this one
 function getUserType() {
     return localStorage.getItem("user_type");
 }
@@ -620,7 +606,7 @@ async function requestJoin(rsoID){
             button.textContent = 'Request';
             button.disabled = false;
         } else {
-            showToast("Request to join successful!");
+            alert("Request to join successful!");
         }
     } catch(error) {
         console.log('Error requesting to join RSO:', error);
@@ -819,8 +805,6 @@ async function getAdmin(){
         console.log('error fetching error');
     }
 }
-
-
 
 async function getEventInfo(){
     const urlParams = new URLSearchParams(window.location.search);
