@@ -80,6 +80,7 @@ input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInpu
     color: red;
     text-align: center;
     display: block;
+    margin: 0 auto;
     margin-top: 1rem;
 }
 
