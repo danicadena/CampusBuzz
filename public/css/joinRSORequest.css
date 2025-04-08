@@ -86,6 +86,10 @@
     background-color: green;
     color: white;
 }
+.owned{
+    background-color: royalblue;
+    color: white;
+}
 
 .request:hover {
     border: 2px solid black;

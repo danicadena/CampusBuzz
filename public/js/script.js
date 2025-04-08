@@ -533,7 +533,12 @@ async function getAllRSOs(){
                     let status = 'Request';
                     let disabled = false;
 
-                    if(rso.status == 'approved'){
+                    if (rso.owned){
+                        statusClass = 'owned';
+                        status = 'Owned';
+                        disabled = true;
+                    }
+                    else if(rso.status == 'approved'){
                         statusClass = 'joined';
                         status = 'Joined';
                         disabled = true;
@@ -606,7 +611,7 @@ async function requestJoin(rsoID){
             button.textContent = 'Request';
             button.disabled = false;
         } else {
-            alert("Request to join successful!");
+            console.log("Request to join successful!");
         }
     } catch(error) {
         console.log('Error requesting to join RSO:', error);

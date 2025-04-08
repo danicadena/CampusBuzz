@@ -14,9 +14,20 @@
 	{
         $rsos = [];
 
+		//get Admins_ID for user
+		$adminCheck = $conn->prepare("SELECT Admins_ID FROM Admins WHERE UID = ?");
+		$adminCheck->bind_param("i", $uid);
+		$adminCheck->execute();
+		$adminCheck->bind_result($adminID);
+		$adminCheck->fetch();
+		$adminCheck->close();
+
+		// Default to null if user is not an admin
+		$isAdmin = isset($adminID);
+
         // get a universities's rso names
 		$get = $conn->prepare("
-			SELECT R.RSO_name, R.RSOs_ID, J.Approval_Status 
+			SELECT R.RSO_name, R.RSOs_ID, R.Admins_ID, J.Approval_Status 
 			FROM RSOs_Creates R
 			LEFT JOIN Joins J ON R.RSOs_ID = J.RSOs_ID AND J.UID = ?
 			WHERE R.Email_domain = ?
@@ -29,7 +40,8 @@
             $rsos[] = [
 				"name" => $row['RSO_name'],
 				"id" => $row['RSOs_ID'],
-				"status" => $row['Approval_Status'] ?? "none"
+				"status" => $row['Approval_Status'] ?? "none",
+				"owned" => $isAdmin && $row['Admins_ID'] == $adminID
 			];
         }
 
