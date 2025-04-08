@@ -818,7 +818,7 @@ async function getComments(){
                 commentInfo.results.forEach(comment => {
                     console.log('Checking comment UID:', comment.UID); 
 
-                    const commentOwner = comment.UID === currentUserId;
+                    const commentOwner = Number (comment.UID) === Number (currentUserId);
                     console.log('comment owner:', commentOwner); 
 
 
@@ -1051,11 +1051,14 @@ async function updateEvent(){
             });
 
             const updateData = await response.json();
-            if (updateData.success) {
+            console.log('Update response:', updateData);
+
+            if (updateData.error === "") {
                 alert('Event updated successfully!');
                 document.getElementById("updateEventModal").style.display = "none";
                 getEventInfo();
             } else {
+                console.log('Failed update response data:', updateData);
                 alert('Failed to update event');
             }
         } catch (error) {

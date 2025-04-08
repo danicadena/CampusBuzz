@@ -49,10 +49,14 @@
 
         <!-- update event modal -->
         <div id="updateEventModal" style="display: none;">
-            <h3>Edit Event</h3>
+            <h3 id="editEventTitle">Edit Event</h3>
+            <label id="editFields">Name:</label>
             <input type="text" id="eventNameInput" placeholder="Event Name">
+            <label id="editFields">Time:</label>
             <input type="text" id="eventTimeInput" placeholder="Event Time">
+            <label id="editFields">Date:</label>
             <input type="date" id="eventDateInput">
+            <label id="editFields">Description:</label>
             <textarea id="eventDescInput" placeholder="Event Description"></textarea>
             <button id="saveEventButton">Save</button>
             <button id="cancelButton">Cancel</button>

@@ -263,10 +263,45 @@ a{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     justify-content: center;
     align-items: center;
+}
+
+#editEventTitle{
+    text-align: center;
+    color: #fff;
+}
+
+#saveEventButton, #cancelButton {
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+    background-color: #E4BC67;
+    border: none;
+    width: 200px;
+}
+
+#eventDescInput {
+    margin-top: 20px;
+}
+
+#eventDateInput {
+    display: block;
+    margin: 0 auto;
+}
+
+#eventTimeInput, #eventNameInput {
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#editFields{
+    display: block;
+    margin: 0 auto;
 }
 
 .modal-content {
