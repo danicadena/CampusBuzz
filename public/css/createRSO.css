@@ -68,8 +68,7 @@ input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInpu
     padding: 5px 70px;
     font-size: 25px;
     margin-top: 10px;
-    display: block;
-    margin: 0 auto;
+    margin-left: 155px;
 }
 
 .rsoButton:hover{
