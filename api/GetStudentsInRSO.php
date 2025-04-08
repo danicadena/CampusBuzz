@@ -15,7 +15,7 @@
 
         // get an rso's list of students
 		$get = $conn->prepare("
-            SELECT U.First,U.Last,J.Approval_Status
+            SELECT U.First,U.Last,U.UID,J.Approval_Status
             FROM Joins J
             JOIN Users U ON J.UID = U.UID
             WHERE J.RSOs_ID = ?
