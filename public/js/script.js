@@ -1106,7 +1106,7 @@ async function updateComment(userId, eventId, newRating, newText){
         const data = await response.json();
         console.log('API Response:', data);
 
-        if (data.error = "") {
+        if (data.error === "") {
             console.log('Comment updated successfully');
             getComments();
             
