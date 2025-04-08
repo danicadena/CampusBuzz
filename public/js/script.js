@@ -1329,7 +1329,7 @@ async function doAddUniversity(){
             document.getElementById("userSelectUniversity").value = "";
         }
         else{
-            showToast("Add university successful!", 3000);
+            alert("University profile created!");
             window.location.href = "dashboard.html";
         }
     }catch(error){
