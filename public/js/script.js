@@ -1541,7 +1541,7 @@ async function getSuperEvents(){
             }
         }
     }catch(error){
-        console.log('Error fetching events');
+        console.log('Error fetching SUPER events');
     }
 }
 
