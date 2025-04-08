@@ -1463,6 +1463,7 @@ async function getSuperEvents(){
     }
 
     let url = urlBase + 'GetSuperEvents.' + extension;
+    console.log("url: ", url);
 
     try{
         const response = await fetch (url,{
@@ -1475,6 +1476,7 @@ async function getSuperEvents(){
             })
         });
 
+        console.log("Before api response");
         const data = await response.json();
         console.log("API response:", data);
 
@@ -1697,6 +1699,7 @@ if (window.location.pathname.includes('RSOStatus.html')) {
 }
 
 if(window.location.pathname.includes('universityProfile.html')){
+    console.log("HELLO HELLO HELLO");
     getSuperEvents();
 }
 
