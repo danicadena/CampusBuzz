@@ -16,14 +16,17 @@ else
     $getLocID = $conn->prepare("SELECT LocID FROM University WHERE Uni_ID = ?");
     $getLocID->bind_param("i", $uniID);
     $getLocID->execute();
-    $getLocID->bind_result($locID);
-    $getLocID->fetch();
-    $getLocID->close();
+    $getLocID->store_result();
 
-    if (!$locID) {
+    if ($getLocID->num_rows === 0) {
+        $getLocID->close();
         returnWithError("No location found for university.");
         exit;
     }
+
+    $getLocID->bind_result($locID);
+    $getLocID->fetch();
+    $getLocID->close();
 
     // get Public Events for this LocID
     $getPublic = $conn->prepare("
