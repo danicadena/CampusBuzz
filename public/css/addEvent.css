@@ -1,5 +1,5 @@
 html, body{
-    overflow: scroll;
+    overflow-x: hidden;
 }
 
 #eventTitle{
@@ -43,7 +43,7 @@ input[type="text"]#uniInput, #timeInput, #dateInput, #descInput, #nameInp{
     background-color:#D9D9D9;
     border: none;
     width: 290px;
-    height: 30px;
+    height: 40px;
     margin-bottom: 60px;
     text-align: center;
 }
