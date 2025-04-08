@@ -1597,7 +1597,7 @@ async function getRsoStudentInfo(){
                 const rsoStud = document.getElementById("rsoStudentCont");                
                 rsoStud.innerHTML = ''; 
 
-                rsoStud.results.forEach(student => {
+                rsoStudRes.results.forEach(student => {
                     const studentDiv = document.createElement('div');
 
                     studentDiv.innerHTML = `
