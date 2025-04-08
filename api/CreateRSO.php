@@ -11,6 +11,8 @@
     $newAdmin = $inData["Student_promoted"];
 	$rsoName = $inData["RSO_name"];
 
+	$status = 'approved';
+
 	// admins can create RSOs - already in database
 	$phone = isset($inData["Admin_phone"]) ? $inData["Admin_phone"] : null;
 
@@ -113,12 +115,6 @@
 		// insert each person into Joins
 		foreach($uidList as $uid)
 		{
-			if ($uid == $newAdmin) {
-				$status = 'approved';
-			} else {
-				$status = 'pending';
-			}
-
 			$join = $conn->prepare("INSERT into Joins (UID, RSOs_ID, Approval_Status) VALUES (?,?,?)");
 			$join->bind_param("iis", $uid, $rsoID, $status);
 			$join->execute();
