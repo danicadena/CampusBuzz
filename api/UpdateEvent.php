@@ -18,61 +18,25 @@
 	}
 	else
 	{
-		// check that the correct admin is updating the event
-		$type = $conn->prepare("SELECT Event_type FROM Events_At WHERE Events_ID = ?");
-        $type->bind_param("i", $eventID);
-        $type->execute();
-        $type->bind_result($eventType);
-        $type->fetch();
-        $type->close();
+		// check that admin exists
+		$checkAdmin = $conn->prepare("SELECT Admins_ID FROM Admins WHERE Admins_ID = ?");
+		$checkAdmin->bind_param("i", $adminID);
+		$checkAdmin->execute();
+		$checkAdmin->store_result();
 
-		if ($eventType === null) {
+		if ($checkAdmin->num_rows === 0) {
+			$checkAdmin->close();
 			$conn->close();
-			returnWithError("Event_type is null!");
+			returnWithError("Admin ID not found.");
 			return;
-		}		
+		}
+		$checkAdmin->close();
 
-        if ($eventType === "Public") {
-            $auth = $conn->prepare("SELECT Admins_ID FROM Public_Events_Creates WHERE Events_ID = ?");
-            $auth->bind_param("i", $eventID);
-        } elseif ($eventType === "Private") {
-            $auth = $conn->prepare("SELECT Admins_ID FROM Private_Events_Creates WHERE Events_ID = ?");
-            $auth->bind_param("i", $eventID);
-        } elseif ($eventType === "RSO") {
-            // get RSOs_ID to then find Admin in charge
-            $getRSO = $conn->prepare("SELECT RSOs_ID FROM RSOs_Events_Owns WHERE Events_ID = ?");
-            $getRSO->bind_param("i", $eventID);
-            $getRSO->execute();
-            $getRSO->bind_result($foundRSO);
-            $getRSO->fetch();
-            $getRSO->close();
-
-            $auth = $conn->prepare("SELECT Admins_ID FROM RSOs_Creates WHERE RSOs_ID = ?");
-            $auth->bind_param("i", $foundRSO);
-        } else {
-            $conn->close();
-            returnWithError("Invalid event type.");
-            return;
-        }
-
-        $auth->execute();
-        $auth->bind_result($foundAdmin);
-        $auth->fetch();
-        $auth->close();
-
-        if ($adminID !== $foundAdmin)
-        {
-            $conn->close();
-            returnWithError("Not authorized to update this event!");
-            return;
-        }
-
-        // if authorized, update event
-		$stmt = $conn->prepare("UPDATE Events_At SET Event_time=?,Date=?,Event_name=?,Description=? WHERE Events_ID = ?");
+        // if admin exists, update event
+		$stmt = $conn->prepare("UPDATE Events_At SET Event_time=?, Date=?, Event_name=?, Description=? WHERE Events_ID = ?");
 		$stmt->bind_param("ssssi", $time, $date, $name, $description, $eventID);
 		$stmt->execute();
 		$stmt->close();
-
 
 		$conn->close();
 		returnWithError("");
