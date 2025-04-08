@@ -1568,13 +1568,13 @@ async function searchEvents(query) {
 
 async function getRsoStudentInfo(){
     const params = new URLSearchParams(window.location.search);
-    const rsoId = params.get('rsoId');
+    const rsoId = Number(params.get('rsoId'));
     console.log("rsoid: ", rsoId);
 
     let url = urlBase + 'GetStudentsInRSO.' + extension;
 
     const getRsoStudPayload = {
-        RSOs_ID :  Number(rsoId)
+        RSOs_ID : rsoId
     };
 
     try{
@@ -1587,6 +1587,7 @@ async function getRsoStudentInfo(){
         })
 
         const rsoStudRes = await response.json();
+        console.log('rsostud res:', rsoStudRes);
 
         if (rsoStudRes.error !== ""){
             document.getElementById("studentRes").value = 'No students Found'
