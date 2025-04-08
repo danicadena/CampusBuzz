@@ -1502,8 +1502,6 @@ async function getSuperEvents(){
                         minute: '2-digit',
                         hour12: true
                     });
-                    
-                    const needsApproval = event.Approval_Status !== "approved";
 
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('eventCard');
