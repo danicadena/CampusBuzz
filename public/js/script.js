@@ -1462,6 +1462,8 @@ async function getSuperEvents(){
         return;
     }
 
+    let university = {Uni_ID: uniID};
+
     let url = urlBase + 'GetSuperEvents.' + extension;
     console.log("url: ", url);
 
@@ -1471,9 +1473,7 @@ async function getSuperEvents(){
             headers:{
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({
-                Uni_ID: uniID
-            })
+            body: JSON.stringify({university})
         });
 
         console.log("Before api response");
