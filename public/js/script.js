@@ -766,6 +766,11 @@ async function getEventInfo(){
         document.getElementById('eventDescription').innerText = eventInfoData.results.Description;
         document.getElementById('eventType').innerText = `Type: ${eventInfoData.results.Event_type}`;
 
+        const userType = getUserType(); 
+        if (userType === "Admin") {
+            document.getElementById("editBtn").style.display = "inline-block";  
+        }
+
       
     } catch (error){
         console.log('error fetching event info');
