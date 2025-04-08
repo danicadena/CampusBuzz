@@ -591,7 +591,7 @@ async function requestJoin(rsoID){
             },
             body: JSON.stringify({
                 UID: uid,
-                RSO_name: rsoID
+                RSOs_ID: rsoID
             }),
         });
 
