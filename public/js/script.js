@@ -1456,13 +1456,14 @@ async function approveEvent(eventID, button){
 async function getSuperEvents(){
     const params = new URLSearchParams(window.location.search);
     const uniID = Number(params.get('uni_id'));
+    uniID = 1;
     console.log("Universtiy id:", uniID);
     if(!uniID){
         console.error("uni_id not found");
         return;
     }
 
-    let university = {Uni_ID: 1};
+    let university = {Uni_ID: uniID};
 
     let url = urlBase + 'GetSuperEvents.' + extension;
     console.log("url: ", url);
