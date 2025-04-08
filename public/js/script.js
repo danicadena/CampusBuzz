@@ -691,7 +691,8 @@ async function getEvents(){
 async function getOwnedRsos(){
     let url = urlBase + 'GetOwnedRSO.' + extension;
 
-    const adminid = getAdminId();
+    const adminid = Number(getAdminId());
+    console.log("admin id for owned: ", adminid);
 
     let adminInf = { Admins_ID : adminid}
 
