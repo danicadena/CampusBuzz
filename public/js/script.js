@@ -1576,7 +1576,7 @@ window.onload = function (){
 
 // on window load
 document.addEventListener("DOMContentLoaded", () => {
-    if(window.location.pathname.includes('createEvent.html')){
+    if(window.location.pathname.includes('createRSO.html')){
         const userType = getUserType();
         console.log("User Type Detected:", userType);
 
