@@ -241,5 +241,6 @@ strong{
 #commentStatus{
     text-align: center;
     color: lightgray;
-    font-size: 20px;
+    font-size: 30px;
+    margin-top: 0 auto;
 }
