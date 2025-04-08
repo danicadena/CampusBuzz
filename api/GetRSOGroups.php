@@ -15,7 +15,7 @@
 
         // get a user's rso names
 		$get = $conn->prepare("
-            SELECT R.RSO_name FROM Joins J
+            SELECT R.RSO_name,R.RSOs_ID FROM Joins J
             JOIN RSOs_Creates R ON J.RSOs_ID = R.RSOs_ID
             WHERE J.UID = ? AND J.Approval_Status = 'approved'
         ");
