@@ -1683,6 +1683,10 @@ document.addEventListener("DOMContentLoaded", () => {
         getAdmin();
         getOwnedRsos();
     }
+
+    if(window,location.pathname.includes('universityProfile.html')){
+        getSuperEvents();
+    }
 })
 
 
@@ -1695,6 +1699,3 @@ if (window.location.pathname.includes('RSOStatus.html')) {
     getRsoStudentInfo();
 }
 
-if(window,location.pathname.includes('universityProfile.html')){
-    getSuperEvents();
-}
