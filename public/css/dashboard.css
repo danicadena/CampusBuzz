@@ -152,6 +152,12 @@ input[type="search"]{
     font-size: 120px;
 }
 
+.card-title{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
 #card-title{
     font-size: 40px 
 }
@@ -162,19 +168,23 @@ input[type="search"]{
     display: flex;
     flex-direction: column;
     min-width: 0;
-    word-wrap: normal;
+    word-wrap: break-word;
     background-color: #fff;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
+    height: auto;
 }
 
 .card-body {
-    word-wrap: normal;
-    overflow-wrap: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     display: block;
     padding-left: 3px;
-    }
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 a{
     color: royalblue;

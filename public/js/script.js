@@ -906,7 +906,7 @@ async function getEventInfo(){
 
         const userType = getUserType(); 
         if (userType === "Admin") {
-            document.getElementById("editBtn").style.display = "inline-block";  
+            document.getElementById("editBtn").style.display = "block";  
         }
 
       
@@ -1643,6 +1643,54 @@ async function approveStudentRequest(studentID){
     }catch(error){
         console.log("approve error: ", error);
     }
+}
+
+async function getRSOsDropDown(){
+    const domain = getEmail();
+    const uid = getUserID();
+    if(!domain || !uid) return;
+
+    let url = urlBase + 'GetRSOs.' + extension;
+
+    const dropdown = document.getElementById("rsoDropdown");
+    dropdown.innerHTML = '<option value="">Loading...</option>';
+    
+    try{
+        const response = await fetch (url,{
+            method: 'POST',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                UID: uid,
+                Domain: domain
+            }),
+        });
+
+        const data = await response.json();
+
+        dropdown.innerHTML = '';
+
+        if(data.error && data.error !== ""){
+            console.log('api error:', data.error);
+        }
+        else{
+            if (Array.isArray(data.results) && data.results.length > 0){
+                data.results.forEach(rso => {
+                    const option = document.createElement("option");
+                    option.value = rso.RSOs_ID;
+                    option.textContent = rso.RSO_name;
+                    dropdown.appendChild(option);
+                });
+            }else {
+                console.log('No RSOs found');
+                dropdown.innerHTML = '<option value="">No RSOs available</option>';            }
+        }
+    }catch(error){
+        console.log('Error fetching RSOs');
+        dropdown.innerHTML = '<option value="">Failed to load RSOs</option>';
+    }
+
 }
 
 window.onload = function (){
