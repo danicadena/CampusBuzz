@@ -1721,6 +1721,7 @@ async function approveStudentRequest(studentID){
 window.onload = function (){
     getEvents();
     getRsos();
+    getOwnedRsos();
     fetchUniversities();
     getSuperEvents();
 }
