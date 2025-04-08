@@ -670,7 +670,6 @@ async function getEvents(){
                         const adminBtns = document.createElement("div");
                         adminBtns.innerHTML = `
                             <button class="eventOptionsBtn" onclick='deleteEvent(${event.Events_ID});'>Delete</button>
-                            <button class="eventOptionsBtn" onclick='updateEvent();'>Update</button>
                         `;
                         eventDiv.appendChild(adminBtns);
                     }
@@ -815,7 +814,7 @@ async function getComments(){
                     commentDiv.classList.add('col-md-4', 'mb-3'); 
 
                     const commentOwner = comment.UID === currentUserId;
-                    const buttonsHTML = isOwner
+                    const buttonsHTML = commentOwner
                     ? `
                     <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${eventId})">Delete</button>
                     <button 
@@ -996,28 +995,29 @@ async function updateEvent(){
 
     if (!eventId)  return;
 
-    const eventInfo = await getEventInfo();
+    const eventInfo = await getEventInfo(); 
+    if (!eventInfo) return;
+
     document.getElementById("updateEventModal").style.display = "block";
 
     console.log('eventinfo:', eventInfo);
 
-
-    document.getElementById('eventName').value = eventInfo.Event_name || '';
-    document.getElementById('eventLocation').value = eventInfo.Event_location || '';
-    document.getElementById('eventTime').value = eventInfo.Event_time || '';
-    document.getElementById('eventDate').value = eventInfo.Date || '';
-    document.getElementById('eventDesc').value = eventInfo.Description || '';
+    document.getElementById('eventNameInput').value = eventInfo.Event_name || '';
+    document.getElementById('eventLocationInput').value = eventInfo.Event_location || ''; // This may not be in the eventInfo, adjust if needed
+    document.getElementById('eventTimeInput').value = eventInfo.Event_time || '';
+    document.getElementById('eventDateInput').value = eventInfo.Date || '';
+    document.getElementById('eventDescInput').value = eventInfo.Description || '';
 
     document.getElementById('saveEventButton').addEventListener('click', async () => {
         const eventPayload = {
-            Events_ID: eventId,
-            Admins_ID: id,
-            Event_time: document.getElementById('eventTime').value,
-            Date: document.getElementById('eventDate').value,
-            Event_name: document.getElementById('eventName').value,
-            Event_location: document.getElementById('eventLocation').value,
-            Description: document.getElementById('eventDesc').value
+            Events_ID: eventId, 
+            Admins_ID: id, 
+            Event_time: document.getElementById('eventTimeInput').value,
+            Date: document.getElementById('eventDateInput').value,
+            Event_name: document.getElementById('eventNameInput').value,
+            Description: document.getElementById('eventDescInput').value
         };
+
         console.log('Updated Event Payload:', eventPayload);
         const url = urlBase + 'UpdateEvent.' + extension;
         
@@ -1031,10 +1031,11 @@ async function updateEvent(){
             });
             
             const data = await response.json();
+            
             if (data.success) {
                 alert('Event updated successfully!');
                 document.getElementById("updateEventModal").style.display = "none";
-                getEvents();
+                loadEventInfo();
             } else {
                 alert('Failed to update event');
             }

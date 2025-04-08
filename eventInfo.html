@@ -19,6 +19,7 @@
         </div>
 
         <div class="eventSection">
+            <button id="editBtn" style="display: none;" onclick="updateEvent();">Update Event</button>
             <p id="eventInfo">Event Info </p>
             <h2 id="eventName"></h2>
             <p><strong>Date:</strong> <span id="eventDate"></span></p>
@@ -44,6 +45,16 @@
             <button class="submitComment" onclick="sendComment();">Submit</button>
         </div>
 
+        <!-- update event modal -->
+        <div id="updateEventModal" style="display: none;">
+            <h3>Edit Event</h3>
+            <input type="text" id="eventNameInput" placeholder="Event Name">
+            <input type="text" id="eventTimeInput" placeholder="Event Time">
+            <input type="date" id="eventDateInput">
+            <textarea id="eventDescInput" placeholder="Event Description"></textarea>
+            <button id="saveEventButton">Save</button>
+            <button id="cancelButton">Cancel</button>
+        </div>
 
         <!-- bootstrap -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
