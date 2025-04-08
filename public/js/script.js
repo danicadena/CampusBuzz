@@ -1684,7 +1684,7 @@ document.addEventListener("DOMContentLoaded", () => {
         getOwnedRsos();
     }
 
-    if(window,location.pathname.includes('universityProfile.html')){
+    if(window.location.pathname.includes('universityProfile.html')){
         getSuperEvents();
     }
 })
