@@ -1456,7 +1456,6 @@ async function approveEvent(eventID, button){
 async function getSuperEvents(){
     const params = new URLSearchParams(window.location.search);
     const uniID = Number(params.get('uni_id'));
-    console.log("Universtiy id:", uniID);
     if(!uniID){
         console.error("uni_id not found");
         return;
@@ -1476,7 +1475,6 @@ async function getSuperEvents(){
             body: JSON.stringify(university)
         });
 
-        console.log("Before api response");
         const data = await response.json();
         console.log("API response:", data);
 
@@ -1699,7 +1697,6 @@ if (window.location.pathname.includes('RSOStatus.html')) {
 }
 
 if(window.location.pathname.includes('universityProfile.html')){
-    console.log("HELLO HELLO HELLO");
     getSuperEvents();
 }
 
