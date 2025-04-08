@@ -1574,7 +1574,7 @@ async function getRsoStudentInfo(){
     let url = urlBase + 'GetStudentsInRSO.' + extension;
 
     const getRsoStudPayload = {
-        RSOs_ID : rsoId
+        RSOs_ID :  Number(rsoId)
     };
 
     try{
