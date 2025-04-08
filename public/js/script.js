@@ -1650,6 +1650,9 @@ async function getRSOsDropDown(){
     const uid = getUserID();
     if(!domain || !uid) return;
 
+    console.log("Domain:", domain);
+    console.log("UID:", uid);
+
     let url = urlBase + 'GetRSOs.' + extension;
 
     const dropdown = document.getElementById("rsoDropdown");
@@ -1668,6 +1671,7 @@ async function getRSOsDropDown(){
         });
 
         const data = await response.json();
+        console.log("data in rso dropdown", data);
 
         dropdown.innerHTML = '';
 
