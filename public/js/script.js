@@ -1462,7 +1462,7 @@ async function getSuperEvents(){
         return;
     }
 
-    let university = {Uni_ID: uniID};
+    let university = {Uni_ID: 1};
 
     let url = urlBase + 'GetSuperEvents.' + extension;
     console.log("url: ", url);
