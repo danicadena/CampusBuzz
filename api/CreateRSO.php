@@ -113,8 +113,14 @@
 		// insert each person into Joins
 		foreach($uidList as $uid)
 		{
-			$join = $conn->prepare("INSERT into Joins (UID, RSOs_ID) VALUES (?,?)");
-			$join->bind_param("ii", $uid, $rsoID);
+			if ($uid == $newAdmin) {
+				$status = 'approved';
+			} else {
+				$status = 'pending';
+			}
+
+			$join = $conn->prepare("INSERT into Joins (UID, RSOs_ID, Approval_Status) VALUES (?,?)");
+			$join->bind_param("ii", $uid, $rsoID, $status);
 			$join->execute();
 			$join->close();
 		}
