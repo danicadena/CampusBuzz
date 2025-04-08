@@ -838,7 +838,6 @@ async function getComments(){
                     commentDiv.classList.add('col-md-4', 'mb-3'); 
 
                     
-
                     commentDiv.innerHTML = `
                         <div class="commentCard">
                             <div class="card-body">
@@ -870,9 +869,6 @@ async function getComments(){
                 document.getElementById('commentStatus').innerHTML = `<p>No Comments found.</p>`;
             }
         }
-
-
-
     }catch(error){
         console.log('Error fetching comments');
     }
@@ -1405,6 +1401,7 @@ async function getSuperEvents(){
     }
 }
 
+/*
 document.getElementById("searchEvents").addEventListener("input", (e) => {
     const searchText = e.target.value.trim();
 
@@ -1417,7 +1414,7 @@ document.getElementById("searchEvents").addEventListener("input", (e) => {
     }
 });
 
-/*
+
 async function searchEvents(query) {
     const id = getUserID();
     const url = urlBase + 'SearchEvent.' + extension;
@@ -1475,7 +1472,7 @@ async function searchEvents(query) {
         console.error("Search error:", error);
     }
 }
-    */
+*/
 
 window.onload = function (){
     getEvents();
