@@ -688,6 +688,60 @@ async function getEvents(){
     
 }
 
+async function getOwnedRsos(){
+    let url = urlBase + 'GetOwnedRSO.' + extension;
+
+    const adminid = getAdminId();
+
+    let adminInf = { Admins_ID : adminid}
+
+    try{
+        const response = await fetch (url, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(adminInf)
+        });
+
+        const ownedData = await response.json();
+
+        if (ownedData.error !== ""){
+            console.log('error with fetching api side: ', ownedData.error);
+        } else{
+            if (Array.isArray(ownedData.results) && ownedData.results.length > 0) {
+                const ownedCont = document.getElementById("ownedRsolist");
+                ownedCont.innerHTML = '';
+
+                ownedData.results.forEach(owned => { 
+                    const ownedContent = document.createElement('div');
+                    ownedContent.classList.add('col-md-4', 'mb-3'); 
+                    ownedContent.innerHTML = `
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                <a href="RSOStatus.html?rsoId=${owned.RSOs_ID}" class="admin-rso-link">
+                                ${owned.RSO_name} | ${owned.Status}
+                                </a>
+                            </h5>
+                            </div>
+                        </div>
+                    `;
+                    ownedCont.appendChild(ownedContent);
+                });
+
+            } else{
+                console.log('No owned RSOS');
+                document.getElementById('dashboard.html').innerHTML = `<p>No Owned RSOs found.</p>`;
+            }
+
+        }
+
+    } catch(error){
+        console.log('error with getting fetched: ', error);
+    }
+}
+
 async function getRsos(){
     let url = urlBase + 'GetRSOGroups.'+ extension;
 
@@ -717,31 +771,21 @@ async function getRsos(){
                 rsoRes.results.forEach(rso => {
 
                     let rsoButtons = "";
-                    let rsoTitle= `<h5 class="card-title">${rso.RSO_name} | ${rso.Status} </h5>
-`
 
                     if (getUserType() === "Student"){
                         const rsoButtons = document.createElement("div");
                         rsoButtons.innerHTML=  `
                             <button class="rsoOptionBtn" onclick='deleteRSO(${rso.RSOs_ID});'> Leave RSO </button>
                         `;
-                    } else if(getUserType() === "Admin"){
-                        rsoTitle=`
-                            <h5 class="card-title">
-                                <a href="RSOStatus.html?rsoId=${rso.RSOs_ID}" class="admin-rso-link">
-                                ${rso.RSO_name}
-                                </a>
-                            </h5>
-                        `;
-                    }
+                    } 
                     
                     const rsoDiv = document.createElement('div');
                     rsoDiv.classList.add('col-md-4', 'mb-3'); 
                     rsoDiv.innerHTML = `
                         <div class="card">
                             <div class="card-body">
-                                ${rsoTitle}
-                                ${rsoButtons}
+                            <h5 class="card-title">${rso.RSO_name} | ${rso.Status} </h5>                                
+                            ${rsoButtons}
                             </div>
                         </div>
                     `;
