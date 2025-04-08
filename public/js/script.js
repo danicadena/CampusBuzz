@@ -723,7 +723,7 @@ async function getOwnedRsos(){
                             <div class="card-body">
                                 <h5 class="card-title">
                                 <a href="RSOStatus.html?rsoId=${owned.RSOs_ID}" class="admin-rso-link">
-                                ${owned.RSO_name} | ${owned.Status}
+                                ${owned.RSO_name} - ${owned.Status}
                                 </a>
                             </h5>
                             </div>
@@ -786,7 +786,7 @@ async function getRsos(){
                     rsoDiv.innerHTML = `
                         <div class="card">
                             <div class="card-body">
-                            <h5 class="card-title">${rso.RSO_name} | ${rso.Status} </h5>                                
+                            <h5 class="card-title">${rso.RSO_name} - ${rso.Status} </h5>                                
                             ${rsoButtons}
                             </div>
                         </div>
@@ -1543,79 +1543,6 @@ async function getSuperEvents(){
         console.log('Error fetching events');
     }
 }
-
-/*
-document.getElementById("searchEvents").addEventListener("input", (e) => {
-    const searchText = e.target.value.trim();
-
-    if (searchText === "") {
-        //show all the events
-        getEvents();
-    } else {
-        //otherwise show the events relevant to the search
-        searchEvents(searchText); 
-    }
-});
-
-
-async function searchEvents(query) {
-    const id = getUserID();
-    const url = urlBase + 'SearchEvent.' + extension;
-
-    const searchPayload = {
-        UID: id,
-        search: query
-    };
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(searchPayload)
-        });
-
-        const result = await response.json();
-        console.log("Search API response:", result);
-
-        const container = getUserType() === "Admin" ? document.getElementById("adminEventCardContainer") : document.getElementById("eventCardContainer");
-        container.innerHTML = "";
-
-        if (Array.isArray(result.results) && result.results.length > 0) {
-            result.results.forEach(event => {
-                const eventDiv = document.createElement('div');
-                eventDiv.classList.add('rsoCard');
-                eventDiv.innerHTML = `
-                    <div class="eventcard">
-                        <div class="card-body">
-                            <h5 class="event-title">
-                                <a href="eventInfo.html?eventId=${event.Events_ID}" class="event-link">
-                                    ${event.Event_name}
-                                </a>
-                            </h5>
-                            <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time}</small></p>
-                            <p class="card-text">${event.Description}</p>
-                        </div>
-                    </div>
-                `;
-
-                if (getUserType() === "Admin") {
-                    const adminBtns = document.createElement("div");
-                    adminBtns.innerHTML = `<button class="eventOptionsBtn" onclick='deleteEvent(${event.Events_ID});'>Delete</button>`;
-                    eventDiv.appendChild(adminBtns);
-                }
-
-                container.appendChild(eventDiv);
-            });
-        } else {
-            container.innerHTML = "<p>No events match your search.</p>";
-        }
-    } catch (error) {
-        console.error("Search error:", error);
-    }
-}
-*/
 
 async function getRsoStudentInfo(){
     const params = new URLSearchParams(window.location.search);

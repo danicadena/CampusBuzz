@@ -64,7 +64,7 @@ input[type="search"]{
 #rsoCont{
     float: right;
     background-color: #D9D9D9;
-    height: 100vh;
+    height: 150vh;
     width: 20vw;
     display: flex;
     flex-direction: column;
