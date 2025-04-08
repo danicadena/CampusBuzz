@@ -312,3 +312,9 @@ a{
     max-width: 600px;
     margin: auto;
 }
+
+#editBtn{
+    display: block;
+    margin : 0 auto;
+    cursor: pointer;
+}
