@@ -46,10 +46,10 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo($results)
+	function returnWithInfo($rsoID)
     {
         $retValue = json_encode([
-            "results" => $results,
+            "results" => $rsoID,
             "error" => ""
         ]);
 
