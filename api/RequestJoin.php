@@ -12,34 +12,6 @@
 	}
 	else
 	{
-        // get student email from UID
-        $domainCheck = $conn->prepare("SELECT Email FROM Users WHERE UID = ?");
-        $domainCheck->bind_param("i", $uid);
-        $domainCheck->execute();
-        $domainCheck->bind_result($email);
-        $domainCheck->fetch();
-        $domainCheck->close();
-
-        $domain = substr(strrchr($email, "@"), 1);
-
-        // get email domain from RSOs_ID
-        $getDomain = $conn->prepare("SELECT Email_domain FROM RSOs_Creates WHERE RSOs_ID = ?");
-        $getDomain->bind_param("i", $rsoID);
-        $getDomain->execute();
-        $getDomain->bind_result($found);
-        $getDomain->fetch();
-        $getDomain->close();
-
-        // compare user domain to RSO domain
-        if ( $domain !== $found )
-        {
-            $conn->close();
-            error_log("User domain: " . $domain);
-            error_log("RSO domain: " . $found);
-            returnWithError("Must be part of the same university to join!");
-            return;
-        }
-
         // check if user has already joined
         $check = $conn->prepare("SELECT * FROM Joins WHERE UID = ? AND RSOs_ID = ?");
         $check->bind_param("ii", $uid, $rsoID);
