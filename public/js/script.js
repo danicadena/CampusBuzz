@@ -755,10 +755,11 @@ async function getRsos(){
 
 //TODO: 
 async function deleteRSO(rsoId){
-    const confirmRsoDel = confirm("Are you sure you want to delete this event?") 
+    const confirmRsoDel = confirm("Are you sure you want to delete this RSO?") 
     if (!confirmRsoDel) return;
 
-    const uid = getUserId();
+    const uid = getUserID();
+    console.log("userId: " , uid);
 
     const delRSOPayload = {
         UID : uid, 
@@ -766,6 +767,7 @@ async function deleteRSO(rsoId){
     }
 
     let url = urlBase + 'LeaveRSO.' + extension;
+    console.log("delete rso payload ", delRSOPayload);
 
     try{
         const response = await fetch (url, {
