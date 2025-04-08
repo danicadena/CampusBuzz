@@ -813,12 +813,15 @@ async function getComments(){
                 commentCont.innerHTML =''; 
 
                 const currentUserId = getUserID();
+                console.log('currentUserId: ', currentUserId); 
 
                 commentInfo.results.forEach(comment => {
-                    const commentDiv = document.createElement('div');
-                    commentDiv.classList.add('col-md-4', 'mb-3'); 
+                    console.log('Checking comment UID:', comment.UID); 
 
                     const commentOwner = comment.UID === currentUserId;
+                    console.log('comment owner:', commentOwner); 
+
+
                     const buttonsHTML = commentOwner
                     ? `
                     <button class="btn btn-danger" onclick="deleteComment(${comment.UID}, ${eventId})">Delete</button>
@@ -830,6 +833,11 @@ async function getComments(){
                             data-text="${encodeURIComponent(comment.Text)}"
                         >Edit</button>
                     ` : '';
+
+                    const commentDiv = document.createElement('div');
+                    commentDiv.classList.add('col-md-4', 'mb-3'); 
+
+                    
 
                     commentDiv.innerHTML = `
                         <div class="commentCard">
@@ -845,12 +853,14 @@ async function getComments(){
                 });
 
                 document.querySelectorAll('.editBtn').forEach(button => {
+                    console.log('Adding event listener for Edit button'); 
                     button.addEventListener('click', () => {
                         const uid = Number(button.dataset.uid);
                         const eid = Number(button.dataset.eventid);
                         const rating = button.dataset.rating;
                         const text = decodeURIComponent(button.dataset.text);
 
+                        console.log(`Edit button clicked for comment UID: ${uid}, Event ID: ${eid}`); 
                         editComment(uid, eid, rating, text);
                     });
                 });
@@ -996,51 +1006,55 @@ async function updateEvent(){
     const eventId = urlParams.get('eventId');
     console.log('Event ID:', eventId);
 
-    const id = getUserID();
-
     if (!eventId)  return;
 
-    const eventInfo = await getEventInfo(); 
-    if (!eventInfo) return;
-
     document.getElementById("updateEventModal").style.display = "block";
+    const url = urlBase + 'GetEvent.' + extension;
+    const eventPayload = { Events_ID: eventId };
 
-    console.log('eventinfo:', eventInfo);
-
-    document.getElementById('eventNameInput').value = eventInfo.Event_name || '';
-    document.getElementById('eventLocationInput').value = eventInfo.Event_location || ''; // This may not be in the eventInfo, adjust if needed
-    document.getElementById('eventTimeInput').value = eventInfo.Event_time || '';
-    document.getElementById('eventDateInput').value = eventInfo.Date || '';
-    document.getElementById('eventDescInput').value = eventInfo.Description || '';
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventPayload)
+    })
+        .then(response => response.json())
+        .then(eventInfoData => {
+            console.log('Event Info:', eventInfoData);
+            document.getElementById('eventNameInput').value = eventInfoData.results.Event_name || '';
+            document.getElementById('eventTimeInput').value = eventInfoData.results.Event_time || '';
+            document.getElementById('eventDateInput').value = eventInfoData.results.Date || '';
+            document.getElementById('eventDescInput').value = eventInfoData.results.Description || '';
+        })
+        .catch(error => console.log('Error fetching event info:', error));
 
     document.getElementById('saveEventButton').addEventListener('click', async () => {
         const eventPayload = {
-            Events_ID: eventId, 
-            Admins_ID: id, 
+            Events_ID: eventId,
+            Admins_ID: getUserID(),
+            Event_name: document.getElementById('eventNameInput').value,
             Event_time: document.getElementById('eventTimeInput').value,
             Date: document.getElementById('eventDateInput').value,
-            Event_name: document.getElementById('eventNameInput').value,
             Description: document.getElementById('eventDescInput').value
         };
 
-        console.log('Updated Event Payload:', eventPayload);
-        const url = urlBase + 'UpdateEvent.' + extension;
-        
+        const updateUrl = urlBase + 'UpdateEvent.' + extension;
+
         try {
-            const response = await fetch(url, {
+            const response = await fetch(updateUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(eventPayload)
             });
-            
-            const data = await response.json();
-            
-            if (data.success) {
+
+            const updateData = await response.json();
+            if (updateData.success) {
                 alert('Event updated successfully!');
                 document.getElementById("updateEventModal").style.display = "none";
-                loadEventInfo();
+                getEventInfo();
             } else {
                 alert('Failed to update event');
             }
@@ -1048,7 +1062,7 @@ async function updateEvent(){
             alert('An error occurred while updating the event');
         }
     });
-    
+
     document.getElementById('cancelButton').addEventListener('click', () => {
         document.getElementById("updateEventModal").style.display = "none";
     });
