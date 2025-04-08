@@ -739,7 +739,8 @@ async function getRsos(){
                         const rsoButtons = document.createElement("div");
                         rsoButtons.innerHTML=  `
                             <button class="rsoOptionBtn" onclick='deleteRSO(${rso.RSOs_ID});'> Leave RSO </button>
-                        `
+                        `;
+                        rsoDiv.appendChild(rsoButtons);
                     }
                 });
             } else {

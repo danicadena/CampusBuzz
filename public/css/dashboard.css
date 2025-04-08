@@ -318,3 +318,11 @@ a{
     margin : 0 auto;
     cursor: pointer;
 }
+
+.rsoOptionBtn{
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+    background-color: #c82333;
+    border-color: #c82333;
+}
