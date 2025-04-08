@@ -705,6 +705,7 @@ async function getOwnedRsos(){
         });
 
         const ownedData = await response.json();
+        console.log('ownedData : ', ownedData);
 
         if (ownedData.error !== ""){
             console.log('error with fetching api side: ', ownedData.error);
