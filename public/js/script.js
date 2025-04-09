@@ -247,7 +247,7 @@ async function doAddEvent(){
         const data = await response.json();
         console.log("data recieved: ", data);
 
-        if (data.error && data.error === "An event already exists at this location and time!"){
+        if (data.error === "An event already exists at this location and time!"){
            alert("An event already exists at this time and location");
             //if error adding an event make all the selected fields empty
             document.getElementById("uniInput").value= "";
@@ -268,7 +268,7 @@ async function doAddEvent(){
             await doCleanUp();
             console.log("after clean up call");
         }
-        else if (data.error !== ""){
+        else if (data.error && data.error !== ""){
              //if error adding an event make all the fields blank
              document.getElementById("uniInput").value= "";
              document.getElementById("timeInput").value = "";
