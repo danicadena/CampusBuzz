@@ -160,6 +160,7 @@ input[type="search"]{
     font-size: 40px 
 }
 
+
 .card{
     margin-left: 10px;
     position: relative;
@@ -376,4 +377,13 @@ a{
 .admin-rso-link{
     text-decoration: line;
     font-size: 20px;
+}
+
+.card-body p {
+    margin: 4px 0;
+    line-height: 1.2;
+}
+
+.event-title {
+    margin-bottom: 6px;
 }
