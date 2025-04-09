@@ -348,7 +348,7 @@ async function doCreateRSO(){
         }
     });
 
-    let name = document.getElementById("nameInput").value;
+    let name = document.getElementById("nameInp").value;
 
     let phoneElement = document.getElementById("phoneInput");
     let phone = phoneElement ? phoneElement.value : "";
@@ -425,7 +425,7 @@ async function doCreateRSO(){
             document.getElementById("adminInput").value= "";
             inputs.forEach(input => input.value = "");
             document.getElementById("phoneInput");
-            document.getElementById("nameInput");
+            document.getElementById("nameInp");
         }
         else{
             //otherwise go back to dashboard
