@@ -46,7 +46,7 @@
     text-align: center;
 }
 
-input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInput, #phoneInput{
+input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInputStudent, #nameInputAdmin, #phoneInput{
     background-color:#D9D9D9;
     border: none;
     width: 500px;
