@@ -353,7 +353,7 @@ async function doCreateRSO(){
     let phoneElement = document.getElementById("phoneInput");
     let phone = phoneElement ? phoneElement.value : "";
 
-    if (resBox) resBox.innerHTML = "";
+    //if (resBox) resBox.innerHTML = "";
 
     let uids = {
         Emails: members
@@ -379,15 +379,21 @@ async function doCreateRSO(){
         
         if (data.error && data.error !== ""){
             //if error finding uids make all email fields blank
+            alert('Fields are blank');
             let inputs = document.querySelectorAll(".memberInp");
             inputs.forEach(input => input.value = "")
             return;
         }
     }catch(error){
-        if (resBox){
+       /* if (resBox){
             resBox.innerHTML = "need at least 4 other members!";
         }
         return;
+        */
+       console.log('FALL INTO CATCH OF CREATE RSO');
+       alert('haiii catch');
+
+       return;
     }
 
     let rsoInfo = {
