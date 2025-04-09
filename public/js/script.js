@@ -748,8 +748,8 @@ async function getEvents(){
                                         ${event.Event_name}
                                      </a>
                                 </h5>
-                                <p class="card-text id="locField">${event.Lname}</p>
-                                <p class="card-text id="timeField"><small class="text-muted">${formattedDate} | ${formattedTime} </small></p>
+                                <p class="card-text">${event.Lname}</p>
+                                <p class="card-text"><small class="text-muted">${formattedDate} | ${formattedTime} </small></p>
                                 <p class="card-text">${event.Description}</p>
                             </div>
                         </div>
@@ -863,9 +863,9 @@ async function getRsos(){
                     let rsoButtons = "";
 
                     if (getUserType() === "Student"){
-                        console.log('Displaying leave rso button')
-                        const rsoButtons = document.createElement("div");
-                        rsoButtons.innerHTML=  `
+                        console.log('Displaying leave rso button');
+                        //const rsoButtons = document.createElement("div");
+                        rsoButtons = `
                             <button class="rsoOptionBtn" onclick='deleteRSO(${rso.RSOs_ID});'> Leave RSO </button>
                         `;
                     } 
