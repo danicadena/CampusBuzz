@@ -265,7 +265,6 @@ async function doAddEvent(){
 
             // GET delete RSO from Events_At
             try{
-                console.log("Before");
                 await doCleanUp();
             }catch(error){
                 console.error("error calling cleanup: ", error);
@@ -725,6 +724,19 @@ async function getEvents(){
                 eventContainer.innerHTML = ''; 
 
                 eventRes.results.forEach(event => {
+                    // format date and time
+                    const formattedDate = new Date(event.Date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                
+                    const formattedTime = new Date(`1970-01-01T${event.Event_time}`).toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+
                     //make a rso card for each event and send each to the event info page 
                     const eventDiv = document.createElement('div');
                     eventDiv.classList.add('rsoCard'); 
@@ -736,7 +748,7 @@ async function getEvents(){
                                         ${event.Event_name}
                                      </a>
                                 </h5>
-                                <p class="card-text"><small class="text-muted">${event.Date} | ${event.Event_time} </small></p>
+                                <p class="card-text"><small class="text-muted">${formattedDate} | ${formattedTime} </small></p>
                                 <p class="card-text">${event.Description}</p>
                             </div>
                         </div>
