@@ -115,6 +115,25 @@ async function doRegister(){
 
 }
 
+async function doCleanUp(){
+    let url = urlBase + 'DeleteUnauthorizedRSOEvent.' + extension;
+    console.log("url: ", url);
+
+    try{
+        const response = await fetch(url, {
+            method: 'GET',
+            headers:{
+                'Content-type': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        console.log("returned from cleanup database: ", data);
+    }catch(error){
+        console.log("failed to clean up");
+    }
+}
+
 // add an event
 async function doAddEvent(){
 	let uni = document.getElementById("uniInput").value
@@ -246,23 +265,7 @@ async function doAddEvent(){
              document.getElementById("eventSelect").value = "";
 
             // POST delete RSO from Events_At
-
-            try{
-                let url = urlBase + 'DeleteUnauthorizedRSOEvent.' + extension;
-                console.log("url: ", url);
-
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers:{
-                        'Content-type': 'application/json'
-                    }
-                });
-
-                const data = await response.json();
-                console.log("returned from cleanup database: ", data);
-            }catch(error){
-                console.log("failed to clean up");
-            }
+            doCleanUp();
 
              return;
         }
