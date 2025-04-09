@@ -238,7 +238,7 @@ async function doAddEvent(){
         const response = await fetch (url1, {
             method: 'POST', 
             headers:{
-                'Content-type': 'application/json'
+                'Accept': 'application/json'
             },
             body: JSON.stringify(eventInfo),
             mode : 'no-cors'
