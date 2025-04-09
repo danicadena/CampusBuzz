@@ -253,7 +253,6 @@ async function doAddEvent(){
             document.getElementById("uniInput").value= "";
             document.getElementById("timeInput").value = "";
             document.getElementById("dateInput").value = "";
-            return;
         }
         else if (data.error === "Not authorized to create events for this RSO!"){
             alert("You are not authorized to create an event for this RSO!");
@@ -268,8 +267,6 @@ async function doAddEvent(){
             console.log("Before clean up call");
             await doCleanUp();
             console.log("after clean up call");
-
-             return;
         }
         else if (data.error !== ""){
              //if error adding an event make all the fields blank
@@ -279,7 +276,6 @@ async function doAddEvent(){
              document.getElementById("descInput").value = ""; 
              document.getElementById("nameInput").value = "";
              document.getElementById("eventSelect").value = "";
-             return;
         }    
         else {
             //otherwise go back to dashboard
