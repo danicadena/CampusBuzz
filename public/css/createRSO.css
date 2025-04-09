@@ -71,6 +71,15 @@ input[type="text"]#adminInput, #m1Input, #m2Input, #m3Input, #m4Input, #nameInpu
     margin-left: 155px;
 }
 
+.rsoButtonStud{
+    background-color: #E4BC67;
+    border: none;
+    padding: 5px 70px;
+    font-size: 25px;
+    margin-top: 10px;
+    margin-left: 155px;
+}
+
 .rsoButton:hover{
     border: 2px solid black;
 }
