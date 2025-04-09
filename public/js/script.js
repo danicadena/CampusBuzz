@@ -250,7 +250,7 @@ async function doAddEvent(){
             console.log("url: ", url);
 
             try{
-                fetch(url, {
+                const response = await fetch(url, {
                     method: 'GET',
                     headers:{
                         'Content-type': 'application/json'
@@ -262,7 +262,7 @@ async function doAddEvent(){
             }catch(error){
                 console.log("failed to clean up");
             }
-            
+
              return;
         }
         else if (data.error !== ""){
