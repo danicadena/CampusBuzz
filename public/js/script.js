@@ -106,7 +106,8 @@ async function doRegister(){
         }
         else{
             //otherwise automatically log in a user 
-            window.location.href = "dashboard.html";
+            alert('User created! Log in now');
+            window.location.href = "login.html";
         }
 
     }catch(error){
