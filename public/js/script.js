@@ -123,7 +123,7 @@ async function doCleanUp(){
         const response = await fetch(url, {
             method: 'GET',
             headers:{
-                'Content-type': 'application/json'
+                'Accept': 'application/json'
             }
         });
 
@@ -238,7 +238,7 @@ async function doAddEvent(){
         const response = await fetch (url1, {
             method: 'POST', 
             headers:{
-                'Accept': 'application/json'
+                'Content-type': 'application/json'
             },
             body: JSON.stringify(eventInfo),
             mode : 'no-cors'
