@@ -924,6 +924,7 @@ async function deleteRSO(rsoId){
             getRsos();
         } else{
             alert("RSO Deleted successfully");
+            getRsos();
             
         }
     } catch(error){
