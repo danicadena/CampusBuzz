@@ -234,6 +234,7 @@ async function doAddEvent(){
             document.getElementById("uniInput").value= "";
             document.getElementById("timeInput").value = "";
             document.getElementById("dateInput").value = "";
+            return;
         }
         else if (data.error === "Not authorized to create events for this RSO!"){
             alert("You are not authorized to create an event for this RSO!");
@@ -243,6 +244,22 @@ async function doAddEvent(){
              document.getElementById("descInput").value = ""; 
              document.getElementById("nameInput").value = "";
              document.getElementById("eventSelect").value = "";
+
+            // POST delete RSO from Events_At
+            let url = urlBase + 'DeleteUnauthorizedRSOEvent.' + extension;
+            console.log("url: ", url);
+
+            fetch(url, {
+                method: 'GET',
+                headers:{
+                    'Content-type': 'application/json'
+                }
+            })
+
+            const data = await response.json();
+            console.log("returned from cleanup database: ", data)
+
+             return;
         }
         else if (data.error !== ""){
              //if error adding an event make all the fields blank
@@ -252,6 +269,7 @@ async function doAddEvent(){
              document.getElementById("descInput").value = ""; 
              document.getElementById("nameInput").value = "";
              document.getElementById("eventSelect").value = "";
+             return;
         }    
         else {
             //otherwise go back to dashboard
