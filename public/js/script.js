@@ -246,16 +246,17 @@ async function doAddEvent(){
              document.getElementById("eventSelect").value = "";
 
             // POST delete RSO from Events_At
-            let url = urlBase + 'DeleteUnauthorizedRSOEvent.' + extension;
-            console.log("url: ", url);
 
             try{
+                let url = urlBase + 'DeleteUnauthorizedRSOEvent.' + extension;
+                console.log("url: ", url);
+
                 const response = await fetch(url, {
                     method: 'GET',
                     headers:{
                         'Content-type': 'application/json'
                     }
-                })
+                });
 
                 const data = await response.json();
                 console.log("returned from cleanup database: ", data);
