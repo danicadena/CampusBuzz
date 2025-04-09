@@ -7,7 +7,7 @@
 	}
 	else
 	{
-		$checkStmt = $conn->prepare("
+		$stmt = $conn->prepare("
             DELETE FROM Events_At
             WHERE Event_type = 'RSO' AND Approval_Status = 'pending'
         ");
@@ -23,7 +23,7 @@
         $deletedCount = $stmt->affected_rows;
 		$stmt->close();
 		$conn->close();
-        
+
 		returnWithError("");
 	}
 
