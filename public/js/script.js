@@ -249,16 +249,20 @@ async function doAddEvent(){
             let url = urlBase + 'DeleteUnauthorizedRSOEvent.' + extension;
             console.log("url: ", url);
 
-            fetch(url, {
-                method: 'GET',
-                headers:{
-                    'Content-type': 'application/json'
-                }
-            })
+            try{
+                fetch(url, {
+                    method: 'GET',
+                    headers:{
+                        'Content-type': 'application/json'
+                    }
+                })
 
-            const data = await response.json();
-            console.log("returned from cleanup database: ", data)
-
+                const data = await response.json();
+                console.log("returned from cleanup database: ", data);
+            }catch(error){
+                console.log("failed to clean up");
+            }
+            
              return;
         }
         else if (data.error !== ""){
