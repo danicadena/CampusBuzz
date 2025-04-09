@@ -387,3 +387,7 @@ a{
 .event-title {
     margin-bottom: 6px;
 }
+
+#timeField{
+    font-size: 22px;
+}
