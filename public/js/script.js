@@ -348,7 +348,10 @@ async function doCreateRSO(){
         }
     });
 
-    let name = document.getElementById("nameInput").value;
+    let name = document.getElementById("nameInputStudent")?.value 
+    || document.getElementById("nameInputAdmin")?.value 
+    || "";    
+    
     console.log('let name: ', name);
 
     let phoneElement = document.getElementById("phoneInput");
@@ -425,10 +428,15 @@ async function doCreateRSO(){
         
         if (data.error && data.error !== ""){
             //if error creating an rso make all fields blank
+            const nameStudent = document.getElementById("nameInputStudent");
+            const nameAdmin = document.getElementById("nameInputAdmin");
+            if (nameStudent) nameStudent.value = "";
+            if (nameAdmin) nameAdmin.value = "";
+
             document.getElementById("adminInput").value= "";
             inputs.forEach(input => input.value = "");
             document.getElementById("phoneInput");
-            document.getElementById("nameInput");
+            //document.getElementById("nameInput");
         }
         else{
             //otherwise go back to dashboard
