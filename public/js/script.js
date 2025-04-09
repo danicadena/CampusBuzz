@@ -126,6 +126,7 @@ async function doAddEvent(){
     let adminID = Number(getAdminId());
 
     let locID;
+    let rsoID = null;
 
     document.getElementById("eventRes").innerHTML = "";
 
@@ -162,6 +163,39 @@ async function doAddEvent(){
         return;
     }
 
+    if (type.toLowerCase() === "rso") {
+        const dropdown = document.getElementById("rsoDropdown");
+        const selectedOption = dropdown.options[dropdown.selectedIndex];
+
+        if (!selectedOption || !selectedOption.textContent || !selectedOption.value) {
+            alert("Please select a valid RSO.");
+            return;
+        }
+
+        const rsoName = selectedOption.textContent;
+
+        try{
+            const rsoRes = await fetch(urlBase + 'GetRSOID.' + extension, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({ RSO_name: rsoName }),
+            });
+
+            const rsoData = await rsoRes.json();
+
+            if (rsoData.error && rsoData.error !== "") {
+                alert("Failed to retrieve RSO ID.");
+                return;
+            }
+
+            rsoID = rsoData.results;
+
+        }catch(error){
+            alert("Something went wrong fetchign the RSOID");
+            return;
+        }
+    }
+
 	let eventInfo = {
 		LocID: locID,
 		Event_time: time,
@@ -171,6 +205,10 @@ async function doAddEvent(){
 		Event_type: type,
 		Admins_ID: adminID
 	}
+
+    if (rsoID) {
+        eventInfo.RSOs_ID = rsoID;
+    }
 
 	console.log("info being sent to backend: ", eventInfo);
 	let url1 = urlBase + 'CreateEvent.' + extension;
@@ -196,6 +234,15 @@ async function doAddEvent(){
             document.getElementById("uniInput").value= "";
             document.getElementById("timeInput").value = "";
             document.getElementById("dateInput").value = "";
+        }
+        else if (data.error === "Not authorized to create events for this RSO!"){
+            alert("You are not authorized to create an event for this RSO!");
+             document.getElementById("uniInput").value= "";
+             document.getElementById("timeInput").value = "";
+             document.getElementById("dateInput").value = "";
+             document.getElementById("descInput").value = ""; 
+             document.getElementById("nameInput").value = "";
+             document.getElementById("eventSelect").value = "";
         }
         else if (data.error !== ""){
              //if error adding an event make all the fields blank
@@ -1682,8 +1729,8 @@ async function getRSOsDropDown(){
             if (Array.isArray(data.results) && data.results.length > 0){
                 data.results.forEach(rso => {
                     const option = document.createElement("option");
-                    option.value = rso.RSOs_ID;
-                    option.textContent = rso.RSO_name;
+                    option.value = rso.id;
+                    option.textContent = rso.name;
                     dropdown.appendChild(option);
                 });
             }else {
