@@ -264,9 +264,13 @@ async function doAddEvent(){
              document.getElementById("eventSelect").value = "";
 
             // GET delete RSO from Events_At
-            console.log("Before clean up call");
-            await doCleanUp();
-            console.log("after clean up call");
+            try{
+                console.log("Before");
+                await doCleanUp();
+            }catch(error){
+                console.error("error calling cleanup: ", error);
+            }
+            
         }
         else if (data.error && data.error !== ""){
              //if error adding an event make all the fields blank
