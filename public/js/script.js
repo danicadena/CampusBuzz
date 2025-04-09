@@ -265,7 +265,7 @@ async function doAddEvent(){
              document.getElementById("eventSelect").value = "";
 
             // POST delete RSO from Events_At
-            doCleanUp();
+            await doCleanUp();
 
              return;
         }
