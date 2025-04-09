@@ -348,7 +348,8 @@ async function doCreateRSO(){
         }
     });
 
-    let name = document.getElementById("nameInp").value;
+    let name = document.getElementById("nameInput").value;
+    console.log('let name: ', name);
 
     let phoneElement = document.getElementById("phoneInput");
     let phone = phoneElement ? phoneElement.value : "";
@@ -403,6 +404,8 @@ async function doCreateRSO(){
         RSO_name: name
     };
 
+    console.log('RSO INFO: ', rsoInfo.RSO_name);
+    
     console.log("info being sent to backend: ",  rsoInfo);
     let url1 = urlBase + 'CreateRSO.'+ extension;
     console.log("url: " , url1);
@@ -425,7 +428,7 @@ async function doCreateRSO(){
             document.getElementById("adminInput").value= "";
             inputs.forEach(input => input.value = "");
             document.getElementById("phoneInput");
-            document.getElementById("nameInp");
+            document.getElementById("nameInput");
         }
         else{
             //otherwise go back to dashboard
