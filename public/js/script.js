@@ -863,6 +863,7 @@ async function getRsos(){
                     let rsoButtons = "";
 
                     if (getUserType() === "Student"){
+                        console.log('Displaying leave rso button')
                         const rsoButtons = document.createElement("div");
                         rsoButtons.innerHTML=  `
                             <button class="rsoOptionBtn" onclick='deleteRSO(${rso.RSOs_ID});'> Leave RSO </button>
