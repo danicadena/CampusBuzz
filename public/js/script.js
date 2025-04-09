@@ -320,8 +320,9 @@ async function doAddMemberField(){
 
 // create an RSO
 async function doCreateRSO(){
+    console.log('CREATE CLICKED');
     // enfore all fields must be filled
-    let filled = true;
+    /*let filled = true;
     let fields = document.querySelectorAll("input[type='text']");
 
     fields.forEach(field => {
@@ -337,7 +338,7 @@ async function doCreateRSO(){
             resBox.innerHTML = "there are missing fields!";
         }        return;
     }
-
+    */
     let members = []
     let inputs = document.querySelectorAll(".memberInp");
 
