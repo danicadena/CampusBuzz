@@ -264,8 +264,10 @@ async function doAddEvent(){
              document.getElementById("nameInput").value = "";
              document.getElementById("eventSelect").value = "";
 
-            // POST delete RSO from Events_At
+            // GET delete RSO from Events_At
+            console.log("Before clean up call");
             await doCleanUp();
+            console.log("after clean up call");
 
              return;
         }
