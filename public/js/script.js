@@ -405,7 +405,7 @@ async function doCreateRSO(){
     };
 
     console.log('RSO INFO: ', rsoInfo.RSO_name);
-    
+
     console.log("info being sent to backend: ",  rsoInfo);
     let url1 = urlBase + 'CreateRSO.'+ extension;
     console.log("url: " , url1);
@@ -433,7 +433,7 @@ async function doCreateRSO(){
         else{
             //otherwise go back to dashboard
             alert("Add RSO successful!");
-            window.location.href = "dashboard.html";
+           // window.location.href = "dashboard.html";
         }
     }catch(error){
         document.getElementById("rsoRes").innerHTML= "failed to add rso!";
