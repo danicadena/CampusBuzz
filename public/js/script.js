@@ -336,7 +336,8 @@ async function doCreateRSO(){
     if(!filled){
         if(resBox){
             resBox.innerHTML = "there are missing fields!";
-        }        return;
+        }
+        return;
     }
     */
     let members = []
